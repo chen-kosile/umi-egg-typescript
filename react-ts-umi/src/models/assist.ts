@@ -11,6 +11,7 @@ export interface IAssistModelState {
 export interface IAssistModel {
   name: 'assist',
   state: IAssistModelState,
+  subscriptions: {},
   effects: {
     test: Effect
   },
@@ -25,6 +26,9 @@ const AssistModel: IAssistModel = {
   state: {
     test: [],
     name: 'test'
+  },
+  subscriptions: {
+
   },
   effects: {
     *test({ payload }, { call, put, select }) {
