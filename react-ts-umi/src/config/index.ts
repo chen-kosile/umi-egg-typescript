@@ -13,7 +13,7 @@ export const AXIOS_DEFAULT_CONFIG = {
 //项目相关配置
 export const APP_DEFAULT_CONFIG =  {
   companyName: 'null',
-  title: 'React-ts-umi',
+  title: 'react-ts-umi',
   // 免登入白名单
   whiteList: [
 

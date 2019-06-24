@@ -9,14 +9,18 @@
     "precommit": "lint-staged"
   },
   "dependencies": {
-    "@types/nprogress": "0.0.29",
+    "@types/classnames": "^2.2.8",
     "axios": "^0.18.0",
+    "classnames": "^2.2.6",
+    "lodash": "^4.17.11",
     "nprogress": "^0.2.0",
     "react": "^16.7.0",
     "react-dom": "^16.7.0"
   },
   "devDependencies": {
     "@types/jest": "^23.3.12",
+    "@types/lodash": "^4.14.134",
+    "@types/nprogress": "0.0.29",
     "@types/react": "^16.8.17",
     "@types/react-dom": "^16.0.11",
     "@types/react-test-renderer": "^16.0.3",
