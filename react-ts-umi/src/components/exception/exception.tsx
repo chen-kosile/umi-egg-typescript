@@ -10,7 +10,7 @@ interface IProps {
   className?: string;
   style?: React.CSSProperties;
   type?: '403' | '404' | '500';
-  title: React.ReactNode;
+  title?: React.ReactNode;
   size?: 'middle' | 'small' | 'large';
   desc?: React.ReactNode;
   img?: string;
