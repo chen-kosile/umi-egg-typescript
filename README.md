@@ -9,6 +9,10 @@
 - react
 - dva
 
+    // "tslint": "^5.12.0",
+    // "tslint-eslint-rules": "^5.4.0",
+    // "tslint-react": "^3.6.0",
+
 - 项目目录结构
   - egg-mysql node后端
     - app  主要后端代码

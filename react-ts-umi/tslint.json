@@ -1,6 +1,6 @@
 {
   "extends": [
-    "tslint-react",
+    "tslint-react"
   ],
   "rules": {
     "align": false,
@@ -16,8 +16,8 @@
     "jsx-self-close": false,
     "whitespace": false,
     "interface-name": [
-      true,
-      "never-prefix"
+      true
+      // "never-prefix"
     ],
     "jsdoc-format": true,
     "jsx-no-lambda": false,

@@ -9,7 +9,8 @@
     "precommit": "lint-staged"
   },
   "dependencies": {
-    "@types/classnames": "^2.2.8",
+    "@alitajs/antd-plus": "^1.0.6",
+    "@alitajs/autils": "^0.2.0",
     "axios": "^0.18.0",
     "classnames": "^2.2.6",
     "lodash": "^4.17.11",
@@ -18,6 +19,9 @@
     "react-dom": "^16.7.0"
   },
   "devDependencies": {
+    "@alitajs/umi-plugin-css-modules": "^0.0.1",
+    "@alitajs/umi-plugin-lodash": "^0.1.0",
+    "@types/classnames": "^2.2.8",
     "@types/jest": "^23.3.12",
     "@types/lodash": "^4.14.134",
     "@types/nprogress": "0.0.29",
@@ -37,6 +41,7 @@
     "tslint": "^5.12.0",
     "tslint-eslint-rules": "^5.4.0",
     "tslint-react": "^3.6.0",
+    "typescript": "^3.5.2",
     "umi": "^2.6.17",
     "umi-plugin-react": "^1.7.6",
     "umi-types": "^0.2.0"
