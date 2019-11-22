@@ -1,4 +1,4 @@
-import { userCookieKey } from 'src/constants';
+import { userCookieKey } from '@/constants';
 import { get, remove, set } from 'js-cookie';
 
 export const cookieUtil = {

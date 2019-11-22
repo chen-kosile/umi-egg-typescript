@@ -33,7 +33,7 @@ const Exception: React.FC<IProps> = props => {
     linkElement,
     backText,
   } = props;
-  const pageType = type in config ? type : '404';
+  const pageType = (type in config) ? type : '404';
 
   return (
     <div

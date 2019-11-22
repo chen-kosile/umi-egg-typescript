@@ -4,13 +4,14 @@ import { IRoute } from 'umi-types';
 import { EffectsCommandMap } from 'dva';
 import { match } from 'react-router-dom';
 import { IMenuModelState } from '@/models/menu';
-import { ILoginModelState } from '@/models/login';
+import { IGlobalModelState } from '@/models/global';
+// import { ILoginModelState } from '@/models/login';
 import { IUserModelState } from '@/models/user';
 
 export interface ConnectState {
   loading: Loading;
   // menu: IMenuModelState;
-  // global: IGlobalModelState;
+  global: IGlobalModelState;
   // tabs: ITabsModelState;
   // user: IUserModelState;
   user: any;

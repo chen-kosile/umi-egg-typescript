@@ -1,5 +1,5 @@
 export default {
   production: '',
-  development: '',
+  development: '127.0.0.1:3001',
   test: ''
 }

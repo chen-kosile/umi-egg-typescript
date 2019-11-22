@@ -4,8 +4,7 @@ import plugins from './plugin.config';
 import serverConfig from './server.config';
 import themeConfig from './theme.config';
 
-// const { NODE_ENV } = process.env;
-const NODE_ENV = 'development';
+const { NODE_ENV } = process.env;
 
 // ref: https://umijs.org/config/
 const config: IConfig =  {
@@ -23,7 +22,6 @@ const config: IConfig =  {
   // 配置式路由， 
   routes: routeConfig,
   define: {
-    // NODE_ENV: 'development',
     BASE_URL: serverConfig[NODE_ENV] || serverConfig.development
   },
   theme: themeConfig,

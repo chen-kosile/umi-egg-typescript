@@ -3,6 +3,7 @@
     "tslint-react"
   ],
   "rules": {
+    "moduleResolution": "node",
     "align": false,
     "ban": false,
     "class-name": true,

@@ -34,13 +34,15 @@ export default [
           {
             path: '/dashboard/analysis',
             name: 'analysis',
-            authority: 'dashboard/analysis',
-            component: './dashboard/analysis',
+            authority: [
+              'dashboard/analysis'
+            ],
+            component: './dashboard/analysis'
           },
           {
             path: '/dashboard/workplace',
             name: 'workplace',
-            authority: 'dashboard/workplace',
+            authority: ['dashboard/workplace'],
             component: './dashboard/workplace',
           },
         ],

@@ -1,13 +1,9 @@
-import React, { Component } from 'react'
+import React from 'react';
 
-class Analysis extends Component<any, any> {
+class AnalysisPage extends React.Component {
   render() {
-    return (
-      <div>
-        Analysis
-      </div>
-    )
+    return <div>Analysis</div>;
   }
 }
 
-export default Analysis;
+export default AnalysisPage;
