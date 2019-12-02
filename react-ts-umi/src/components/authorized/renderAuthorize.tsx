@@ -1,8 +1,7 @@
 import { AnyComponent } from './promiseRender';
 
-let CURRENT: string | string[] = 'NULL';
-
-export declare type CurrentAuthority = string | string[] | (() => string | string[]) | 'NULL';
+export let CURRENT: string | string[] = 'NULL';
+export type CurrentAuthority = string | string[] | (() => string | string[]) | 'NULL';
 
 const renderAuthorize = <T extends AnyComponent>(Authorized: T) => (
   currentAuthority?: CurrentAuthority,
@@ -22,5 +21,4 @@ const renderAuthorize = <T extends AnyComponent>(Authorized: T) => (
   return Authorized;
 };
 
-export { CURRENT };
 export default <T extends AnyComponent>(Authorized: T) => renderAuthorize<T>(Authorized);

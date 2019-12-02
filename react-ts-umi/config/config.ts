@@ -4,6 +4,7 @@ import plugins from './plugin.config';
 import serverConfig from './server.config';
 import themeConfig from './theme.config';
 
+const path = require('path');
 const { NODE_ENV } = process.env;
 
 // ref: https://umijs.org/config/
@@ -25,6 +26,22 @@ const config: IConfig =  {
     BASE_URL: serverConfig[NODE_ENV] || serverConfig.development
   },
   theme: themeConfig,
+  chainWebpack(config, { webpack }) {
+    // config.merge({
+    //   plugin: {
+    //     bundleAnalyzer: {
+    //       plugin: require("webpack-bundle-analyzer").BundleAnalyzerPlugin,
+    //       args: [{ analyzerPort: 9999 }]
+    //     }
+    //   }
+    // });
+    //第二种方式添加
+    /*config
+      .plugin("webpack-bundle-analyzer")
+      .use(require("webpack-bundle-analyzer").BundleAnalyzerPlugin, [
+        { analyzerPort: 9900 }
+      ]);*/
+  },
   hash: true,
 }
 

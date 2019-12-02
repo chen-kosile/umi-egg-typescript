@@ -15,7 +15,7 @@ export default (appInfo: EggAppInfo) => {
   config.security = {
     csrf: { enable: false },
     // 允许本地3000端口访问 这里前端部分是在3000端口打开
-    domainWhiteList: [ 'http://localhost:3000', 'http://127.0.0.1:3000' ],
+    domainWhiteList: [ 'http://localhost:8000', 'http://127.0.0.1:8000' ],
   };
   config.cors = {
     allowMethods: 'GET,HEAD,PUT,POST,DELETE,PATCH,OPTIONS',

@@ -53,7 +53,7 @@
     ],
     "typedef": [
       true,
-      "parameter",
+      // "parameter,
       "property-decaration"
     ],
     "typedef-whitespace": [

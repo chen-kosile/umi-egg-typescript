@@ -88,7 +88,7 @@ const AuthComponent: React.FC<IProps> = (props) => {
   )
 };
 
-export default connect(({ menu, user, global }) => ({
+export default connect(({ menu, user, global }: any) => ({
   policy: global.policy,
   actions: global.actions,
   policies: user.policies,

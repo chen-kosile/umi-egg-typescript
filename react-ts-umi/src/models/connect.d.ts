@@ -10,12 +10,10 @@ import { IUserModelState } from '@/models/user';
 
 export interface ConnectState {
   loading: Loading;
-  // menu: IMenuModelState;
+  menu: IMenuModelState;
   global: IGlobalModelState;
   // tabs: ITabsModelState;
-  // user: IUserModelState;
-  user: any;
-  menu: any;
+  user: IUserModelState;
   // userGroup: IUserGroupModelState;
   // action: IActionModelState;
   // policy: IPolicyModelState;

@@ -32,7 +32,7 @@ const UserModal: IUserModel = {
       let test = yield 'test';
     },
     *fetchCurrent({ payload }, { call, put, select }) {
-
+      let test = yield 'test';
     }
   },
   reducers: {

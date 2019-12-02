@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "esnext",
+    "target": "es5",
     "module": "esnext",
     "moduleResolution": "node",
     "importHelpers": true,
@@ -9,6 +9,8 @@
     "sourceMap": true,
     "baseUrl": ".",
     // "strict": true,
+    "noUnusedLocals": true,                // 有未使用的变量时，抛出错误
+    "noUnusedParameters": true,            // 有未使用的参数时，抛出错误
     "experimentalDecorators": true,
     "paths": {
       "@/*": ["src/*"]
