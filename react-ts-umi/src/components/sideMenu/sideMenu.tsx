@@ -88,7 +88,7 @@ class SideMenu extends React.Component<ISideMenuProps, IState> {
             <h1>{title}</h1>
           </Link>
         </div>
-        <React.Suspense fallback={<PageLoading />}>
+        <React.Suspense fallback={<PageLoading/>}>
           <BaseMenu
             {...this.props}
             mode="inline"

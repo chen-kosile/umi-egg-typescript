@@ -22,7 +22,7 @@ export default [
   {
     path: '/',
     component: '../layouts/basicLayout/basicLayout',
-    Routes: ['src/pages/authorized'],
+    // Routes: ['src/pages/authorized'],
     routes: [
       // dashboard
       { path: '/', redirect: '/dashboard/analysis' },
