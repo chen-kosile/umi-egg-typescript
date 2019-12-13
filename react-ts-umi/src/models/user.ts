@@ -1,54 +1,165 @@
-import { Effect } from '@/models/connect';
 import { Reducer } from 'redux';
+import { Effect } from '@/models/connect';
+import { fetchList, fetchCreate, fetchRemove, fetchUpdate, fetchCurrent } from '@/services/user';
+import { IPolicyData } from '@/components/authorized/policy';
+import { IPagination } from '@/pages/global';
+import { formatTime } from '@/utils/utils';
+
+export interface ICurrentUser {
+  name?: string;
+  avatar?: string;
+  email?: string;
+}
+
+export interface IUser {
+  id?: string | number;
+  username?: string;
+  avatar?: string;
+  email?: string;
+  mobile?: string;
+  remark?: string;
+}
+
+export interface IUserTable {
+  list: IUser[];
+  pagination: IPagination;
+}
 
 export interface IUserModelState {
-
+  table: IUserTable
+  currentUser: ICurrentUser;
+  policies: IPolicyData[];
 }
 
 export interface IUserModel {
-  name: string;
-  state: IUserModelState,
-  subscriptions: {},
+  namespace: 'user';
+  state: IUserModelState;
   effects: {
-    fetchActions: Effect,
-    fetchCurrent: Effect
+    // 获取用户列表
+    fetchList: Effect;
+    fetchCreate: Effect;
+    fetchRemove: Effect;
+    fetchUpdate: Effect;
+    // 获取当前用户信息
+    fetchCurrent: Effect;
   },
   reducers: {
-    save: Reducer<any>,
-    test: Reducer<any>
+    saveTable: Reducer<any>;
+    savePolicies: Reducer<any>;
+    saveCurrentUser: Reducer<any>;
+    changeNotifyCount: Reducer<any>;
   }
 }
 
-const UserModal: IUserModel = {
-  name: 'user',
+const UserModel: IUserModel = {
+  namespace: 'user',
   state: {
-
-  },
-  subscriptions: {
-
+    table: {
+      list: [],
+      pagination: {
+        total: 0,
+        current: 1,
+        pageSize: 10
+      }
+    },
+    currentUser: {},
+    policies: []
   },
   effects: {
-    *fetchActions({ payload }, { call, put, select }) {
-      let test = yield 'test';
+    *fetchList({ payload }, { call, put }) {
+      const response = yield call(fetchList, payload);
+      if (response && response.code === 200) {
+        const data = response.data || {};
+        const { list = [], total = 0 } = data;
+
+        const users = list.map(item => {
+          return {
+            ...item,
+            createTime: formatTime(item.createTime)
+          }
+        });
+
+        yield put({
+          type: 'saveTable',
+          payload: {
+            list: users,
+            pagination: {
+              total,
+              current: payload.page,
+              pageSize: payload.limit
+            }
+          }
+        })
+      }
     },
-    *fetchCurrent({ payload }, { call, put, select }) {
-      let test = yield 'test';
-    }
+    *fetchCreate({ payload, callback }, { call }) {
+      const response = yield call(fetchCreate, payload);
+      if (response && response.code === 200) {
+        callback && callback();
+      }
+    },
+    *fetchRemove({ payload, callback }, { call }) {
+      const response = yield call(fetchRemove, payload);
+      if (response && response.code === 200) {
+        callback && callback();
+      }
+    },
+    *fetchUpdate({ payload, callback }, { call }) {
+      const response = yield call(fetchUpdate, payload);
+      if (response && response.code === 200) {
+        callback && callback();
+      }
+    },
+    *fetchCurrent(_, { call, put }) {
+      const response = yield call(fetchCurrent);
+      if (response && response.code === 200) {
+        const info = response.data || {};
+        const { policies } = info;
+
+        yield put({
+          type: 'saveCurrentUser',
+          payload: {
+            ...info
+          }
+        });
+
+        yield put({
+          type: 'savePolicies',
+          payload: policies
+        })
+      }
+    },
   },
   reducers: {
-    save(state, action) {
+    saveTable(state, { payload }) {
       return {
         ...state,
-        ...action.payload
-      }
+        table: payload
+      };
     },
-    test(state, action) {
+    saveCurrentUser(state, { payload }) {
       return {
         ...state,
-        ...action.payload
-      }
+        currentUser: payload
+      };
+    },
+    savePolicies(state, { payload }) {
+      return {
+        ...state,
+        policies: payload
+      };
+    },
+    changeNotifyCount(state, { payload }) {
+      return {
+        ...state,
+        currentUser: {
+          ...state.currentUser,
+          notifyCount: payload.totalCount,
+          unreadCount: payload.unreadCount
+        }
+      };
     }
   }
-}
+};
 
-export default UserModal
+export default UserModel;

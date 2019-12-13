@@ -13,7 +13,7 @@ import TabPages, { ITab } from '@/components/tabPages';
 import { SETTING_DEFAULT_CONFIG, STORAGE_KEY_DEFAULT_CONFIG } from '@/config';
 import { ConnectProps } from '@/models/connect';
 import logo from '@/assets/logo.svg';
-// import Context from './menuContext';
+import Context from './menuContext';
 // import Header from './header';
 import './basicLayout.less';
 
@@ -163,22 +163,26 @@ const BasicLayout: React.FC<IProps> = (props) => {
       />
 
       <Content className={`${prefixCls}__wrapper`}>
-        <Header
+        {/* <Header
           isMobile={isMobile}
           {...restProps}
-        />
+        /> */}
         <TabPages
           onClick={handleTabClick}
           onRemove={handleTabRemove}
           activeKey={tabActiveKey}
-          tabList={tabList}
+          // tabList={tabList}
+          tabList={[]}
         />
       </Content>
     </Layout>
   );
 
   return (
-    <DocumentTitle title={moGetPageTitle(location!.pathname, breadcrumbNameMap)}>
+    <DocumentTitle 
+      title="test"
+      // title={moGetPageTitle(location!.pathname, breadcrumbNameMap)}
+    >
       <ContainerQuery query={query}>
         {params => (
           <Context.Provider value={{ location, breadcrumbNameMap }}>
@@ -197,8 +201,8 @@ BasicLayout.defaultProps = {
 };
 
 export default connect(({ menu, tabs }) => ({
-  tabActiveKey: tabs.tabActiveKey,
-  tabList: tabs.tabList,
+  // tabActiveKey: tabs.tabActiveKey,
+  // tabList: tabs.tabList,
   menuData: menu.menuData,
   breadcrumbNameMap: menu.breadcrumbNameMap,
 }))(BasicLayout);

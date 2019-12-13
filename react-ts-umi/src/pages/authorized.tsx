@@ -3,7 +3,7 @@ import { connect } from 'dva';
 import pathToRegexp from 'path-to-regexp';
 import RenderAuthorized from '@/components/authorized';
 import Policy, { IAction, IPolicyData } from '@/components/authorized/policy';
-import PageLoading from '@/components/pageLoading';
+import PageLoading from '@/components/page-loading';
 import Exception403 from '@/pages/exception/403';
 import { ConnectProps } from '@/models/connect';
 
@@ -88,9 +88,10 @@ const AuthComponent: React.FC<IProps> = (props) => {
   )
 };
 
-export default connect(({ menu, user, global }: any) => ({
+export default connect(({ menu, user, global }) => ({
   policy: global.policy,
   actions: global.actions,
   policies: user.policies,
   routerData: menu.routerData
 }))(AuthComponent);
+

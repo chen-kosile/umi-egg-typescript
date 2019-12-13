@@ -3,7 +3,7 @@ import memoizeOne from 'memoize-one';
 import { formatMessage } from 'umi-plugin-react/locale';
 import isEqual from 'lodash/isEqual';
 import { Effect } from '@/models/connect';
-import { IMenu } from '@/components/sideMenu';
+import { IMenu } from '@/components/side-menu';
 import { SETTING_DEFAULT_CONFIG } from '@/config';
 
 const { menu } = SETTING_DEFAULT_CONFIG;
@@ -96,7 +96,7 @@ const MenuModel: IMenuModel = {
     breadcrumbNameMap: {}
   },
   effects: {
-    *getMenuData({ payload, callback }: any, { put }: any) {
+    *getMenuData({ payload, callback }, { put }) {
       const { routes, authority } = payload;
       const originalMenuData = memoizeOneFormatter(routes, authority);
       const menuData = filterMenuData(originalMenuData);

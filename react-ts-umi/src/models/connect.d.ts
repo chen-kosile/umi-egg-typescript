@@ -5,46 +5,47 @@ import { EffectsCommandMap } from 'dva';
 import { match } from 'react-router-dom';
 import { IMenuModelState } from '@/models/menu';
 import { IGlobalModelState } from '@/models/global';
-// import { ILoginModelState } from '@/models/login';
+import { ITabsModelState } from '@/models/tabs';
 import { IUserModelState } from '@/models/user';
+import { IActionModelState } from '@/models/action';
+import { IUserGroupModelState } from '@/models/user-group';
+import { IPolicyModelState } from '@/pages/permission/models/policy';
 
 export interface ConnectState {
   loading: Loading;
   menu: IMenuModelState;
   global: IGlobalModelState;
-  // tabs: ITabsModelState;
+  tabs: ITabsModelState;
   user: IUserModelState;
-  // userGroup: IUserGroupModelState;
-  // action: IActionModelState;
-  // policy: IPolicyModelState;
+  userGroup: IUserGroupModelState;
+  action: IActionModelState;
+  policy: IPolicyModelState;
 }
 
 export type Effect = (
   action: AnyAction,
-  effects: EffectsCommandMap & { select: <T>(func: (state: any) => T) => T}, // 后面需要将any改为ConnectState
+  effects: EffectsCommandMap & { select: <T>(func: (state: ConnectState) => T) => T },
 ) => void;
 
-export type Dispatch = <P = any, C = (payload: P) => void>( action: {
+export type Dispatch = <P = any, C = (payload: P) => void>(action: {
   type: string;
   payload?: P;
   callback?: C;
-  [key: string]: any; 
+  [key: string]: any;
 }) => any;
 
 export interface Loading {
   global: boolean;
-  effects: { 
-    [key: string]: boolean | undefined
-  };
+  effects: { [key: string]: boolean | undefined };
   models: {
     menu?: boolean;
-  }
+  };
 }
 
-export interface ConnectProps<P extends { [K in keyof P]?: string} = {}>
+export interface ConnectProps<P extends { [K in keyof P]?: string } = {}>
   extends Partial<RouterTypes<IRoute>> {
-    dispatch: Dispatch;
-    match: match<P>;
+    dispatch?: Dispatch;
+    match?: match<P>;
   }
 
 export default ConnectState;
