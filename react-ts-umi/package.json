@@ -6,7 +6,7 @@
   "scripts": {
     "bootstrap": "yarn || npm i",
     "clean": "rimraf dist",
-    "start": "cross-env PORT=8080 umi dev",
+    "dev": "cross-env PORT=8080 umi dev",
     "build": "cross-env NODE_ENV=development umi build",
     "build:test": "cross-env NODE_ENV=test umi build",
     "build:prod": "cross-env NODE_ENV=production umi build",
@@ -25,10 +25,13 @@
     "prettier": "prettier --write ./src/**/**/**/*"
   },
   "repository": "git@github.com:chen-kosile/umi-egg-typescript.git",
-  "author": "JiuMao FE Team",
+  "author": "chen-kosile",
   "license": "MIT",
   "dependencies": {
+    "@alitajs/antd-plus": "^1.0.6",
+    "@alitajs/autils": "^0.2.0",
     "@antv/data-set": "^0.10.1",
+    "@jiumao/rc-table": "^0.0.2",
     "antd": "^3.16.5",
     "axios": "^0.18.0",
     "bizcharts": "^3.5.2",
@@ -46,6 +49,7 @@
     "path-to-regexp": "^3.0.0",
     "qs": "^6.9.1",
     "rc-animate": "^2.4.4",
+    "rc-charts": "^0.4.1",
     "react": "^16.8.1",
     "react-container-query": "^0.11.0",
     "react-copy-to-clipboard": "^5.0.1",
@@ -99,11 +103,6 @@
     "umi": "^2.6.16",
     "umi-plugin-react": "^1.7.5",
     "umi-types": "^0.3.2"
-  },
-  "husky": {
-    "hooks": {
-      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
-    }
   },
   "engines": {
     "node": ">=8.0.0"

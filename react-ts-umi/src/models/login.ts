@@ -1,34 +1,35 @@
 import { Reducer } from 'redux';
 import store from 'store';
 import { stringify } from 'qs';
-import { routerRedux } from 'dva/router';
+import { routerRedux } from 'dva';
 import { Effect } from '@/models/connect';
 import { fetchCaptcha } from '@/services/global';
 import { fetchLogin, fetchLogout, fetchResetPassword } from '@/services/user';
 import { parseQuery } from '@/utils/path-tools';
 import { setCookie, removeCookie } from '@/utils/cookie';
 import { STORAGE_KEY_DEFAULT_CONFIG } from '@/config';
-import { message } from 'antd';
 
 export type TLoginType = 'password' | 'sms';
 
+export interface ILoginModelState {
+  status: boolean;
+  type: TLoginType;
+}
+
 export interface ILoginModel {
-  namespace: 'login',
-  state: {
-    status: boolean;
-    type: TLoginType;
-  },
+  namespace: 'login';
+  state: ILoginModelState;
   effects: {
     // 用户登录
     fetchLogin: Effect;
     fetchLogout: Effect;
     fetchCaptcha: Effect;
     fetchResetPassword: Effect;
-  },
+  };
   reducers: {
     changeStatus: Reducer<any>;
     changeLoginType: Reducer<any>;
-  }
+  };
 }
 
 const { loginType } = STORAGE_KEY_DEFAULT_CONFIG;
@@ -37,10 +38,11 @@ const Login: ILoginModel = {
   namespace: 'login',
   state: {
     status: false,
-    type: store.get(loginType, 'password')
+    type: store.get(loginType, 'password'),
   },
   effects: {
     *fetchLogin({ payload }, { call, put }) {
+      console.log(payload);
       const response = yield call(fetchLogin, payload);
       // login success
       if (response && response.code === 200) {
@@ -65,13 +67,10 @@ const Login: ILoginModel = {
           }
         }
         yield put(routerRedux.replace(redirect || '/'));
-      } else {
-        message.error(response.message);
       }
     },
     *fetchCaptcha({ payload }, { call, put }) {
       const response = yield call(fetchCaptcha, payload);
-
     },
     *fetchLogout({ payload }, { call, put }) {
       // 发送退出登录请求
@@ -80,7 +79,7 @@ const Login: ILoginModel = {
       yield put({
         type: 'changeStatus',
         payload: {
-          status: false
+          status: false,
         },
       });
 
@@ -98,25 +97,24 @@ const Login: ILoginModel = {
         );
       }
     },
-    *fetchResetPassword({ payload }, { call, put }) {
-      const response = yield call(fetchResetPassword, payload);
-
-    }
+    *fetchResetPassword({ payload }, { call }) {
+      yield call(fetchResetPassword, payload);
+    },
   },
   reducers: {
     changeStatus(state, { payload }) {
       return {
         ...state,
-        status: payload.status
+        status: payload.status,
       };
     },
     changeLoginType(state, { payload }) {
       return {
         ...state,
-        type: payload
+        type: payload,
       };
-    }
-  }
+    },
+  },
 };
 
 export default Login;

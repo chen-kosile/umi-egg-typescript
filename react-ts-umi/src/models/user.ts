@@ -1,152 +1,103 @@
 import { Reducer } from 'redux';
 import { Effect } from '@/models/connect';
-import { fetchList, fetchCreate, fetchRemove, fetchUpdate, fetchCurrent } from '@/services/user';
-import { IPolicyData } from '@/components/authorized/policy';
-import { IPagination } from '@/pages/global';
-import { formatTime } from '@/utils/utils';
-
-export interface ICurrentUser {
-  name?: string;
-  avatar?: string;
-  email?: string;
-}
-
-export interface IUser {
-  id?: string | number;
-  username?: string;
-  avatar?: string;
-  email?: string;
-  mobile?: string;
-  remark?: string;
-}
-
-export interface IUserTable {
-  list: IUser[];
-  pagination: IPagination;
-}
+import { fetchCurrent } from '@/services/user';
+import { Policy } from '@alitajs/autils';
+import { IAction } from '@alitajs/autils/es/policy';
+import { fetchList } from '@/services/action';
 
 export interface IUserModelState {
-  table: IUserTable
-  currentUser: ICurrentUser;
-  policies: IPolicyData[];
+  policy: Policy;
+  actions: IAction[];
+  currentUser: APP.ICurrentUser;
 }
 
 export interface IUserModel {
   namespace: 'user';
   state: IUserModelState;
   effects: {
-    // 获取用户列表
-    fetchList: Effect;
-    fetchCreate: Effect;
-    fetchRemove: Effect;
-    fetchUpdate: Effect;
     // 获取当前用户信息
     fetchCurrent: Effect;
-  },
+    fetchActions: Effect;
+  };
   reducers: {
-    saveTable: Reducer<any>;
-    savePolicies: Reducer<any>;
+    savePolicy: Reducer<any>;
+    saveActions: Reducer<any>;
     saveCurrentUser: Reducer<any>;
     changeNotifyCount: Reducer<any>;
-  }
+  };
 }
 
 const UserModel: IUserModel = {
   namespace: 'user',
   state: {
-    table: {
-      list: [],
-      pagination: {
-        total: 0,
-        current: 1,
-        pageSize: 10
-      }
-    },
+    policy: null,
+    actions: [],
     currentUser: {},
-    policies: []
   },
   effects: {
-    *fetchList({ payload }, { call, put }) {
-      const response = yield call(fetchList, payload);
-      if (response && response.code === 200) {
-        const data = response.data || {};
-        const { list = [], total = 0 } = data;
-
-        const users = list.map(item => {
-          return {
-            ...item,
-            createTime: formatTime(item.createTime)
-          }
-        });
-
-        yield put({
-          type: 'saveTable',
-          payload: {
-            list: users,
-            pagination: {
-              total,
-              current: payload.page,
-              pageSize: payload.limit
-            }
-          }
-        })
-      }
-    },
-    *fetchCreate({ payload, callback }, { call }) {
-      const response = yield call(fetchCreate, payload);
-      if (response && response.code === 200) {
-        callback && callback();
-      }
-    },
-    *fetchRemove({ payload, callback }, { call }) {
-      const response = yield call(fetchRemove, payload);
-      if (response && response.code === 200) {
-        callback && callback();
-      }
-    },
-    *fetchUpdate({ payload, callback }, { call }) {
-      const response = yield call(fetchUpdate, payload);
-      if (response && response.code === 200) {
-        callback && callback();
-      }
-    },
-    *fetchCurrent(_, { call, put }) {
+    *fetchCurrent(_, { call, put, select }) {
+      console.log(fetchCurrent)
       const response = yield call(fetchCurrent);
+      console.log(response)
       if (response && response.code === 200) {
         const info = response.data || {};
-        const { policies } = info;
+        const { policies = [] } = info;
+
+        const { actions = [] } = yield select(state => state.user);
+
+        const policy = new Policy(actions);
+
+        policies.forEach(item => {
+          policy.addPolicy(item);
+        });
 
         yield put({
           type: 'saveCurrentUser',
           payload: {
-            ...info
-          }
+            ...info,
+          },
         });
 
         yield put({
-          type: 'savePolicies',
-          payload: policies
-        })
+          type: 'savePolicy',
+          payload: policy,
+        });
+      }
+    },
+    *fetchActions(_, { call, put }) {
+      const response = yield call(fetchList);
+      if (response && response.code === 200) {
+        const list = response.data;
+
+        const actions = list.map(item => ({
+          module: item.module.name,
+          action: item.name,
+        }));
+
+        yield put({
+          type: 'saveActions',
+          payload: actions,
+        });
       }
     },
   },
   reducers: {
-    saveTable(state, { payload }) {
+    savePolicy(state, { payload }) {
       return {
         ...state,
-        table: payload
+        policy: payload,
+      };
+    },
+    saveActions(state, { payload }) {
+      return {
+        ...state,
+        actions: payload,
       };
     },
     saveCurrentUser(state, { payload }) {
       return {
         ...state,
-        currentUser: payload
-      };
-    },
-    savePolicies(state, { payload }) {
-      return {
-        ...state,
-        policies: payload
+        currentUser: payload,
       };
     },
     changeNotifyCount(state, { payload }) {
@@ -155,11 +106,11 @@ const UserModel: IUserModel = {
         currentUser: {
           ...state.currentUser,
           notifyCount: payload.totalCount,
-          unreadCount: payload.unreadCount
-        }
+          unreadCount: payload.unreadCount,
+        },
       };
-    }
-  }
+    },
+  },
 };
 
 export default UserModel;

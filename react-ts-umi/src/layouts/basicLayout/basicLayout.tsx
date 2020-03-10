@@ -1,29 +1,24 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Layout } from 'antd';
 import { connect } from 'dva';
-import router from 'umi/router';
-import store from 'store';
 import classNames from 'classnames';
 import useMedia from 'react-media-hook2';
 import { ContainerQuery } from 'react-container-query';
 import DocumentTitle from 'react-document-title';
-import SideMenu, { ISideMenuProps, IMenu } from '@/components/sideMenu';
-import TabPages, { ITab } from '@/components/tabPages';
-// import { moGetPageTitle } from '@/utils/getPageTitle';
-import { SETTING_DEFAULT_CONFIG, STORAGE_KEY_DEFAULT_CONFIG } from '@/config';
-import { ConnectProps } from '@/models/connect';
+import SidebarMenu, { ISidebarMenuProps, IMenu } from '@/components/sidebarMenu';
+import { moGetPageTitle } from '@/utils/getPageTitle';
+import { ConnectProps, ConnectState, ISettingModelState } from '@/models/connect';
 import logo from '@/assets/logo.svg';
-import Context from './menuContext';
-// import Header from './header';
+import Context from '../menuContext';
+import Header from '../header/header';
 import './basicLayout.less';
 
 interface IProps
-  extends Required<ConnectProps>, ISideMenuProps {
+  extends Required<ConnectProps>, ISidebarMenuProps {
     prefixCls?: string;
-    // tabList?: ITab[];
     tabActiveKey?: string;
-    breadcrumbNameMap?: { [path: string]: IMenu;
-  }
+    breadcrumbNameMap?: { [path: string]: IMenu };
+    setting?: ISettingModelState;
 }
 
 const query = {
@@ -51,8 +46,6 @@ const query = {
   },
 };
 const { Content } = Layout;
-const { theme, fixedSide } = SETTING_DEFAULT_CONFIG;
-const { tabListKey, storageTabActiveKey } = STORAGE_KEY_DEFAULT_CONFIG;
 
 const BasicLayout: React.FC<IProps> = (props) => {
   const {
@@ -60,129 +53,58 @@ const BasicLayout: React.FC<IProps> = (props) => {
     location,
     route,
     menuData,
-    // tabList,
-    tabActiveKey,
     breadcrumbNameMap,
+    setting,
     children
   } = props;
+  const { fixedHeader, theme } = setting;
   const { prefixCls, ...restProps } = props;
-  const { routes, authority } = route!;
+  const { routes } = route!;
 
   // constructor
   useState(() => {
-    const tabList = store.get(tabListKey) || [];
-    // 获取当前登录用户信息
-    // dispatch!({
-    //   type: 'user/fetchCurrent'
-    // });
     // 获取菜单数据
     dispatch!({
       type: 'menu/getMenuData',
       payload: {
-        routes,
-        authority
+        routes
       },
     });
-    // 保存Tab数据到全局状态
-    dispatch!({
-      type: 'tabs/fetchAddTab',
-      payload: {
-        tabList,
-        location
-      }
-    });
-    // 保存当前活跃Tab Key
-    dispatch!({
-      type: 'tabs/saveTabActiveKey',
-      payload: store.get(storageTabActiveKey) || ''
-    });
   });
-
-  useEffect(() => {
-    setTabListData();
-  }, [props.location]);
-
-  useEffect(() => {
-    const pathname = location.pathname;
-    if (!tabActiveKey || tabActiveKey === pathname) return;
-    router.push(tabActiveKey);
-  }, [props.tabActiveKey]);
-
-  const setTabListData = () => {
-    const pathname = location!.pathname;
-    if (!pathname) return;
-
-    const menuData = breadcrumbNameMap[pathname];
-    if (!menuData) return;
-
-    dispatch!({
-      type: 'tabs/saveTabActiveKey',
-      payload: menuData.path
-    });
-
-    const tabData = {
-      menuData,
-      id: pathname
-    };
-
-    dispatch!({
-      type: 'tabs/fetchAddTab',
-      payload: {
-        tabData,
-        location
-      }
-    });
-  };
-
-  const handleTabClick = (tabData: ITab) => {
-    const { menuData } = tabData;
-    dispatch!({
-      type: 'tabs/saveTabActiveKey',
-      payload: menuData.path
-    });
-  };
-
-  const handleTabRemove = (id) => {
-    dispatch({
-      type: 'tabs/fetchRemoveTab',
-      payload: id
-    })
-  };
 
   const isMobile = useMedia({ id: 'BasicLayout', query: '(max-width: 599px)' })[0];
 
   const layout = (
     <Layout className={prefixCls}>
       {/** 左侧菜单 */}
-      <SideMenu
+      <SidebarMenu
         logo={logo}
         theme={theme}
         menuData={menuData}
-        fixedSide={fixedSide}
+        isMobile={isMobile}
         {...restProps}
       />
-
-      <Content className={`${prefixCls}__wrapper`}>
-        {/* <Header
+      <Layout
+        style={{
+          minHeight: '100vh',
+        }}
+      >
+        <Header
           isMobile={isMobile}
           {...restProps}
-        /> */}
-        <TabPages
-          onClick={handleTabClick}
-          onRemove={handleTabRemove}
-          activeKey={tabActiveKey}
-          // tabList={tabList}
-          tabList={[]}
         />
-      </Content>
+        <Content
+          className={`${prefixCls}__wrapper`}
+          style={!fixedHeader ? { paddingTop: 0 } : {}}
+        >
+          {children}
+        </Content>
+      </Layout>
     </Layout>
   );
 
   return (
-    <DocumentTitle 
-      title="test"
-      // title={moGetPageTitle(location!.pathname, breadcrumbNameMap)}
-    >
+    <DocumentTitle title={moGetPageTitle(location!.pathname, breadcrumbNameMap)}>
       <ContainerQuery query={query}>
         {params => (
           <Context.Provider value={{ location, breadcrumbNameMap }}>
@@ -200,9 +122,8 @@ BasicLayout.defaultProps = {
   prefixCls: 'lotus-basic-layout'
 };
 
-export default connect(({ menu, tabs }) => ({
-  // tabActiveKey: tabs.tabActiveKey,
-  // tabList: tabs.tabList,
+export default connect(({ menu, setting }: ConnectState) => ({
   menuData: menu.menuData,
   breadcrumbNameMap: menu.breadcrumbNameMap,
+  setting
 }))(BasicLayout);

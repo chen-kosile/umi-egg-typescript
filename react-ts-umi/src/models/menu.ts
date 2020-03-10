@@ -1,41 +1,55 @@
 import { Reducer } from 'redux';
+import { delay } from 'dva/saga';
 import memoizeOne from 'memoize-one';
-import { formatMessage } from 'umi-plugin-react/locale';
 import isEqual from 'lodash/isEqual';
+import { Policy } from '@alitajs/autils';
+import { formatMessage } from 'umi-plugin-react/locale';
 import { Effect } from '@/models/connect';
-import { IMenu } from '@/components/side-menu';
-import { SETTING_DEFAULT_CONFIG } from '@/config';
+import checkAuthority from '@/components/authorized/checkAuthority';
+import { IMenu } from '@/components/sidebarMenu';
+import defaultSettings from '@/config/defaultSettings';
 
-const { menu } = SETTING_DEFAULT_CONFIG;
+const { menu } = defaultSettings;
+let policy: Policy = null;
 
-// 将路由数据转换为菜单数据
-function formatter(
-  data: IRoute[],
-  parentAuthority?: string[] | string,
-  parentName?: string,
-): IMenu[] {
-  return data
-    .filter(item => item.name && item.path)
-    .map(item => {
-      const locale = `${parentName || 'menu'}.${item.name!}`;
-      // if enableMenuLocale use item.name,
-      // close menu international
-      const name = menu.disableLocal
-        ? item.name!
-        : formatMessage({ id: locale, defaultMessage: item.name! });
-      const result: IMenu = {
-        ...item,
-        name,
-        locale,
-        routes: void 0,
-        authority: item.authority || parentAuthority,
-      };
-      if (item.routes) {
-        // Reduce memory usage
-        result.children = formatter(item.routes, item.authority, locale);
+function formatterMenu(data: IRoute[], parentName?: string): IMenu[] {
+  let newMenus: IMenu[] = [];
+
+  const menus = data.filter(item => item.name && item.path);
+
+  menus.forEach(item => {
+    const locale = `${parentName || 'menu'}.${item.name!}`;
+
+    const name = menu.disableLocal
+      ? item.name!
+      : formatMessage({ id: locale as any, defaultMessage: item.name! });
+
+    const result: IMenu = {
+      ...item,
+      name,
+      locale,
+      routes: void 0,
+      authority: item.authority || undefined,
+    };
+
+    if (item.routes) {
+      // Reduce memory usage
+      result.children = formatterMenu(item.routes, locale);
+
+      if (!result.children.length) {
+        return;
       }
-      return result;
-    });
+    }
+
+    // 检查权限
+    let authResult = checkAuthority(policy, result.authority);
+
+    if (authResult) {
+      newMenus.push(result);
+    }
+  });
+
+  return newMenus;
 }
 
 // 获取面包屑映射
@@ -54,14 +68,12 @@ const getBreadcrumbNameMap = (menuData: IMenu[]) => {
   return routerMap;
 };
 
-const memoizeOneFormatter = memoizeOne(formatter, isEqual);
+const memoizeOneFormatter = memoizeOne(formatterMenu, isEqual);
 const memoizeOneGetBreadcrumbNameMap = memoizeOne(getBreadcrumbNameMap, isEqual);
 
 // 过滤菜单数据
 const filterMenuData = (menuData: IMenu[] = []): IMenu[] => {
-  return menuData
-    .filter(item => item.name && !item.hideInMenu)
-    .filter(item => item);
+  return menuData.filter(item => item.name && !item.hideInMenu).filter(item => item);
 };
 
 export interface IRoute extends IMenu {
@@ -74,15 +86,15 @@ export interface IRoute extends IMenu {
 export interface IMenuModelState {
   menuData: IMenu[];
   routerData: IRoute[];
-  breadcrumbNameMap: object;
+  breadcrumbNameMap: { [path: string]: IMenu };
 }
 
 export interface IMenuModel {
-  namespace: 'menu',
-  state: IMenuModelState,
+  namespace: 'menu';
+  state: IMenuModelState;
   effects: {
     getMenuData: Effect;
-  },
+  };
   reducers: {
     saveState: Reducer<any>;
   };
@@ -93,12 +105,18 @@ const MenuModel: IMenuModel = {
   state: {
     menuData: [],
     routerData: [],
-    breadcrumbNameMap: {}
+    breadcrumbNameMap: {},
   },
   effects: {
-    *getMenuData({ payload, callback }, { put }) {
-      const { routes, authority } = payload;
-      const originalMenuData = memoizeOneFormatter(routes, authority);
+    *getMenuData({ payload, callback }, { put, call, select }) {
+      // 解决先于生成policy执行问题
+      yield call(delay, 400);
+
+      const user = yield select(state => state.user);
+
+      const { routes } = payload;
+      policy = user.policy;
+      const originalMenuData = memoizeOneFormatter(routes);
       const menuData = filterMenuData(originalMenuData);
       const breadcrumbNameMap = memoizeOneGetBreadcrumbNameMap(originalMenuData);
 
@@ -107,21 +125,21 @@ const MenuModel: IMenuModel = {
         payload: {
           menuData,
           breadcrumbNameMap,
-          routerData: routes
-        }
+          routerData: routes,
+        },
       });
 
       callback && callback();
-    }
+    },
   },
   reducers: {
     saveState(state, action) {
       return {
         ...state,
-        ...action.payload
+        ...action.payload,
       };
-    }
-  }
+    },
+  },
 };
 
 export default MenuModel;

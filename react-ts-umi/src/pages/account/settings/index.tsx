@@ -1,13 +1,7 @@
-import React, { Component } from 'react'
+import React from 'react';
 
-class Settings extends Component {
-  render() {
-    return (
-      <div>
-        Settings
-      </div>
-    )
-  }
-}
+const AccountSettings: React.FC = () => {
+  return <div>账户设置</div>;
+};
 
-export default Settings;
+export default AccountSettings;

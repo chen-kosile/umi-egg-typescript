@@ -1,13 +1,7 @@
-import React, { Component } from 'react'
+import React from 'react';
 
-class Center extends Component {
-  render() {
-    return (
-      <div>
-        Center
-      </div>
-    )
-  }
-}
+const AccountCenter: React.FC = () => {
+  return <div>个人中心</div>;
+};
 
-export default Center;
+export default AccountCenter;

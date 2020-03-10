@@ -1,16 +1,48 @@
+@import '~antd/es/style/themes/default.less';
+@import './styles/ant-design';
 
-html, body, #root {
+html,
+body,
+#root {
   height: 100%;
-  box-sizing: border-box;
+}
+
+canvas {
+  display: block;
 }
 
 body {
-  margin: 0;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-// 全局样式，不会css模块化
-:global {
-  .test {
-    color: white;
+ul,
+ol {
+  list-style: none;
+}
+
+.layout-container {
+  max-width: 1056px;
+  height: 100%;
+  margin-right: auto;
+  margin-left: auto;
+  padding-right: 16px;
+  padding-left: 16px;
+}
+
+.table-action {
+  button + button {
+    margin-left: 6px;
   }
+}
+
+// 美化滚动条
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: transparent;
+  border-radius: 4px;
 }

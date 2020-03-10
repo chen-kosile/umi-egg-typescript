@@ -1,57 +1,33 @@
 import React from 'react';
 import { connect } from 'dva';
 import pathToRegexp from 'path-to-regexp';
-import RenderAuthorized from '@/components/authorized';
-import Policy, { IAction, IPolicyData } from '@/components/authorized/policy';
+import Authorized from '@/components/authorized';
+import { Policy } from '@alitajs/autils';
 import PageLoading from '@/components/page-loading';
 import Exception403 from '@/pages/exception/403';
-import { ConnectProps } from '@/models/connect';
+import { ConnectProps, ConnectState } from '@/models/connect';
 
 interface IProps extends ConnectProps {
   policy: Policy;
-  actions: IAction[];
   routerData: any[];
-  policies: IPolicyData[];
+  loading: boolean;
 }
 
-const AuthComponent: React.FC<IProps> = (props) => {
-  const {
-    actions,
-    location,
-    policies,
-    children,
-    routerData,
-    dispatch
-  } = props;
-  let policy = props.policy;
-  const [loading, setLoading] = React.useState<boolean>(true);
+const AuthComponent: React.FC<IProps> = props => {
+  const { policy, loading, location, children, routerData, dispatch } = props;
 
   React.useState(() => {
+    // 类似 Promise.all 实现比较合理，待优化
     // 获取所有操作
     dispatch({
-      type: 'global/fetchActions'
-    })
-    .then(() => {
+      type: 'user/fetchActions',
+    }).then(() => {
       // 获取当前登录用户信息 -- 包含权限策略
       dispatch({
-        type: 'user/fetchCurrent'
+        type: 'user/fetchCurrent',
       });
-    })
+    });
   });
-
-  React.useEffect(() => {
-    if (actions.length && policies.length) {
-      setLoading(false);
-      policy = new Policy(actions);
-      policies.forEach(item => {
-        policy.addPolicy(item);
-      });
-      dispatch({
-        type: 'global/savePolicy',
-        payload: policy
-      })
-    }
-  }, [props.actions, props.policies]);
 
   const getRouteAuthority = (path, routeData) => {
     let authorities = undefined;
@@ -68,30 +44,25 @@ const AuthComponent: React.FC<IProps> = (props) => {
     });
     return authorities;
   };
-
   if (loading || !policy) {
-    return (
-      <PageLoading />
-    )
+    return <PageLoading />;
   }
 
-  const Authorized = RenderAuthorized(policy.getAllAction());
   const authority = getRouteAuthority(location.pathname, routerData);
 
   return (
-    <Authorized
-      authority={policy.verifyAction(authority)}
-      noMatch={<Exception403 />}
-    >
+    <Authorized authority={authority} noMatch={<Exception403 />}>
       {children}
     </Authorized>
-  )
+  );
 };
 
-export default connect(({ menu, user, global }) => ({
-  policy: global.policy,
-  actions: global.actions,
-  policies: user.policies,
-  routerData: menu.routerData
-}))(AuthComponent);
+AuthComponent.defaultProps = {
+  policy: null,
+};
 
+export default connect(({ menu, user, loading }: ConnectState) => ({
+  policy: user.policy,
+  routerData: menu.routerData,
+  loading: loading['user/fetchCurrent'],
+}))(AuthComponent);

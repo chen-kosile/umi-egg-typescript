@@ -4,23 +4,38 @@ import { IRoute } from 'umi-types';
 import { EffectsCommandMap } from 'dva';
 import { match } from 'react-router-dom';
 import { IMenuModelState } from '@/models/menu';
+import { ILoginModelState } from '@/models/login';
 import { IGlobalModelState } from '@/models/global';
-import { ITabsModelState } from '@/models/tabs';
 import { IUserModelState } from '@/models/user';
+import { ISettingModelState } from '@/models/setting';
 import { IActionModelState } from '@/models/action';
-import { IUserGroupModelState } from '@/models/user-group';
-import { IPolicyModelState } from '@/pages/permission/models/policy';
+import { IUserGroupModelState } from '@/pages/system/models/user-group';
+import { ISystemUserModelState } from '@/pages/system/models/system-user';
+import { IPolicyModelState } from '@/models/policy';
 
 export interface ConnectState {
   loading: Loading;
   menu: IMenuModelState;
   global: IGlobalModelState;
-  tabs: ITabsModelState;
+  setting: ISettingModelState;
   user: IUserModelState;
+  login: ILoginModelState;
+  systemUser: ISystemUserModelState;
   userGroup: IUserGroupModelState;
   action: IActionModelState;
   policy: IPolicyModelState;
 }
+
+export {
+  IMenuModelState,
+  IGlobalModelState,
+  ISettingModelState,
+  IUserGroupModelState,
+  IActionModelState,
+  IPolicyModelState,
+  ILoginModelState,
+  IUserModelState,
+};
 
 export type Effect = (
   action: AnyAction,
@@ -44,8 +59,8 @@ export interface Loading {
 
 export interface ConnectProps<P extends { [K in keyof P]?: string } = {}>
   extends Partial<RouterTypes<IRoute>> {
-    dispatch?: Dispatch;
-    match?: match<P>;
-  }
+  dispatch?: Dispatch;
+  match?: match<P>;
+}
 
 export default ConnectState;

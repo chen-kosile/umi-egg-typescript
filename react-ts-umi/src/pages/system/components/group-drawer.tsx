@@ -1,8 +1,8 @@
 import React from 'react';
 import { Form, Input } from 'antd';
 import { FormComponentProps } from 'antd/es/form';
-import { IGroup } from '@/models/user-group';
-import DrawerWrapper from '@/components/drawer-wrapper';
+import DrawerWrapper from '@/components/drawerWrapper';
+import { IGroup } from '../models/user-group';
 
 export type TType = 'create' | 'update';
 
@@ -16,7 +16,7 @@ interface IProps extends FormComponentProps {
 
 const { TextArea } = Input;
 
-const GroupDrawer: React.FC<IProps> = (props) => {
+const GroupDrawer: React.FC<IProps> = props => {
   const { visible, onClose, onSubmit, currentGroup, form, type } = props;
   const { getFieldDecorator } = form;
 
@@ -32,6 +32,7 @@ const GroupDrawer: React.FC<IProps> = (props) => {
         const data = { ...values };
 
         if (type === 'update') {
+          // @ts-ignore
           data.id = currentGroup.id;
         }
 
@@ -39,7 +40,6 @@ const GroupDrawer: React.FC<IProps> = (props) => {
       }
     });
   };
-
 
   const formItemLayout = {
     labelCol: {
@@ -73,46 +73,36 @@ const GroupDrawer: React.FC<IProps> = (props) => {
             rules: [
               {
                 required: true,
-                message: '用户组名称不能为空'
+                message: '用户组名称不能为空',
               },
-            ]
-          })(
-            <Input placeholder="请输入用户组名称" />
-          )}
+            ],
+          })(<Input placeholder="请输入用户组名称" />)}
         </Form.Item>
-        <Form.Item
-          {...formItemLayout}
-          label="显示名称"
-          help="最大长度24个字符或汉字"
-        >
+        <Form.Item {...formItemLayout} label="显示名称" help="最大长度24个字符或汉字">
           {getFieldDecorator('displayName', {
             initialValue: currentGroup.displayName,
             rules: [
               {
                 required: true,
-                message: '显示名称不能为空'
+                message: '显示名称不能为空',
               },
-            ]
-          })(
-            <Input placeholder="请输入显示名称" />
-          )}
+            ],
+          })(<Input placeholder="请输入显示名称" />)}
         </Form.Item>
         <Form.Item {...formItemLayout} label="备注">
           {getFieldDecorator('remark', {
             initialValue: currentGroup.remark,
-            rules: []
-          })(
-            <TextArea rows={3} />
-          )}
+            rules: [],
+          })(<TextArea rows={3} />)}
         </Form.Item>
       </Form>
     </DrawerWrapper>
-  )
+  );
 };
 
 GroupDrawer.defaultProps = {
   visible: false,
-  currentGroup: {}
+  currentGroup: {},
 };
 
-export default Form.create()(GroupDrawer);
+export default Form.create<IProps>()(GroupDrawer);

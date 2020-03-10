@@ -4,7 +4,6 @@ import plugins from './plugin.config';
 import serverConfig from './server.config';
 import themeConfig from './theme.config';
 
-const path = require('path');
 const { NODE_ENV } = process.env;
 
 // ref: https://umijs.org/config/
@@ -43,6 +42,12 @@ const config: IConfig =  {
       ]);*/
   },
   hash: true,
+  proxy: {
+    '/api/': {
+      target: 'http://127.0.0.1:7001/',
+      changeOrigin: true,
+    },
+  }
 }
 
 export default config;

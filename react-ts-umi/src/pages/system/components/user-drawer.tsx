@@ -1,8 +1,8 @@
 import React from 'react';
 import { Form, Input } from 'antd';
 import { FormComponentProps } from 'antd/es/form';
-import DrawerWrapper from '@/components/drawer-wrapper';
-import { IUser } from '@/models/user';
+import DrawerWrapper from '@/components/drawerWrapper';
+import { IUser } from '../models/system-user';
 
 export type TType = 'create' | 'update';
 
@@ -16,7 +16,7 @@ interface IProps extends FormComponentProps {
 
 const { TextArea } = Input;
 
-const UserDrawer: React.FC<IProps> = (props) => {
+const UserDrawer: React.FC<IProps> = props => {
   const { visible, onClose, onSubmit, form, type, currentUser } = props;
   const { getFieldDecorator } = form;
 
@@ -38,6 +38,7 @@ const UserDrawer: React.FC<IProps> = (props) => {
         const data = { ...values };
 
         if (type === 'update') {
+          // @ts-ignore
           data.id = currentUser.id;
         }
 
@@ -74,12 +75,10 @@ const UserDrawer: React.FC<IProps> = (props) => {
             rules: [
               {
                 required: true,
-                message: '用户名不能为空'
+                message: '用户名不能为空',
               },
-            ]
-          })(
-            <Input placeholder="请输入用户名" />
-          )}
+            ],
+          })(<Input placeholder="请输入用户名" />)}
         </Form.Item>
         <Form.Item {...formItemLayout} label="手机号">
           {getFieldDecorator('mobile', {
@@ -87,12 +86,10 @@ const UserDrawer: React.FC<IProps> = (props) => {
             rules: [
               {
                 required: true,
-                message: '手机号不能为空'
+                message: '手机号不能为空',
               },
-            ]
-          })(
-            <Input placeholder="请输入手机号" />
-          )}
+            ],
+          })(<Input placeholder="请输入手机号" />)}
         </Form.Item>
         <Form.Item {...formItemLayout} label="邮箱地址">
           {getFieldDecorator('email', {
@@ -100,29 +97,25 @@ const UserDrawer: React.FC<IProps> = (props) => {
             rules: [
               {
                 required: true,
-                message: '邮箱地址不能为空'
+                message: '邮箱地址不能为空',
               },
-            ]
-          })(
-            <Input placeholder="请输入邮箱" />
-          )}
+            ],
+          })(<Input placeholder="请输入邮箱" />)}
         </Form.Item>
         <Form.Item {...formItemLayout} label="备注">
           {getFieldDecorator('remark', {
             initialValue: currentUser.remark,
-            rules: []
-          })(
-            <TextArea rows={3} />
-          )}
+            rules: [],
+          })(<TextArea rows={3} />)}
         </Form.Item>
       </Form>
     </DrawerWrapper>
-  )
+  );
 };
 
 UserDrawer.defaultProps = {
   visible: false,
-  currentUser: {}
+  currentUser: {},
 };
 
-export default Form.create()(UserDrawer);
+export default Form.create<IProps>()(UserDrawer);

@@ -2,10 +2,9 @@ import isEqual from 'lodash/isEqual';
 import memoizeOne from 'memoize-one';
 import pathToRegexp from 'path-to-regexp';
 import { formatMessage } from 'umi-plugin-react/locale';
-import { SETTING_DEFAULT_CONFIG, APP_DEFAULT_CONFIG } from '@/config';
+import defaultSettings from '@/config/defaultSettings';
 
-const { title } = APP_DEFAULT_CONFIG;
-const { menu } = SETTING_DEFAULT_CONFIG;
+const { menu, title } = defaultSettings;
 
 interface RouterData {
   name: string;
@@ -28,9 +27,10 @@ const getPageTitle = (pathname: string, breadcrumbNameMap: object): string => {
   const pageName = menu.disableLocal
     ? currentRouterData.name
     : formatMessage({
-      id: currentRouterData.locale || currentRouterData.name,
-      defaultMessage: currentRouterData.name,
-    });
+        // @ts-ignore
+        id: currentRouterData.locale || currentRouterData.name,
+        defaultMessage: currentRouterData.name,
+      });
 
   return `${pageName} · ${title}`;
 };
@@ -42,9 +42,10 @@ const getTitle = (pathname: string, breadcrumbNameMap: object): string => {
   const pageName = menu.disableLocal
     ? currentRouterData.name
     : formatMessage({
-      id: currentRouterData.locale || currentRouterData.name,
-      defaultMessage: currentRouterData.name,
-    });
+        // @ts-ignore
+        id: currentRouterData.locale || currentRouterData.name,
+        defaultMessage: currentRouterData.name,
+      });
 
   return `${pageName}`;
 };
