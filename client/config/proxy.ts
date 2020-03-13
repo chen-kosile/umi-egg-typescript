@@ -8,20 +8,22 @@
 export default {
   dev: {
     '/api/': {
-      target: 'http://127.0.0.1:7001/',
-      changeOrigin: true
+      target: 'https://preview.pro.ant.design',
+      changeOrigin: true,
     },
   },
   test: {
     '/api/': {
-      target: 'http://127.0.0.1:7001/',
-      changeOrigin: true
+      target: 'https://preview.pro.ant.design',
+      changeOrigin: true,
+      pathRewrite: { '^': '' },
     },
   },
   pre: {
     '/api/': {
-      target: 'http://127.0.0.1:7001/',
-      changeOrigin: true
+      target: 'your pre url',
+      changeOrigin: true,
+      pathRewrite: { '^': '' },
     },
   },
 };
