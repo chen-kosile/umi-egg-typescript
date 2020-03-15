@@ -1,7 +1,7 @@
 import { AnyAction, Reducer } from 'redux';
 
 import { EffectsCommandMap } from 'dva';
-import { fakeRegister } from './service';
+import { fakeRegister, queryCaptcha } from './service';
 
 export interface StateType {
   status?: 'ok' | 'error';
@@ -18,6 +18,7 @@ export interface ModelType {
   state: StateType;
   effects: {
     submit: Effect;
+    getCaptcha: Effect;
   };
   reducers: {
     registerHandle: Reducer<StateType>;
@@ -39,6 +40,13 @@ const Model: ModelType = {
         payload: response,
       });
     },
+
+    *getCaptcha({ payload }, { call }) {
+      const response = yield call(queryCaptcha, payload);
+      if (response) {
+       console.log(response);
+      }
+    }
   },
 
   reducers: {

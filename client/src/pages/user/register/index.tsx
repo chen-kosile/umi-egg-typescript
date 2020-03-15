@@ -1,4 +1,4 @@
-import { Form, Button, Col, Input, Popover, Progress, Row, Select, message } from 'antd';
+import { Form, Button, Col, Input, Popover, Progress, Row, message } from 'antd';
 import { FormattedMessage, formatMessage } from 'umi-plugin-react/locale';
 import React, { FC, useState, useEffect } from 'react';
 import { Dispatch } from 'redux';
@@ -9,7 +9,6 @@ import { StateType } from './model';
 import styles from './style.less';
 
 const FormItem = Form.Item;
-const { Option } = Select;
 const InputGroup = Input.Group;
 
 const passwordStatusMap = {
@@ -47,22 +46,27 @@ interface RegisterProps {
 }
 
 export interface UserRegisterParams {
-  mail: string;
+  username: string;
+  email: string;
   password: string;
-  confirm: string;
   mobile: string;
   captcha: string;
-  prefix: string;
 }
+
+export interface CaptchaValidate {
+  captcha: string;
+}
+
 
 const Register: FC<RegisterProps> = ({ submitting, dispatch, userAndregister }) => {
   const [count, setcount]: [number, any] = useState(0);
   const [visible, setvisible]: [boolean, any] = useState(false);
-  const [prefix, setprefix]: [string, any] = useState('86');
   const [popover, setpopover]: [boolean, any] = useState(false);
+  const [email, setEmail]: [string, any] = useState('');
   const confirmDirty = false;
   let interval: number | undefined;
   const [form] = Form.useForm();
+  
   useEffect(() => {
     if (!userAndregister) {
       return;
@@ -78,11 +82,14 @@ const Register: FC<RegisterProps> = ({ submitting, dispatch, userAndregister }) 
       });
     }
   }, [userAndregister]);
-  useEffect(() => {
-    return () => {
+  useEffect(() =>(() => {
       clearInterval(interval);
-    };
-  }, []);
+  }), []);
+
+  function onEmailChange(ev: any) {
+    setEmail(ev.target.value);
+  }
+
   const onGetCaptcha = () => {
     let counts = 59;
     setcount(counts);
@@ -93,6 +100,13 @@ const Register: FC<RegisterProps> = ({ submitting, dispatch, userAndregister }) 
         clearInterval(interval);
       }
     }, 1000);
+
+    dispatch({
+      type: 'userAndregister/getCaptcha',
+      payload: {
+        email
+      }
+    })
   };
   const getPasswordStatus = () => {
     const value = form.getFieldValue('password');
@@ -108,8 +122,7 @@ const Register: FC<RegisterProps> = ({ submitting, dispatch, userAndregister }) 
     dispatch({
       type: 'userAndregister/submit',
       payload: {
-        ...values,
-        prefix,
+        ...values
       },
     });
   };
@@ -140,9 +153,6 @@ const Register: FC<RegisterProps> = ({ submitting, dispatch, userAndregister }) 
     }
     return promise.resolve();
   };
-  const changePrefix = (value: string) => {
-    setprefix(value);
-  };
   const renderPasswordProgress = () => {
     const value = form.getFieldValue('password');
     const passwordStatus = getPasswordStatus();
@@ -166,21 +176,17 @@ const Register: FC<RegisterProps> = ({ submitting, dispatch, userAndregister }) 
       </h3>
       <Form form={form} name="UserRegister" onFinish={onFinish}>
         <FormItem
-          name="mail"
+          name="username"
           rules={[
             {
               required: true,
-              message: formatMessage({ id: 'userandregister.email.required' }),
-            },
-            {
-              type: 'email',
-              message: formatMessage({ id: 'userandregister.email.wrong-format' }),
-            },
+              message: '请输入校园卡号/管理员账号',
+            }
           ]}
         >
           <Input
             size="large"
-            placeholder={formatMessage({ id: 'userandregister.email.placeholder' })}
+            placeholder="学号"
           />
         </FormItem>
         <Popover
@@ -244,12 +250,8 @@ const Register: FC<RegisterProps> = ({ submitting, dispatch, userAndregister }) 
           />
         </FormItem>
         <InputGroup compact>
-          <Select size="large" value={prefix} onChange={changePrefix} style={{ width: '20%' }}>
-            <Option value="86">+86</Option>
-            <Option value="87">+87</Option>
-          </Select>
           <FormItem
-            style={{ width: '80%' }}
+            style={{ width: '100%' }}
             name="mobile"
             rules={[
               {
@@ -267,6 +269,27 @@ const Register: FC<RegisterProps> = ({ submitting, dispatch, userAndregister }) 
               placeholder={formatMessage({ id: 'userandregister.phone-number.placeholder' })}
             />
           </FormItem>
+        <FormItem
+          name="email"
+          style={{width: '100%'}}
+          rules={[
+            {
+              required: true,
+              message: formatMessage({ id: 'userandregister.email.required' }),
+            },
+            {
+              type: 'email',
+              message: formatMessage({ id: 'userandregister.email.wrong-format' }),
+            },
+          ]}
+        >
+          <Input
+            size="large"
+            value={email}
+            onChange={onEmailChange}
+            placeholder={formatMessage({ id: 'userandregister.email.placeholder' })}
+          />
+        </FormItem>
         </InputGroup>
         <Row gutter={8}>
           <Col span={16}>

@@ -7,6 +7,7 @@ module.exports = app => {
     username: {type: STRING(255), allowNull: false}, // 用户名 校园卡号
     email: {type: STRING(255), allowNull: false},// email 地址
     password: {type: STRING(255), allowNull: false},// 密码  
+    captcha: {type: INTEGER}, // 校验码
     avatarUrl: {type: STRING(256), defaultValue: 'https://s11.mogucdn.com/mlcdn/c45406/181105_60bdj928jdhjg9ehhg58hje1212ek_640x640.jpg'},// 头像
     signature: {type:STRING(256)}, // 签名
     title: {type: STRING(256)}, // 头衔、管理员， 教职工，学生

@@ -34,6 +34,7 @@
     "jsonwebtoken": "^8.3.0",
     "moment": "^2.24.0",
     "mysql2": "^2.1.0",
+    "nodemailer": "^6.4.5",
     "qiniu": "^7.2.1",
     "uuid": "^3.3.2"
   },

@@ -1,5 +1,6 @@
 import { parse } from 'querystring';
 import pathRegexp from 'path-to-regexp';
+import Moment from 'moment';
 import { Route } from '@/models/connect';
 
 /* eslint no-useless-escape:0 import/prefer-default-export:0 */
@@ -13,6 +14,11 @@ export const isAntDesignPro = (): boolean => {
   }
   return window.location.hostname === 'preview.pro.ant.design';
 };
+
+// 格式化时间
+export function formatTime(time: any, formatStr?: any) {
+  return Moment(time).format(formatStr || 'YYYY-MM-DD HH:mm:ss');
+}
 
 // 给官方演示站点用，用于关闭真实开发环境不需要使用的特性
 export const isAntDesignProOrDev = (): boolean => {

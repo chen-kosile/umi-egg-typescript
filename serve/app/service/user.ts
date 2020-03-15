@@ -1,4 +1,4 @@
-import { Service } from 'egg';
+const Service = require('egg').Service;
 const jwt = require('jsonwebtoken');
 const uuid = require('uuid');
 
@@ -9,8 +9,8 @@ const uuid = require('uuid');
 interface RegisterParams {
   username: string,
   password: string,
-  mobile?: number,
   email: string,
+  mobile?: number,
   userId?: string
 }
 

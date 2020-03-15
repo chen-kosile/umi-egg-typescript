@@ -19,7 +19,7 @@
     "lint:prettier": "prettier --check \"**/*\" --end-of-line auto",
     "lint:style": "stylelint --fix \"src/**/*.less\" --syntax less",
     "prettier": "prettier -c --write \"**/*\"",
-    "start": "umi dev",
+    "start": "cross-env REACT_APP_ENV=dev UMI_UI=none MOCK=none umi dev",
     "start:dev": "cross-env REACT_APP_ENV=dev MOCK=none umi dev",
     "start:no-mock": "cross-env MOCK=none umi dev",
     "start:no-ui": "cross-env UMI_UI=none umi dev",
@@ -87,7 +87,8 @@
     "umi-plugin-react": "^1.14.10",
     "umi-request": "^1.0.8",
     "umi-types": "^0.5.12",
-    "use-merge-value": "^1.0.1"
+    "use-merge-value": "^1.0.1",
+    "webpack-chain": "^6.4.0"
   },
   "devDependencies": {
     "@ant-design/pro-cli": "^1.0.18",
