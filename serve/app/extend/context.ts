@@ -16,10 +16,11 @@ module.exports = {
    * @param data // 返回数据
    */
   returnBody (status, message, data) {
-    this.status = status;
+    this.status = 200;
     this.body = {
       data,
       message,
+      status,
       success: true,
     };
   },

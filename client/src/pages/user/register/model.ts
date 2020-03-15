@@ -1,6 +1,8 @@
 import { AnyAction, Reducer } from 'redux';
-
 import { EffectsCommandMap } from 'dva';
+import router from 'umi/router' 
+import { message } from 'antd';       
+ 
 import { fakeRegister, queryCaptcha } from './service';
 
 export interface StateType {
@@ -35,6 +37,10 @@ const Model: ModelType = {
   effects: {
     *submit({ payload }, { call, put }) {
       const response = yield call(fakeRegister, payload);
+      if (response.status === 200) {
+        message.success('注册成功');
+        router.push('/user/login');
+      }
       yield put({
         type: 'registerHandle',
         payload: response,
@@ -43,9 +49,10 @@ const Model: ModelType = {
 
     *getCaptcha({ payload }, { call }) {
       const response = yield call(queryCaptcha, payload);
-      if (response) {
-       console.log(response);
+      if (response.code === 200) {
+        message.success('发送成功');
       }
+      return response;
     }
   },
 

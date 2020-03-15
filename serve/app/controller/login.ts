@@ -9,13 +9,24 @@ class UserController extends Controller {
     // 注册
     public async register () {
         const {ctx} = this;
-        const {password, username, email} = ctx.request.body
+        const {
+            password, username, email, 
+            mobile, captcha, name
+        } = ctx.request.body
 
         // 错误处理
         if (!this.__errNotice) return
 
-        // 注册成功返回体
-        await ctx.service.user.register({ password, username, email});
+        const emailCode = await ctx.service.email.getByMail(email);
+        if (parseInt(captcha) === (emailCode && emailCode.captcha)) {
+            // 注册成功返回体
+            const user = await ctx.service.user.register({ password, username, email, mobile, name});
+            if (user && user.userId) {
+                await ctx.service.role.upsertRole({userId: user.userId})
+            }
+        } else {
+            ctx.returnBody(500, '验证码错误');
+        }
 
     }
 

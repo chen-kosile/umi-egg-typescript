@@ -7,16 +7,17 @@ const uuid = require('uuid');
  */
 
 interface RegisterParams {
-  username: string,
-  password: string,
-  email: string,
-  mobile?: number,
-  userId?: string
+  username: string;
+  password: string;
+  email: string;
+  mobile?: number;
+  userId?: string;
+  name?: string;
 }
 
 interface LoginParams {
-    username: string,
-    password: string
+    username: string;
+    password: string;
 }
 
 export default class UserService extends Service {
@@ -35,16 +36,15 @@ export default class UserService extends Service {
         user.userId = uuid.v4().replace(/-/g,'')
 
         // 是否可以查询到
-        const queryResult = await this.hasRegister(user.email)
+        const queryResult = await this.hasRegister(user.email);
         if (queryResult) {
-            ctx.returnBody(200, "邮箱已被使用", {
+            ctx.returnBody(600, "邮箱已被使用", {
                 flag: false  
             })
-            return
+            return;
         }
         
         const userInfo = await this.ctx.model.User.create(user);
-
         // 注册成功，返回userid给前端
         ctx.status = 200;
         ctx.returnBody(200, "注册成功", {

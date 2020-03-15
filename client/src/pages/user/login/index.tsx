@@ -59,7 +59,7 @@ const Login: React.FC<LoginProps> = props => {
             rules={[
               {
                 required: true,
-                message: '请输入用户名!',
+                message: '校园卡号或者管理员账号!',
               },
             ]}
           />

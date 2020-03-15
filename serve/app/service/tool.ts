@@ -1,8 +1,8 @@
 'use strict';
 
 const Service = require('egg').Service;
-
 const nodemailer = require('nodemailer');
+
 const user_email = '1944614333@qq.com';
 const auth_code = 'joqcyfeldhxscgad';
 
@@ -13,13 +13,12 @@ const transporter = nodemailer.createTransport({
   auth: {
     user: user_email, // 账号
     pass: auth_code, // 授权码
-
   },
 });
 
 class ToolService extends Service {
 
-  async sendMail(email, subject, text, html) {
+  public async sendMail(email: string, subject, text, html) {
 
     const mailOptions = {
       from: user_email, // 发送者,与上面的user一致
@@ -33,8 +32,10 @@ class ToolService extends Service {
       await transporter.sendMail(mailOptions);
       return true;
     } catch (err) {
+      console.log(err);
       return false;
     }
+
   }
 
 }

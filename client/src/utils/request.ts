@@ -5,6 +5,20 @@
 import { extend } from 'umi-request';
 import { notification } from 'antd';
 
+function judge(url: string): boolean {
+  const urls = [
+    '/api/v2/login',
+    '/api/v2/register',
+    '/api/v2/signout',
+    '/api/v2/pass/getCaptcha'
+  ]
+
+  if (urls.includes(url)) {
+    return false;
+  }
+  return true;
+}
+
 const codeMessage = {
   200: '服务器成功返回请求的数据。',
   201: '新建或修改数据成功。',
@@ -49,8 +63,48 @@ const errorHandler = (error: { response: Response }): Response => {
  * 配置request请求时的默认参数
  */
 const request = extend({
-  errorHandler, // 默认错误处理
+  errorHandler, // 默认错误处理?
+  prefix: "/api/v2",
   credentials: 'include', // 默认请求是否带上cookie
+  mode: 'cors'
+});
+
+// 中间件，对请求前、响应后做处理
+request.use(async (ctx, next) => {
+  const { req } = ctx;
+  const { url, options } = req;
+  let tokenSessionStorage: string | null = sessionStorage.getItem('token');
+
+  // eslint-disable-next-line max-len
+  if ((tokenSessionStorage === null || tokenSessionStorage.length === 0) && judge(url)) {
+    window.location.href = '/user/login';
+    return;
+  }
+
+  if (tokenSessionStorage === null) {
+    tokenSessionStorage = '';
+  }
+
+  options.headers = {
+    Authorization: tokenSessionStorage,
+    ...options.headers,
+  };
+
+  ctx.req.options = options;
+  await next();
+
+  const { res } = ctx;
+  let { token } = res;
+  if (res.status !== 200) {
+    notification.error({
+      message: res.message,
+      description: ''
+    });
+  }
+  if (token !== undefined && token !== null && token.length > 0) {
+    token = `Bearer ${token}`;
+    sessionStorage.setItem('token', token);
+  }
 });
 
 export default request;

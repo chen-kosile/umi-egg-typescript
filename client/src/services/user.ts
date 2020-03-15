@@ -5,17 +5,17 @@ export async function query(): Promise<any> {
 }
 
 export async function queryCurrent(): Promise<any> {
-  return request('/api/v2/user/currentUser');
+  return request('/user/currentUser');
 }
 
 export async function queryNotices(): Promise<any> {
-  return request('/api/v2/notices');
+  return request('/notices');
 }
 
 export async function createToken(): Promise<any> {
-  return request('/api/v2/user/createToken');
+  return request('/user/createToken');
 }
 
 export async function queryVerifyToken(): Promise<any> {
-  return request('/api/v2/user/verifyToken');
+  return request('/user/verifyToken');
 }

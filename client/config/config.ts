@@ -83,9 +83,9 @@ export default {
   targets: {
     ie: 11,
   },
-  // umi routes: https://umijs.org/zh/guide/router.html
+
   routes: routerConfig,
-  // Theme for antd: https://ant.design/docs/react/customize-theme-cn
+
   theme: {
     // ...darkTheme,
     'primary-color': defaultSettings.primaryColor,
@@ -125,7 +125,7 @@ export default {
           .split('/')
           .map((a: string) => a.replace(/([A-Z])/g, '-$1'))
           .map((a: string) => a.toLowerCase());
-        return `antd-pro${arr.join('-')}-${localName}`.replace(/--/g, '-');
+        return `oa${arr.join('-')}-${localName}`.replace(/--/g, '-');
       }
 
       return localName;

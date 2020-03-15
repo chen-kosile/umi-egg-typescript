@@ -63,6 +63,7 @@ const Register: FC<RegisterProps> = ({ submitting, dispatch, userAndregister }) 
   const [visible, setvisible]: [boolean, any] = useState(false);
   const [popover, setpopover]: [boolean, any] = useState(false);
   const [email, setEmail]: [string, any] = useState('');
+  const [name, setName]: [string, any] = useState('');
   const confirmDirty = false;
   let interval: number | undefined;
   const [form] = Form.useForm();
@@ -89,8 +90,12 @@ const Register: FC<RegisterProps> = ({ submitting, dispatch, userAndregister }) 
   function onEmailChange(ev: any) {
     setEmail(ev.target.value);
   }
+  function onNameChange(ev: any) {
+    setName(ev.target.value);
+  }
 
-  const onGetCaptcha = () => {
+  const onGetCaptcha = async () => {
+    await form.validateFields(['email', 'name']);
     let counts = 59;
     setcount(counts);
     interval = window.setInterval(() => {
@@ -100,7 +105,6 @@ const Register: FC<RegisterProps> = ({ submitting, dispatch, userAndregister }) 
         clearInterval(interval);
       }
     }, 1000);
-
     dispatch({
       type: 'userAndregister/getCaptcha',
       payload: {
@@ -180,13 +184,29 @@ const Register: FC<RegisterProps> = ({ submitting, dispatch, userAndregister }) 
           rules={[
             {
               required: true,
-              message: '请输入校园卡号/管理员账号',
+              message: '请输入校园卡号！',
             }
           ]}
         >
           <Input
             size="large"
-            placeholder="学号"
+            placeholder="校园卡号"
+          />
+        </FormItem>
+        <FormItem
+          name="name"
+          rules={[
+            {
+              required: true,
+              message: '请输入姓名！',
+            }
+          ]}
+        >
+          <Input
+            size="large"
+            placeholder="姓名"
+            value={name}
+            onChange={onNameChange}
           />
         </FormItem>
         <Popover
@@ -280,7 +300,7 @@ const Register: FC<RegisterProps> = ({ submitting, dispatch, userAndregister }) 
             {
               type: 'email',
               message: formatMessage({ id: 'userandregister.email.wrong-format' }),
-            },
+            }
           ]}
         >
           <Input
