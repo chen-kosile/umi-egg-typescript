@@ -5,6 +5,7 @@ module.exports = app => {
     id: {type: INTEGER, primaryKey: true, autoIncrement: true},//记录id
     userId: {type: STRING(255), allowNull: false, unique: true},//用户id
     username: {type: STRING(255), allowNull: false, unique: true}, // 用户名
+    name: {type: STRING(255), allowNull: false},
     email: {type: STRING(255), allowNull: false, unique: true},// email 地址
     password: {type: STRING(255), allowNull: false},// 密码  
     captcha: {type: INTEGER}, // 校验码

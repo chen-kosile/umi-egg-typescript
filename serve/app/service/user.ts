@@ -1,3 +1,4 @@
+
 const Service = require('egg').Service;
 const jwt = require('jsonwebtoken');
 const uuid = require('uuid');
@@ -43,7 +44,6 @@ export default class UserService extends Service {
             })
             return;
         }
-        
         const userInfo = await this.ctx.model.User.create(user);
         // 注册成功，返回userid给前端
         ctx.status = 200;
@@ -79,7 +79,7 @@ export default class UserService extends Service {
 
         // 验证通过
         const token = jwt.sign({userId: existUser.userId,}, app.config.jwtSecret, {expiresIn: '7d'});
-        return token;
+        return { token, userId: existUser.userId };
     }
 
     

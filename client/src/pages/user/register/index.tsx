@@ -5,6 +5,7 @@ import { Dispatch } from 'redux';
 import { Link, router } from 'umi';
 import { connect } from 'dva';
 
+import { aesEncrypt } from '@/utils/crypto';
 import { StateType } from './model';
 import styles from './style.less';
 
@@ -72,8 +73,8 @@ const Register: FC<RegisterProps> = ({ submitting, dispatch, userAndregister }) 
     if (!userAndregister) {
       return;
     }
-    const account = form.getFieldValue('mail');
-    if (userAndregister.status === 'ok') {
+    const account = form.getFieldValue('email');
+    if (userAndregister.status === 200) {
       message.success('注册成功！');
       router.push({
         pathname: '/user/register-result',
@@ -108,7 +109,8 @@ const Register: FC<RegisterProps> = ({ submitting, dispatch, userAndregister }) 
     dispatch({
       type: 'userAndregister/getCaptcha',
       payload: {
-        email
+        email,
+        name
       }
     })
   };
@@ -126,7 +128,8 @@ const Register: FC<RegisterProps> = ({ submitting, dispatch, userAndregister }) 
     dispatch({
       type: 'userAndregister/submit',
       payload: {
-        ...values
+        ...values,
+        password: aesEncrypt(values.password)
       },
     });
   };

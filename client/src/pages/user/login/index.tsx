@@ -1,6 +1,6 @@
 import { WeiboCircleOutlined, WechatOutlined, QqOutlined } from '@ant-design/icons';
 import { Alert, Checkbox } from 'antd';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Dispatch, AnyAction } from 'redux';
 import { Link } from 'umi';
 import { connect } from 'dva';
@@ -8,6 +8,7 @@ import { StateType } from './model';
 import styles from './style.less';
 import { LoginParamsType } from './service';
 import LoginFrom from './components/Login';
+import { aesEncrypt, aesDecrypt } from '@/utils/crypto';
 
 const { Tab, UserName, Password, Submit } = LoginFrom;
 interface LoginProps {
@@ -31,31 +32,56 @@ const LoginMessage: React.FC<{
 
 const Login: React.FC<LoginProps> = props => {
   const { userAndlogin = {}, submitting } = props;
-  const { status, type: loginType } = userAndlogin;
-  const [autoLogin, setAutoLogin] = useState(true);
+  const { status } = userAndlogin;
+  const [autoLogin, setAutoLogin] = useState<boolean>(true);
   const [type, setType] = useState<string>('account');
+  const [name, setUserName] = useState<string>('');
+  const [pass, setPassWrod] = useState<string>('');
+
+  useEffect(() => {
+    // const { dispatch } = props;
+    const username = localStorage.getItem('username') || '';
+    const password = localStorage.getItem('password') || '';
+    if (autoLogin && username && password) {
+      setUserName(username)
+      setPassWrod(aesDecrypt(password))
+      // dispatch({
+      //   type: 'userAndlogin/login',
+      //   payload: {
+      //     username,
+      //     password,
+      //     type
+      //   }
+      // })
+    }
+  }, [])
 
   const handleSubmit = (values: LoginParamsType) => {
     const { dispatch } = props;
+    const { username, password } = values;
     dispatch({
       type: 'userAndlogin/login',
       payload: {
         ...values,
+        password: aesEncrypt(password),
         type,
       },
     });
+    localStorage.setItem('username', username);
+    localStorage.setItem('password', aesEncrypt(password));
   };
   return (
     <div className={styles.main}>
       <LoginFrom activeKey={type} onTabChange={setType} onSubmit={handleSubmit}>
         <Tab key="account" tab="账户密码登录">
-          {status === 'error' && loginType === 'account' && !submitting && (
+          {status && status !== 200 && !submitting && (
             <LoginMessage content="账户或密码错误" />
           )}
 
           <UserName
             name="username"
             placeholder="用户名: 校园卡号或者管理员账号"
+            defaultValue={name}
             rules={[
               {
                 required: true,
@@ -66,6 +92,7 @@ const Login: React.FC<LoginProps> = props => {
           <Password
             name="password"
             placeholder="密码"
+            defaultValue={pass}
             rules={[
               {
                 required: true,
@@ -114,6 +141,6 @@ export default connect(
     };
   }) => ({
     userAndlogin,
-    submitting: loading.effects['userAndlogin/login'],
+    submitting: loading.effects['userAndlogin/login'], // loading.effects 监听userAndlogin/login 方法请求结束前true结束后为false
   }),
 )(Login);

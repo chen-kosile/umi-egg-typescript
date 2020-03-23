@@ -22,7 +22,14 @@ class UserController extends Controller {
             // 注册成功返回体
             const user = await ctx.service.user.register({ password, username, email, mobile, name});
             if (user && user.userId) {
-                await ctx.service.role.upsertRole({userId: user.userId})
+                await ctx.service.role.upsertRole({
+                    userId: user.userId,
+                    roleType: 'admin',
+                    roleDes: '学生',
+                    parentGroup: '',
+                    superior: '',
+                    level: 0,
+                })
             }
         } else {
             ctx.returnBody(500, '验证码错误');
@@ -36,23 +43,26 @@ class UserController extends Controller {
         const {password, username} = ctx.request.body
 
         // 登录
-        const token = await ctx.service.user.login({password, username})
-
+        const loginReturn = await ctx.service.user.login({password, username});
         // set cookie
-        if (token) {
+        if (loginReturn) {
+            const role = await ctx.service.role.getRoleByUserId(loginReturn.userId);
             // id存入Cookie, 用于验证过期.
             const opts = {
                 path: '/',
-                maxAge: 1000 * 60 * 60 * 24 * 30,
+                maxAge: 1000 * 60 * 60 * 24 * 7,
                 // maxAge: 1000 * 40,
                 // signed: true,
                 httpOnly: false,
-                domain: '127.0.0.1'
+                // domain: 'http://localhost/',
             };
-            ctx.cookies.set(this.config.auth_cookie_name, token, opts); // cookie 有效期30天
-            ctx.returnBody(200, "登录成功")
+            ctx.cookies.set(this.config.auth_cookie_name, loginReturn.token, opts); // cookie 有效期7天
+            ctx.cookies.set('userId', loginReturn.userId, opts);
+            ctx.returnBody(200, "登录成功", {
+                currentAuthority: role.roleType
+            })
         } else {
-            ctx.throw(400, '用户名或密码错误')
+            ctx.returnBody(500, '用户名或密码错误')
         }
     }
 

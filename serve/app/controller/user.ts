@@ -6,21 +6,25 @@ class UserController extends Controller {
     public async userInfo() {
         const {ctx} = this
 
-        let userId = ctx.query.userId || ctx.user.userId
+        let userId = ctx.cookies.get('userId');
 
         // 获取并填充数据
-        let user = await this.service.user.getUserByUserId(userId)
-        let userInfo = {
-            username: user.username,
-            email: user.email,
-            avatarUrl: user.avatarUrl,
-            abstract: user.abstract,
-            account: user.email.replace(/@.*/, ''),
-            mobile: user.mobile,
-            sex: user.sex,
-            userId: user.userId
+        let user = await this.service.user.getUserByUserId(userId);
+        if (user) {
+            let userInfo = {
+                username: user.username,
+                email: user.email,
+                avatarUrl: user.avatarUrl,
+                abstract: user.abstract,
+                account: user.email.replace(/@.*/, ''),
+                mobile: user.mobile,
+                sex: user.sex,
+                userId: user.userId
+            }
+            ctx.returnBody(200, "获取成功", userInfo)
+        } else {
+            ctx.returnBody(400, "请登录")
         }
-        ctx.returnBody(200, "获取成功", userInfo)
     }
 
     // 更新用户信息

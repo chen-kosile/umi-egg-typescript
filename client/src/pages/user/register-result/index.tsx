@@ -29,7 +29,7 @@ const RegisterResult: React.FC<RouteChildrenProps> = ({ location }) => (
       <div className={styles.title}>
         <FormattedMessage
           id="userandregister-result.register-result.msg"
-          values={{ email: location.state ? location.state.account : 'AntDesign@example.com' }}
+          values={{ email: location.state ? location.state.account : 'test@example.com' }}
         />
       </div>
     }

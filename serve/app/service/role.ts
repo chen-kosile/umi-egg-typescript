@@ -5,6 +5,15 @@ class RoleService extends Service {
         const { ctx } = this;
         await ctx.model.Role.upsert(role);
     }
+
+    public async getRoleByUserId(userId) {
+        const { ctx } = this;
+        return await ctx.model.Role.findOne({
+            where: {
+                userId
+            }
+        })
+    }
 }
 
 module.exports = RoleService;

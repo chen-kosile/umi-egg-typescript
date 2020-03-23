@@ -4,13 +4,15 @@
  */
 import { extend } from 'umi-request';
 import { notification } from 'antd';
+import Cookie from 'js-cookie';
 
 function judge(url: string): boolean {
   const urls = [
     '/api/v2/login',
     '/api/v2/register',
     '/api/v2/signout',
-    '/api/v2/pass/getCaptcha'
+    '/api/v2/pass/getCaptcha',
+    '/api/v2/login/account'
   ]
 
   if (urls.includes(url)) {
@@ -73,8 +75,7 @@ const request = extend({
 request.use(async (ctx, next) => {
   const { req } = ctx;
   const { url, options } = req;
-  let tokenSessionStorage: string | null = sessionStorage.getItem('token');
-
+  let tokenSessionStorage: string | null = Cookie.get('token') || null;
   // eslint-disable-next-line max-len
   if ((tokenSessionStorage === null || tokenSessionStorage.length === 0) && judge(url)) {
     window.location.href = '/user/login';

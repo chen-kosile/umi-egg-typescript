@@ -31,9 +31,15 @@ export default (appInfo: EggAppInfo) => {
     package: 'egg-router-plus',
   };
   // 白名单
-  config.authWhiteList = [ '/api/v2/user/login', '/api/v2/login/register', ];
-  config.middleware = [ 'errorHandler', ];
-  // config.middleware = [ 'authorization', 'errorHandler' ];
+  config.authWhiteList = [ 
+    '/api/v2/login/account', 
+    '/api/v2/register', 
+    '/api/v2/login', 
+    '/api/v2/signout', 
+    '/api/v2/pass/getCaptcha'
+  ];
+  // config.middleware = [ 'errorHandler', ];,
+  config.middleware = [ 'authorization', 'errorHandler' ];
   config.password_secret = 'ps1234secr';
     // token 凭证
   config.jwtSecret = 'kosile';

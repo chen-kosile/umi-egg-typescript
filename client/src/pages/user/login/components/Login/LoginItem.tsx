@@ -44,7 +44,7 @@ const getFormItemOptions = ({
   const options: {
     rules?: LoginItemProps['rules'];
     onChange?: LoginItemProps['onChange'];
-    initialValue?: LoginItemProps['defaultValue'];
+    defaultValue?: LoginItemProps['defaultValue'];
   } = {
     rules: rules || (customProps.rules as LoginItemProps['rules']),
   };
@@ -52,7 +52,7 @@ const getFormItemOptions = ({
     options.onChange = onChange;
   }
   if (defaultValue) {
-    options.initialValue = defaultValue;
+    options.defaultValue = defaultValue;
   }
   return options;
 };

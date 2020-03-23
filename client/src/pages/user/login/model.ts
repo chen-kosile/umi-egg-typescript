@@ -6,9 +6,9 @@ import { fakeAccountLogin, getFakeCaptcha } from './service';
 import { getPageQuery, setAuthority } from './utils/utils';
 
 export interface StateType {
-  status?: 'ok' | 'error';
+  status?: number;
   type?: string;
-  currentAuthority?: 'user' | 'guest' | 'admin';
+  currentAuthority?: number;
 }
 
 export type Effect = (
@@ -38,12 +38,12 @@ const Model: ModelType = {
   effects: {
     *login({ payload }, { call, put }) {
       const response = yield call(fakeAccountLogin, payload);
-      yield put({
-        type: 'changeLoginStatus',
-        payload: response,
-      });
       // Login successfully
-      if (response.status === 'ok') {
+      if (response.status === 200) {
+        yield put({
+          type: 'changeLoginStatus',
+          payload: response.data,
+        });
         message.success('登录成功！');
         const urlParams = new URL(window.location.href);
         const params = getPageQuery();
