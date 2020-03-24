@@ -3,7 +3,7 @@
  * 更详细的 api 文档: https://github.com/umijs/umi-request
  */
 import { extend } from 'umi-request';
-import { notification } from 'antd';
+import { message, notification } from 'antd';
 import Cookie from 'js-cookie';
 
 function judge(url: string): boolean {
@@ -97,10 +97,7 @@ request.use(async (ctx, next) => {
   const { res } = ctx;
   let { token } = res;
   if (res.status !== 200) {
-    notification.error({
-      message: res.message,
-      description: ''
-    });
+    message.error(res.message);
   }
   if (token !== undefined && token !== null && token.length > 0) {
     token = `Bearer ${token}`;

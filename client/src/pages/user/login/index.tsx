@@ -1,5 +1,11 @@
-import { WeiboCircleOutlined, WechatOutlined, QqOutlined } from '@ant-design/icons';
-import { Alert, Checkbox } from 'antd';
+import { 
+  WeiboCircleOutlined, 
+  WechatOutlined, 
+  QqOutlined, 
+  UserOutlined, 
+  LockTwoTone 
+} from '@ant-design/icons';
+import { Alert, Checkbox, Form, Input, Button } from 'antd';
 import React, { useState, useEffect } from 'react';
 import { Dispatch, AnyAction } from 'redux';
 import { Link } from 'umi';
@@ -7,10 +13,10 @@ import { connect } from 'dva';
 import { StateType } from './model';
 import styles from './style.less';
 import { LoginParamsType } from './service';
-import LoginFrom from './components/Login';
+// import LoginFrom from './components/Login';
 import { aesEncrypt, aesDecrypt } from '@/utils/crypto';
 
-const { Tab, UserName, Password, Submit } = LoginFrom;
+const FormItem = Form.Item;
 interface LoginProps {
   dispatch: Dispatch<AnyAction>;
   userAndlogin: StateType;
@@ -34,17 +40,19 @@ const Login: React.FC<LoginProps> = props => {
   const { userAndlogin = {}, submitting } = props;
   const { status } = userAndlogin;
   const [autoLogin, setAutoLogin] = useState<boolean>(true);
-  const [type, setType] = useState<string>('account');
-  const [name, setUserName] = useState<string>('');
-  const [pass, setPassWrod] = useState<string>('');
+  // const [name, setUserName] = useState<string>('');
+  // const [pass, setPassWrod] = useState<string>('');
+  const [form] = Form.useForm();
 
   useEffect(() => {
     // const { dispatch } = props;
     const username = localStorage.getItem('username') || '';
     const password = localStorage.getItem('password') || '';
     if (autoLogin && username && password) {
-      setUserName(username)
-      setPassWrod(aesDecrypt(password))
+      form.setFieldsValue({
+        username,
+        password: aesDecrypt(password)
+      });
       // dispatch({
       //   type: 'userAndlogin/login',
       //   payload: {
@@ -63,44 +71,75 @@ const Login: React.FC<LoginProps> = props => {
       type: 'userAndlogin/login',
       payload: {
         ...values,
-        password: aesEncrypt(password),
-        type,
+        password: aesEncrypt(password)
       },
     });
     localStorage.setItem('username', username);
     localStorage.setItem('password', aesEncrypt(password));
   };
+  // function onChangeName(ev: any) {
+  //   if (ev.target.value) {
+  //     setUserName(ev.target.value)
+  //   }
+  // }
+  // function onChangePass(ev: any) {
+  //   if (ev.target.value) {
+  //     setPassWrod(ev.target.value)
+  //   }
+  // }
   return (
     <div className={styles.main}>
-      <LoginFrom activeKey={type} onTabChange={setType} onSubmit={handleSubmit}>
-        <Tab key="account" tab="账户密码登录">
+      <Form
+        form={form}
+        // initialValues={{username: name, password: pass}}
+        onFinish={values => {
+            handleSubmit(values as LoginParamsType);
+          }}>
           {status && status !== 200 && !submitting && (
             <LoginMessage content="账户或密码错误" />
           )}
-
-          <UserName
+          <FormItem
             name="username"
-            placeholder="用户名: 校园卡号或者管理员账号"
-            defaultValue={name}
             rules={[
               {
                 required: true,
                 message: '校园卡号或者管理员账号!',
               },
             ]}
-          />
-          <Password
+          >
+            <Input 
+              placeholder="用户名: 校园卡号或者管理员账号"
+              size='large'
+              id='username'
+              prefix={(
+                <UserOutlined
+                  style={{
+                    color: '#1890ff',
+                  }}
+                  className={styles.prefixIcon}
+                />
+              )}
+            />
+          </FormItem>
+          <FormItem
             name="password"
-            placeholder="密码"
-            defaultValue={pass}
             rules={[
               {
                 required: true,
                 message: '请输入密码！',
               },
             ]}
-          />
-        </Tab>
+          >
+            <Input 
+              placeholder="密码"
+              size='large'
+              type="password"
+              id='password'
+              prefix={(
+                <LockTwoTone className={styles.prefixIcon} />
+              )}
+            />
+          </FormItem>
         <div>
           <Checkbox checked={autoLogin} onChange={e => setAutoLogin(e.target.checked)}>
             自动登录
@@ -113,7 +152,11 @@ const Login: React.FC<LoginProps> = props => {
             忘记密码
           </a>
         </div>
-        <Submit loading={submitting}>登录</Submit>
+        <FormItem>
+          <Button size="large" className={styles.submit} type="primary" htmlType="submit" loading={submitting}>
+            登录
+          </Button>
+        </FormItem>
         <div className={styles.other}>
           其他登录方式
           <WeiboCircleOutlined className={styles.icon} />
@@ -123,7 +166,7 @@ const Login: React.FC<LoginProps> = props => {
             注册账户
           </Link>
         </div>
-      </LoginFrom>
+      </Form>
     </div>
   );
 };

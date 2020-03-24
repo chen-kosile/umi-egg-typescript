@@ -6,7 +6,7 @@ import { formatMessage } from 'umi-plugin-react/locale';
 import { connect } from 'dva';
 import SelectLang from '@/components/SelectLang';
 import { ConnectProps, ConnectState } from '@/models/connect';
-import logo from '../assets/logo.svg';
+// import logo from '../assets/logo.svg';
 import styles from './UserLayout.less';
 
 export interface UserLayoutProps extends ConnectProps {
@@ -35,6 +35,7 @@ const UserLayout: React.FC<UserLayoutProps> = props => {
     breadcrumb,
     ...props,
   });
+
   return (
     <>
       <Helmet>
@@ -50,7 +51,7 @@ const UserLayout: React.FC<UserLayoutProps> = props => {
           <div className={styles.top}>
             <div className={styles.header}>
               <Link to="/">
-                <img alt="logo" className={styles.logo} src={logo} />
+                {/* <img alt="logo" className={styles.logo} src={logo} /> */}
                 <span className={styles.title}>OA System</span>
               </Link>
             </div>

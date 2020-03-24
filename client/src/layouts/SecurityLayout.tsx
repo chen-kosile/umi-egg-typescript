@@ -32,6 +32,19 @@ class SecurityLayout extends React.Component<SecurityLayoutProps, SecurityLayout
     }
   }
 
+  judge = (url: string): boolean => {
+    const urls = [
+      '/user/login',
+      '/user/register',
+      '/user/register-result'
+    ]
+  
+    if (urls.includes(url)) {
+      return false;
+    }
+    return true;
+  }
+
   render() {
     const { isReady } = this.state;
     const { children, loading, currentUser } = this.props;
@@ -45,9 +58,12 @@ class SecurityLayout extends React.Component<SecurityLayoutProps, SecurityLayout
     if ((!isLogin && loading) || !isReady) {
       return <PageLoading />;
     }
-    if (!isLogin && window.location.pathname !== '/user/login') {
+    if (!isLogin && this.judge(window.location.pathname)) {
       return <Redirect to={`/user/login?${queryString}`} />;
     }
+    // if (isLogin) {
+    //   return <Redirect to='/dashboard/analysis'/>
+    // }
     return children;
   }
 }

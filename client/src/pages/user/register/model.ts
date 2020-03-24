@@ -44,7 +44,7 @@ const Model: ModelType = {
 
     *getCaptcha({ payload }, { call }) {
       const response = yield call(queryCaptcha, payload);
-      if (response.code === 200) {
+      if (response.status === 200) {
         message.success('发送成功');
       }
       return response;
