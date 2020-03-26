@@ -23,7 +23,7 @@ class UserController extends Controller {
             }
             ctx.returnBody(200, "获取成功", userInfo)
         } else {
-            ctx.returnBody(400, "请登录")
+            ctx.returnBody(200, "")
         }
     }
 

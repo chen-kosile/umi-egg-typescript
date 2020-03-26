@@ -61,8 +61,10 @@ class UserController extends Controller {
             ctx.returnBody(200, "登录成功", {
                 currentAuthority: role.roleType
             })
+        } else if (loginReturn === false) {
+            ctx.returnBody(400, '用户名或密码错误')
         } else {
-            ctx.returnBody(500, '用户名或密码错误')
+            ctx.returnBody(400, '用户不存在')
         }
     }
 
