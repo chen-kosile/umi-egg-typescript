@@ -5,6 +5,7 @@ import { Redirect } from 'umi';
 import { stringify } from 'querystring';
 import { ConnectState, ConnectProps } from '@/models/connect';
 import { CurrentUser } from '@/models/user';
+import Cookie from 'js-cookie';
 
 interface SecurityLayoutProps extends ConnectProps {
   loading?: boolean;
@@ -48,22 +49,19 @@ class SecurityLayout extends React.Component<SecurityLayoutProps, SecurityLayout
   render() {
     const { isReady } = this.state;
     const { children, loading, currentUser } = this.props;
-    // You can replace it to your authentication rule (such as check token exists)
-    // 你可以把它替换成你自己的登录认证规则（比如判断 token 是否存在）
-    const isLogin = currentUser && currentUser.userId;
+   
+    const isLogin = Cookie.get('token') && currentUser && currentUser.username;
     const queryString = stringify({
       redirect: window.location.href,
-    });
-
+    }); 
     if ((!isLogin && loading) || !isReady) {
       return <PageLoading />;
     }
+    console.log(!isLogin);
+    console.log(window.location.pathname);
     if (!isLogin && this.judge(window.location.pathname)) {
       return <Redirect to={`/user/login?${queryString}`} />;
     }
-    // if (isLogin) {
-    //   return <Redirect to='/dashboard/analysis'/>
-    // }
     return children;
   }
 }

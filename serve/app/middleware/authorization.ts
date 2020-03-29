@@ -13,7 +13,7 @@ module.exports = (options, app) => {
       const token = ctx.cookies.get('token');
       // 解码token
       try {
-        ctx.jwt.verify(token, app.config.jwtSecret);
+        await ctx.jwt.verify(token, app.config.jwtSecret);
       } catch (error) {
         ctx.returnBody(401, '您未登录，请登录后再试');
         return;

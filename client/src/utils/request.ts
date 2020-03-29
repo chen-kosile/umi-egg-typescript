@@ -12,7 +12,8 @@ function judge(url: string): boolean {
     '/api/v2/register',
     '/api/v2/signout',
     '/api/v2/pass/getCaptcha',
-    '/api/v2/login/account'
+    '/api/v2/login/account',
+    '/api/v2/user/currentUser'
   ]
 
   if (urls.includes(url)) {
@@ -78,6 +79,7 @@ request.use(async (ctx, next) => {
   let tokenSessionStorage: string | null = Cookie.get('token') || null;
   // eslint-disable-next-line max-len
   if ((tokenSessionStorage === null || tokenSessionStorage.length === 0) && judge(url)) {
+    console.log('api auth');
     window.location.href = '/user/login';
     return;
   }
@@ -96,7 +98,7 @@ request.use(async (ctx, next) => {
 
   const { res } = ctx;
   let { token } = res;
-  if (res.status !== 200) {
+  if (res.status !== 200 && res.message) {
     message.error(res.message);
   }
   if (token !== undefined && token !== null && token.length > 0) {

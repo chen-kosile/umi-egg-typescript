@@ -78,7 +78,7 @@ export default class UserService extends Service {
         }
 
         // 验证通过
-        const token = jwt.sign({userId: existUser.userId,}, app.config.jwtSecret, {expiresIn: '7d'});
+        const token = jwt.sign({userId: existUser.userId,}, app.config.jwtSecret, {expiresIn: '1d'});
         return { token, userId: existUser.userId };
     }
 

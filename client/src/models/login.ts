@@ -3,7 +3,7 @@ import { Effect } from 'dva';
 import { stringify } from 'querystring';
 import { router } from 'umi';
 
-import { fakeAccountLogin } from '@/services/login';
+import { fakeAccountLogin, fakeLogout } from '@/services/login';
 import { setAuthority } from '@/utils/authority';
 import { getPageQuery } from '@/utils/utils';
 
@@ -60,10 +60,11 @@ const Model: LoginModelType = {
       }
     },
 
-    logout() {
+    *logout(_, { call }) {
+      const response = yield call(fakeLogout);
       const { redirect } = getPageQuery();
       // Note: There may be security issues, please note
-      if (window.location.pathname !== '/user/login' && !redirect) {
+      if (window.location.pathname !== '/user/login' && !redirect && response.status === 200) {
         router.replace({
           pathname: '/user/login',
           search: stringify({

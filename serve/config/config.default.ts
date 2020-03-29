@@ -36,7 +36,8 @@ export default (appInfo: EggAppInfo) => {
     '/api/v2/register', 
     '/api/v2/login', 
     '/api/v2/signout', 
-    '/api/v2/pass/getCaptcha'
+    '/api/v2/pass/getCaptcha',
+    '/api/v2/user/currentUser'
   ];
   // config.middleware = [ 'errorHandler', ];,
   config.middleware = [ 'authorization', 'errorHandler' ];

@@ -1,11 +1,13 @@
 import request from '@/utils/request';
 
-export async function queryCurrent() {
-  return request('/api/currentUser');
+export async function queryCurrent(): Promise<any> {
+  return request('/user/currentUser', {
+    method: 'GET'
+  });
 }
 
 export async function queryFakeList(params: { count: number }) {
-  return request('/api/fake_list', {
+  return request('/fake_list', {
     params,
   });
 }

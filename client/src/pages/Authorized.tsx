@@ -1,6 +1,7 @@
 import React from 'react';
 import { Redirect } from 'umi';
 import { connect } from 'dva';
+import Cookie from 'js-cookie'
 import Authorized from '@/utils/Authorized';
 import { getRouteAuthority } from '@/utils/utils';
 import { ConnectProps, ConnectState, UserModelState } from '@/models/connect';
@@ -21,8 +22,7 @@ const AuthComponent: React.FC<AuthComponentProps> = ({
 }) => {
   const { currentUser } = user;
   const { routes = [] } = route;
-  const isLogin = currentUser && currentUser.username;
-
+  const isLogin = Cookie.get('token') && currentUser && currentUser.username;
   return (
     <Authorized
       authority={getRouteAuthority(location.pathname, routes) || ''}

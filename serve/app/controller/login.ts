@@ -50,7 +50,7 @@ class UserController extends Controller {
             // id存入Cookie, 用于验证过期.
             const opts = {
                 path: '/',
-                maxAge: 1000 * 60 * 60 * 24 * 7,
+                maxAge: 1000 * 60 * 60 * 24,
                 // maxAge: 1000 * 40,
                 // signed: true,
                 httpOnly: false,
@@ -72,6 +72,7 @@ class UserController extends Controller {
     public async signOut () {
         const { ctx } = this;
         ctx.logout();
+        ctx.cookies.set('userId', '');
         ctx.cookies.set(this.config.auth_cookie_name, ""); // cookie 有效期30天
         ctx.returnBody(200, "退出登录成功")
     }

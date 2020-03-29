@@ -14,6 +14,12 @@ export async function fakeAccountLogin(params: LoginParamsType) {
   });
 }
 
+export async function fakeLogout() {
+  return request('/signout', {
+    method: 'GET'
+  })
+}
+
 export async function getFakeCaptcha(mobile: string) {
   return request(`/login/captcha?mobile=${mobile}`);
 }

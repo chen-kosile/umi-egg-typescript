@@ -7,7 +7,10 @@ class UserController extends Controller {
         const {ctx} = this
 
         let userId = ctx.cookies.get('userId');
-
+        if (!userId) {
+            ctx.returnBody(403, '')
+            return;
+        }
         // 获取并填充数据
         let user = await this.service.user.getUserByUserId(userId);
         if (user) {

@@ -46,6 +46,7 @@ const Login: React.FC<LoginProps> = props => {
 
   useEffect(() => {
     // const { dispatch } = props;
+    // console.log(props);
     const username = localStorage.getItem('username') || '';
     const password = localStorage.getItem('password') || '';
     if (autoLogin && username && password) {

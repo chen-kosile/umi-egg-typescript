@@ -65,8 +65,8 @@ const defaultFooterDom = (
     copyright=""
     links={[
       {
-        key: 'Ant Design Pro',
-        title: 'Ant Design Pro',
+        key: 'OA System',
+        title: 'OA System',
         href: '/',
         blankTarget: true,
       },
@@ -76,12 +76,12 @@ const defaultFooterDom = (
         href: '/',
         blankTarget: true,
       },
-      {
-        key: 'Ant Design',
-        title: 'Ant Design',
-        href: '/',
-        blankTarget: true,
-      },
+      // {
+      //   key: 'OA System',
+      //   title: 'OA System',
+      //   href: '/',
+      //   blankTarget: true,
+      // },
     ]}
   />
 );
@@ -100,7 +100,7 @@ const footerRender: BasicLayoutProps['footerRender'] = () => {
           textAlign: 'center',
         }}
       >
-        <a href="https://www.netlify.com" target="_blank" rel="noopener noreferrer">
+        <a href="/" target="_blank" rel="noopener noreferrer">
           <img
             src="https://www.netlify.com/img/global/badges/netlify-color-bg.svg"
             width="82px"

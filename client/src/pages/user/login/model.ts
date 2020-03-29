@@ -1,7 +1,8 @@
 import { AnyAction, Reducer } from 'redux';
-import { message } from 'antd';
+// import { message } from 'antd';
 import { EffectsCommandMap } from 'dva';
 import { routerRedux } from 'dva/router';
+// import { router } from 'umi';
 import { fakeAccountLogin, getFakeCaptcha } from './service';
 import { getPageQuery, setAuthority } from './utils/utils';
 
@@ -44,7 +45,6 @@ const Model: ModelType = {
           type: 'changeLoginStatus',
           payload: response.data,
         });
-        message.success('登录成功！');
         const urlParams = new URL(window.location.href);
         const params = getPageQuery();
         let { redirect } = params as { redirect: string };
@@ -60,6 +60,7 @@ const Model: ModelType = {
             return;
           }
         }
+        // router.push('/')
         yield put(routerRedux.replace(redirect || '/'));
       }
     },

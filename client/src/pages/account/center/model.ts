@@ -37,10 +37,12 @@ const Model: ModelType = {
   effects: {
     *fetchCurrent(_, { call, put }) {
       const response = yield call(queryCurrent);
-      yield put({
-        type: 'saveCurrentUser',
-        payload: response,
-      });
+      if (response.status === 200) {
+        yield put({
+          type: 'saveCurrentUser',
+          payload: response,
+        });
+      }
     },
     *fetch({ payload }, { call, put }) {
       const response = yield call(queryFakeList, payload);
