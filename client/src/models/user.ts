@@ -48,7 +48,6 @@ const UserModel: UserModelType = {
     },
     *fetchCurrent(_, { call, put }) {
       const response = yield call(queryCurrent);
-
       if (response.status === 200) {
         yield put({
           type: 'saveCurrentUser',

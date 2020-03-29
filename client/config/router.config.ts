@@ -1,7 +1,7 @@
 export default [
     {
       path: '/',
-      component: '../layouts/SecurityLayout',
+      component: '../layouts/BlankLayout',
       routes: [
         {
           path: '/user',

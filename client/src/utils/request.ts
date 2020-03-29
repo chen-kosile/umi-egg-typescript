@@ -79,7 +79,6 @@ request.use(async (ctx, next) => {
   let tokenSessionStorage: string | null = Cookie.get('token') || null;
   // eslint-disable-next-line max-len
   if ((tokenSessionStorage === null || tokenSessionStorage.length === 0) && judge(url)) {
-    console.log('api auth');
     window.location.href = '/user/login';
     return;
   }

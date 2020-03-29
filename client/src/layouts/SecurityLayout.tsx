@@ -57,8 +57,6 @@ class SecurityLayout extends React.Component<SecurityLayoutProps, SecurityLayout
     if ((!isLogin && loading) || !isReady) {
       return <PageLoading />;
     }
-    console.log(!isLogin);
-    console.log(window.location.pathname);
     if (!isLogin && this.judge(window.location.pathname)) {
       return <Redirect to={`/user/login?${queryString}`} />;
     }

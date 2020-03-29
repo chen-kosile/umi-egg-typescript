@@ -9,17 +9,21 @@ import ProLayout, {
   Settings,
   DefaultFooter,
   SettingDrawer,
+  PageLoading
 } from '@ant-design/pro-layout';
 import { formatMessage } from 'umi-plugin-react/locale';
 import React, { useEffect } from 'react';
-import { Link } from 'umi';
+import { Link, Redirect } from 'umi';
 import { Dispatch } from 'redux';
 import { connect } from 'dva';
 import { GithubOutlined } from '@ant-design/icons';
+import Cookie from 'js-cookie';
+import { stringify } from 'querystring';
 import { Result, Button } from 'antd';
 import Authorized from '@/utils/Authorized';
 import RightContent from '@/components/GlobalHeader/RightContent';
 import { ConnectState } from '@/models/connect';
+import { CurrentUser } from '@/models/user';
 import { isAntDesignPro, getAuthorityFromRouter } from '@/utils/utils';
 import logo from '../assets/logo.svg';
 
@@ -44,6 +48,7 @@ export interface BasicLayoutProps extends ProLayoutProps {
   };
   settings: Settings;
   dispatch: Dispatch;
+  currentUser?: CurrentUser;
 }
 export type BasicLayoutContext = { [K in 'location']: BasicLayoutProps[K] } & {
   breadcrumbNameMap: {
@@ -120,11 +125,12 @@ const BasicLayout: React.FC<BasicLayoutProps> = props => {
     location = {
       pathname: '/',
     },
+    loading, 
+    currentUser
   } = props;
   /**
    * constructor
    */
-
   useEffect(() => {
     if (dispatch) {
       dispatch({
@@ -136,6 +142,18 @@ const BasicLayout: React.FC<BasicLayoutProps> = props => {
    * init variables
    */
 
+  const judge = (url: string): boolean => {
+    const urls = [
+      '/user/login',
+      '/user/register',
+      '/user/register-result'
+    ]
+  
+    if (urls.includes(url)) {
+      return false;
+    }
+    return true;
+  }
   const handleMenuCollapse = (payload: boolean): void => {
     if (dispatch) {
       dispatch({
@@ -144,6 +162,17 @@ const BasicLayout: React.FC<BasicLayoutProps> = props => {
       });
     }
   }; // get children authority
+   
+  const isLogin = Cookie.get('token') && currentUser && currentUser.username;
+  const queryString = stringify({
+    redirect: window.location.href,
+  }); 
+  if ((!isLogin && loading)) {
+    return <PageLoading />;
+  }
+  if (!isLogin && judge(window.location.pathname)) {
+    return <Redirect to={`/user/login?${queryString}`} />;
+  }
 
   const authorized = getAuthorityFromRouter(props.route.routes, location.pathname || '/') || {
     authority: undefined,
@@ -205,7 +234,8 @@ const BasicLayout: React.FC<BasicLayoutProps> = props => {
   );
 };
 
-export default connect(({ global, settings }: ConnectState) => ({
+export default connect(({ global, settings, user }: ConnectState) => ({
   collapsed: global.collapsed,
   settings,
+  currentUser: user.currentUser,
 }))(BasicLayout);
