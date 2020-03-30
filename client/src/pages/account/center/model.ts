@@ -40,7 +40,7 @@ const Model: ModelType = {
       if (response.status === 200) {
         yield put({
           type: 'saveCurrentUser',
-          payload: response,
+          payload: response.data,
         });
       }
     },
