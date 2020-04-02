@@ -17,7 +17,8 @@ class UserController extends Controller {
             let userInfo = {
                 username: user.username,
                 email: user.email,
-                avatarUrl: user.avatarUrl,
+                avatar: user.avatarUrl,
+                name: user.name,
                 abstract: user.abstract,
                 account: user.email.replace(/@.*/, ''),
                 mobile: user.mobile,

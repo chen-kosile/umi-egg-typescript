@@ -55,7 +55,7 @@ export default {
   menu: {
     locale: true,
   },
-  title: 'OA.System',
+  title: '江西财经大学',
   pwa: false,
   iconfontUrl: '',
 } as DefaultSettings;

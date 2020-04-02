@@ -3,6 +3,10 @@ import { Application, Router } from 'egg';
 export default (app: Application) => {
   const { controller } = app;
   const { login, validate, test, user } = controller;
+
+   // 挂载鉴权路由
+  app.passport.mount('github');
+
   // api 版本的 访问路径前面加上apiV2Router的路径
   const apiV2Router: Router = app.router.namespace('/api/v2');
 

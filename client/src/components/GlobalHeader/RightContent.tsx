@@ -36,19 +36,19 @@ const GlobalHeaderRight: React.SFC<GlobalHeaderRightProps> = props => {
         defaultValue="umi ui"
         options={[
           {
-            label: <a href="https://umijs.org/zh/guide/umi-ui.html">umi ui</a>,
+            label: <a href="/">umi ui</a>,
             value: 'umi ui',
           },
           {
-            label: <a href="next.ant.design">Ant Design</a>,
+            label: <a href="/">Ant Design</a>,
             value: 'Ant Design',
           },
           {
-            label: <a href="https://protable.ant.design/">Pro Table</a>,
+            label: <a href="/">Pro Table</a>,
             value: 'Pro Table',
           },
           {
-            label: <a href="https://prolayout.ant.design/">Pro Layout</a>,
+            label: <a href="/">Pro Layout</a>,
             value: 'Pro Layout',
           },
         ]} // onSearch={value => {
@@ -58,7 +58,7 @@ const GlobalHeaderRight: React.SFC<GlobalHeaderRightProps> = props => {
       <Tooltip title="使用文档">
         <a
           target="_blank"
-          href="https://pro.ant.design/docs/getting-started"
+          href="/"
           rel="noopener noreferrer"
           className={styles.action}
         >

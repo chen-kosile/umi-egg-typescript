@@ -41,6 +41,12 @@ export default [
           authority: ['admin', 'user'],
           routes: [
             {
+              name: 'home',
+              icon: 'home',
+              path: '/home',
+              component: './home',
+            },
+            {
               path: '/dashboard',
               name: 'dashboard',
               icon: 'dashboard',
@@ -253,8 +259,7 @@ export default [
             },
             {
               path: '/',
-              redirect: '/dashboard/analysis',
-              authority: ['admin', 'user'],
+              redirect: '/home',
             },
             {
               component: '404',

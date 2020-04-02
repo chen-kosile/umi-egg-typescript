@@ -25,7 +25,7 @@ import RightContent from '@/components/GlobalHeader/RightContent';
 import { ConnectState } from '@/models/connect';
 import { CurrentUser } from '@/models/user';
 import { isAntDesignPro, getAuthorityFromRouter } from '@/utils/utils';
-import logo from '../assets/logo.svg';
+import logo from '../assets/logo_icon.png';
 
 const noMatch = (
   <Result
@@ -82,7 +82,7 @@ const defaultFooterDom = (
       {
         key: 'github',
         title: <GithubOutlined />,
-        href: '/',
+        href: 'https://github.com/chen-kosile',
         blankTarget: true,
       },
       // {

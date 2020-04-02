@@ -58,6 +58,7 @@ class UserController extends Controller {
             };
             ctx.cookies.set(this.config.auth_cookie_name, loginReturn.token, opts); // cookie 有效期7天
             ctx.cookies.set('userId', loginReturn.userId, opts);
+            ctx.session.secureKey = 'kosile';
             ctx.returnBody(200, "登录成功", {
                 currentAuthority: role.roleType
             })

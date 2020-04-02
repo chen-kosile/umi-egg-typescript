@@ -45,6 +45,12 @@ export default (appInfo: EggAppInfo) => {
     // token 凭证
   config.jwtSecret = 'kosile';
   // the return config will combines to EggAppConfig
+
+  config.passportGithub = {
+    key: '1e5eb6004517470e9a6d',
+    secret: '4ae1ba674cf54f47b844682820f42598625fb380',
+  };
+
   return {
     ...config,
     ...bizConfig,

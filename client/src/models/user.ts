@@ -12,6 +12,7 @@ export interface CurrentUser {
   userId?: string;
   email?: string;
   unreadCount?: number;
+  name?: string;
 }
 
 export interface UserModelState {
