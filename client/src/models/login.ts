@@ -10,7 +10,7 @@ import { getPageQuery } from '@/utils/utils';
 export interface StateType {
   status?: number;
   type?: string;
-  currentAuthority?: number;
+  currentAuthority?: string;
 }
 
 export interface LoginModelType {

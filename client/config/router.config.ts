@@ -47,6 +47,19 @@ export default [
               component: './home',
             },
             {
+              name: 'process',
+              icon: 'form',
+              path: '/process',
+              routes: [
+                {
+                  name: 'newProcess',
+                  icon: 'smile',
+                  path: '/process/newProcess',
+                  component: './process/newProcess'
+                }
+              ]
+            },
+            {
               path: '/dashboard',
               name: 'dashboard',
               icon: 'dashboard',
