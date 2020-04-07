@@ -4,7 +4,7 @@ module.exports = app => {
     const Role = app.model.define('roles', {
       roleId: {type: INTEGER, primaryKey: true, autoIncrement: true},//记录id
       userId: {type: STRING(255), allowNull: false, unique: true},//用户id
-      roleType: {type: STRING(255)}, // 角色类型 0 ，管理员 1 教职工， 2学生, -1 未知
+      roleType: {type: STRING(255)}, // 角色类型 admin 管理员, faculty 教职工， student学生, visitor 未知
       roleDes: {type: STRING(256)}, // 角色描述
       parentGroup: {type: STRING(256)}, // 所属组织
       superior: {type: STRING(256)}, // 领导人 username

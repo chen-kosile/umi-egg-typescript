@@ -14,6 +14,15 @@ class RoleService extends Service {
             }
         })
     }
+
+    public async getTearchList() {
+        const { ctx } = this;
+        return await ctx.model.Role.findAll({
+            where: {
+                roleType: 'faculty'
+            }
+        })
+    }
 }
 
 module.exports = RoleService;

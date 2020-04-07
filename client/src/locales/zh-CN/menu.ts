@@ -4,6 +4,7 @@ export default {
   'menu.home': '首页',
   'menu.process': '流程',
   'menu.process.newProcess': '新建流程',
+  'menu.process.processList': '我的流程',
   'menu.admin': '管理页',
   'menu.admin.sub-page': '二级管理页',
   'menu.login': '登录',

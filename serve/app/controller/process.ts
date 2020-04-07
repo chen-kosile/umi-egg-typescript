@@ -23,10 +23,11 @@ class ProcessController extends Controller {
         });
         if (process && process.userId) {
             ctx.returnBody(200, "提交成功")
+        } else {
+            ctx.returnBody(500, "提交失败", {
+                process
+            });
         }
-        ctx.returnBody(500, "提交失败", {
-            process
-        });
     }
 
 }

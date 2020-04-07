@@ -69,6 +69,22 @@ class UserController extends Controller {
         }
     }
 
+    // 获取用户列表
+    public async teacherInfos() {
+        const { ctx } = this;
+        const { userId } = ctx.request.body;
+        const user = await ctx.service.role.getRoleByUserId(userId);
+        const teacher = await ctx.service.user.getUserByUserId(user.superior);
+        const roles = await ctx.service.role.getTearchList();
+        const ids = roles.map(item => (item.userId));
+        const users = await ctx.service.user.getUsersByIds(ids);
+        
+        if (Array.isArray(users)) {
+            ctx.returnBody(200, '请求成功', { teacherInfos: users, headTeacher: teacher })
+        } else {
+            ctx.returnBody(500, '请求失败')
+        }
+    }
     // 获取用户关注、粉丝、帖子数量
     public async userPersonalInfo () {
         const {ctx} = this

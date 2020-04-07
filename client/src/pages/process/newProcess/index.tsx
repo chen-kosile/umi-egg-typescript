@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Card, Steps } from 'antd';
 import { PageHeaderWrapper } from '@ant-design/pro-layout';
-import { connect } from 'dva';
+import { connect, Dispatch } from 'dva';
 import { StateType } from './model';
 import Step1 from './components/Step1';
 import Step2 from './components/Step2';
@@ -12,6 +12,7 @@ const { Step } = Steps;
 
 interface StepFormProps {
   current: StateType['current'];
+  dispatch?: Dispatch
 }
 
 const getCurrentStepAndComponent = (current?: string) => {
@@ -26,9 +27,17 @@ const getCurrentStepAndComponent = (current?: string) => {
   }
 };
 
-const StepForm: React.FC<StepFormProps> = ({ current }) => {
+const StepForm: React.FC<StepFormProps> = ({ current, dispatch }) => {
   const [stepComponent, setStepComponent] = useState<React.ReactNode>(<Step1 />);
   const [currentStep, setCurrentStep] = useState<number>(0);
+
+  useEffect(() => {
+    if (dispatch) {
+      dispatch({
+        type: 'formAndstepForm/queryTeacherInfos'
+      })
+    }
+  }, [])
 
   useEffect(() => {
     const { step, component } = getCurrentStepAndComponent(current);

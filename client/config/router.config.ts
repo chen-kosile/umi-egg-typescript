@@ -56,6 +56,11 @@ export default [
                   icon: 'smile',
                   path: '/process/newProcess',
                   component: './process/newProcess'
+                }, {
+                  name: 'processList',
+                  icon: 'smile',
+                  path: '/process/processList',
+                  component: './process/processList'
                 }
               ]
             },

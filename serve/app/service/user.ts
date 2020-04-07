@@ -107,7 +107,7 @@ export default class UserService extends Service {
      */
     public async getUserByUserId(userId) {
         const query = { userId: userId };
-        return this.ctx.model.User.findOne({
+        return await this.ctx.model.User.findOne({
             where: query
         })
     }
@@ -149,6 +149,18 @@ export default class UserService extends Service {
         })
     }
 
+    public async getUsersByIds(ids) {
+        const { app, ctx } = this;
+        const Op = app.Sequelize.Op
+
+        return await ctx.model.User.findAll({
+            where: {
+                userId: {
+                    [Op.in]: ids
+                }
+            }
+        })
+    }
 
     /**
      * 查找除自己外的用户

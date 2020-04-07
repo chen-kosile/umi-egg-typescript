@@ -20,6 +20,7 @@ export default (app: Application) => {
 
   // user
   apiV2Router.get('/user/currentUser', user.userInfo) // 获取用户信息
+  apiV2Router.post('/user/teacherInfos', user.teacherInfos)
 
   // process
   apiV2Router.post('/process/forms', process.submitProcess)

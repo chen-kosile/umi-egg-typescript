@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Form, Button, Divider, Input, Select, DatePicker } from 'antd';
 import { formatMessage } from 'umi-plugin-react/locale';
 import { Dispatch } from 'redux';
 import { connect } from 'dva';
 import moment from 'moment';
+import { CurrentUser } from '@/models/user';
 import { StateType } from '../../model';
 import styles from './index.less';
 
@@ -22,11 +23,19 @@ const formItemLayout = {
 interface Step1Props {
   data?: StateType['step'];
   dispatch?: Dispatch<any>;
+  teacherInfos?: CurrentUser[];
+  headTeacher?: CurrentUser;
 }
 
 const Step1: React.FC<Step1Props> = props => {
-  const { dispatch, data } = props;
+  const { dispatch, data, teacherInfos = [], headTeacher = { userId: ''} } = props;
   const [form] = Form.useForm();
+
+  useEffect(() => {
+    form.setFieldsValue({
+      approver: headTeacher.userId
+    })
+  }, [headTeacher, teacherInfos])
 
   if (!data) {
     return null;
@@ -39,8 +48,8 @@ const Step1: React.FC<Step1Props> = props => {
         type: 'formAndstepForm/saveStepFormData',
         payload: {
           ...values,
-          startTime: moment(values[0]).valueOf(),
-          endTime: moment(values[1]).valueOf(),
+          startTime: moment(values.rangeDate[0]).valueOf(),
+          endTime: moment(values.rangeDate[1]).valueOf(),
         },
       });
       dispatch({
@@ -50,8 +59,8 @@ const Step1: React.FC<Step1Props> = props => {
     }
   };
 
-  const authority = localStorage.getItem('oa-authority') || 'visitor';
-  console.log(authority);
+  // const authority = localStorage.getItem('oa-authority') || 'visitor';
+  // console.log(authority);
   return (
     <>
       <Form
@@ -105,8 +114,8 @@ const Step1: React.FC<Step1Props> = props => {
         >
              <Select>
               {
-                [{userId: 1, value: 'teacher'}].map(item => (
-                <Option key={item.userId} value={item.value}>{item.value}</Option>
+                teacherInfos.map(item => (
+                  <Option key={item.userId} value={item.userId || ''}>{item.name}</Option>
                 ))
               }
             </Select>
@@ -152,4 +161,6 @@ const Step1: React.FC<Step1Props> = props => {
 
 export default connect(({ formAndstepForm }: { formAndstepForm: StateType }) => ({
   data: formAndstepForm.step,
+  teacherInfos: formAndstepForm.teacherInfos,
+  headTeacher: formAndstepForm.headTeacher
 }))(Step1);

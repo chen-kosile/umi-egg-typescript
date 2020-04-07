@@ -7,6 +7,9 @@ export async function fakeSubmitForm(params: any) {
   });
 }
 
-export async function fakeGetTeacher() {
-  return request('/process/teacher')
+export async function fakeGetTeacher(params: any) {
+  return request('/user/teacherInfos', {
+    method: 'POST',
+    data: params
+  })
 }
