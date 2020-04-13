@@ -30,10 +30,9 @@ interface Step1Props {
 const Step1: React.FC<Step1Props> = props => {
   const { dispatch, data, teacherInfos = [], headTeacher = { userId: ''} } = props;
   const [form] = Form.useForm();
-
   useEffect(() => {
     form.setFieldsValue({
-      approver: headTeacher.userId
+      approver: headTeacher ?  headTeacher.userId : ''
     })
   }, [headTeacher, teacherInfos])
 

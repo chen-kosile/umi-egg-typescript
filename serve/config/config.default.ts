@@ -40,7 +40,7 @@ export default (appInfo: EggAppInfo) => {
     '/api/v2/user/currentUser'
   ];
   // config.middleware = [ 'errorHandler', ];,
-  config.middleware = [ 'authorization', 'errorHandler' ];
+  config.middleware = [ 'authorization', 'errorHandler', 'notfoundHandler' ];
   config.password_secret = 'ps1234secr';
     // token 凭证
   config.jwtSecret = 'kosile';

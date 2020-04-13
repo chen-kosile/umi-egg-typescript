@@ -8,6 +8,7 @@ module.exports = app => {
       roleDes: {type: STRING(256)}, // 角色描述
       parentGroup: {type: STRING(256)}, // 所属组织
       superior: {type: STRING(256)}, // 领导人 username
+      subordinate: {type: STRING(256)}, // 下属
       level: {type: INTEGER}, // 权限等级 管理员 0 ， 老师： 讲师  2，教授 1， 学生：本科 4，研究生 3
       createdAt: {type: DATE, defaultValue: NOW},// 创建时间
       updatedAt: {type: DATE, defaultValue: NOW}// 更新时间

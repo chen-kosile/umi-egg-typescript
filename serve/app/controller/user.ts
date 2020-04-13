@@ -80,7 +80,7 @@ class UserController extends Controller {
         const users = await ctx.service.user.getUsersByIds(ids);
         
         if (Array.isArray(users)) {
-            ctx.returnBody(200, '请求成功', { teacherInfos: users, headTeacher: teacher })
+            ctx.returnBody(200, '请求成功', { teacherInfos: users, headTeacher: teacher || {} })
         } else {
             ctx.returnBody(500, '请求失败')
         }
