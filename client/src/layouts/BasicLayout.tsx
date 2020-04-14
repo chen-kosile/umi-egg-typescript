@@ -71,7 +71,7 @@ const menuDataRender = (menuList: MenuDataItem[]): MenuDataItem[] =>
 
 const defaultFooterDom = (
   <DefaultFooter
-    copyright=""
+    copyright="chenyuhan"
     links={[
       {
         key: 'OA System',
