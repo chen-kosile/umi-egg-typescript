@@ -6,7 +6,7 @@ import { fakeRegister, queryCaptcha } from './service';
 
 export interface StateType {
   status?: number;
-  currentAuthority?: number;
+  currentAuthority?: string;
 }
 
 export type Effect = (
