@@ -18,12 +18,29 @@ export default (app: Application) => {
   apiV2Router.post('/login/account', login.loginIn); // 登录
   apiV2Router.get('/signout', login.signOut); // 退出登录
 
+  // github 登录
+  // apiV2Router.get('/passport/github', github);
+  // apiV2Router.get('/passport/github/callback', github);
+
   // user
   apiV2Router.get('/user/currentUser', user.userInfo) // 获取用户信息
   apiV2Router.post('/user/teacherInfos', user.teacherInfos)
+  apiV2Router.post('/completeInfo/submitInfo', user.completeInfo);
 
   // process
-  apiV2Router.post('/process/forms', process.submitProcess)
+  apiV2Router.post('/process/forms', process.submitProcess) // 提交
+  // apiV2Router.post('/process/getSubmitList', process.getSubmitList) 
+  // apiV2Router.post('/process/getApproveList', process.getApproveList) 
+  // apiV2Router.post('/process/update', process.updateItem)
+  // apiV2Router.post('/process/approve', process.approve)
+  // apiV2Router.post('/process/refuse', process.refuseProcess)
+
+  // announce
+  // apiV2Router.post('/announce/release', announce.releaseAnnounce) // 发布
+  // apiV2Router.post('/announce/bulkNotice', announce.bulkNotice) // 批量通知 
+
+  // annalysis
+  // apiV2Router.post('/annalysis/annalysisInfos', annalysis.annalysisInfos)
 
   // 兜底测试
   apiV2Router.all('*', test.index);

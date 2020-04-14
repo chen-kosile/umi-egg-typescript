@@ -6,6 +6,15 @@ class RoleService extends Service {
         await ctx.model.Role.upsert(role);
     }
 
+    public async updateRole(role) {
+        return await this.ctx.model.Role.update({
+            roleType: role.roleType}, {
+            where: {
+                userId: role.userId
+            }
+        });
+    }
+
     public async getRoleByUserId(userId) {
         const { ctx } = this;
         return await ctx.model.Role.findOne({
