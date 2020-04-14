@@ -1,5 +1,6 @@
 // import { AnyAction } from 'redux';
 import { Effect } from 'dva';
+import { routerRedux } from 'dva/router';
 // import { message } from 'antd';
 import { ConnectState } from '@/models/connect.d';
 import { fakeSubmitForm } from './service';
@@ -23,7 +24,7 @@ const Model: ModelType = {
   state: {},
 
   effects: {
-    *submitRegularForm({ payload }, { call, select }) {
+    *submitRegularForm({ payload }, { call, select, put }) {
       const user = yield select((state: ConnectState) => state.user.currentUser);
       const response = yield call(fakeSubmitForm, {
         ...payload,
@@ -31,6 +32,7 @@ const Model: ModelType = {
       });
       if (response.status === 200) {
         setAuthority(payload.roleType);
+        yield put(routerRedux.replace('/'));
       }
     },
   },

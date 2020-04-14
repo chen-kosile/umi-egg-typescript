@@ -38,18 +38,25 @@ export default [
           path: '/',
           component: '../layouts/BasicLayout',
           Routes: ['src/pages/Authorized'],
-          authority: ['admin', 'user'],
+          authority: ['admin', 'student','visitor', 'faculty'],
           routes: [
             {
               name: 'home',
               icon: 'home',
               path: '/home',
               component: './home',
+              authority: ['admin', 'student', 'faculty'],
+            },
+            {
+              path: '/completeInfo',
+              component: './completeInfo',
+              authority: ['visitor']
             },
             {
               name: 'process',
               icon: 'form',
               path: '/process',
+              authority: ['admin', 'student', 'faculty'],
               routes: [
                 {
                   name: 'newProcess',
@@ -68,6 +75,7 @@ export default [
               path: '/dashboard',
               name: 'dashboard',
               icon: 'dashboard',
+              authority: ['admin'],
               routes: [
                 {
                   name: 'analysis',
@@ -93,6 +101,7 @@ export default [
               path: '/form',
               icon: 'form',
               name: 'form',
+              authority: ['admin', 'student', 'faculty'],
               routes: [
                 {
                   name: 'basic-form',
@@ -118,6 +127,7 @@ export default [
               path: '/list',
               icon: 'table',
               name: 'list',
+              authority: ['admin', 'student', 'faculty'],
               routes: [
                 {
                   path: '/list/search',
@@ -172,6 +182,7 @@ export default [
               path: '/profile',
               name: 'profile',
               icon: 'profile',
+              authority: ['admin', 'student', 'faculty'],
               routes: [
                 {
                   name: 'basic',
@@ -191,6 +202,7 @@ export default [
               name: 'result',
               icon: 'CheckCircleOutlined',
               path: '/result',
+              authority: ['admin', 'student', 'faculty'],
               routes: [
                 {
                   name: 'success',
@@ -207,7 +219,6 @@ export default [
               ],
             },
             {
-              name: 'exception',
               icon: 'warning',
               path: '/exception',
               routes: [
@@ -235,6 +246,7 @@ export default [
               name: 'account',
               icon: 'user',
               path: '/account',
+              authority: ['admin', 'student', 'faculty'],
               routes: [
                 {
                   name: 'center',
@@ -254,6 +266,7 @@ export default [
               name: 'editor',
               icon: 'highlight',
               path: '/editor',
+              authority: ['admin', 'student', 'faculty'],
               routes: [
                 {
                   name: 'flow',

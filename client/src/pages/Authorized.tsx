@@ -3,6 +3,7 @@ import { Redirect } from 'umi';
 import { connect } from 'dva';
 import Cookie from 'js-cookie'
 import Authorized from '@/utils/Authorized';
+import { getAuthority } from '@/utils/authority';
 import { getRouteAuthority } from '@/utils/utils';
 import { ConnectProps, ConnectState, UserModelState } from '@/models/connect';
 
@@ -22,11 +23,25 @@ const AuthComponent: React.FC<AuthComponentProps> = ({
 }) => {
   const { currentUser } = user;
   const { routes = [] } = route;
-  const isLogin = Cookie.get('token') && currentUser && currentUser.username;
+  function getNoMatch() {
+    const isLogin = Cookie.get('token') && currentUser && currentUser.username;
+    const auth = getAuthority();
+    if (auth) {
+      return <Redirect to="/completeInfo" />;
+    }
+    if (isLogin) {
+      return <Redirect to="/exception/403" />;
+    }
+
+    return <Redirect to="/user/login" />;
+  }
+
+  const result = getNoMatch();
+
   return (
     <Authorized
       authority={getRouteAuthority(location.pathname, routes) || ''}
-      noMatch={isLogin ? <Redirect to="/exception/403" /> : <Redirect to="/user/login" />}
+      noMatch={result}
     >
       {children}
     </Authorized>
