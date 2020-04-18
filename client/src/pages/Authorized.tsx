@@ -26,7 +26,7 @@ const AuthComponent: React.FC<AuthComponentProps> = ({
   function getNoMatch() {
     const isLogin = Cookie.get('token') && currentUser && currentUser.username;
     const auth = getAuthority();
-    if (auth) {
+    if (auth[0] === 'visitor') {
       return <Redirect to="/completeInfo" />;
     }
     if (isLogin) {
