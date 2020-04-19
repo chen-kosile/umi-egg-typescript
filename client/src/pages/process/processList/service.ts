@@ -5,9 +5,10 @@ interface ParamsType extends Partial<BasicListItemDataType> {
   count?: number;
 }
 
-export async function queryFakeList(params: ParamsType) {
-  return request('/api/fake_list', {
-    params,
+export async function queryProcessList(params: ParamsType) {
+  return request('/process/getProcessList', {
+    method: 'POST',
+    data: params,
   });
 }
 

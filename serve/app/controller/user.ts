@@ -13,6 +13,7 @@ class UserController extends Controller {
         }
         // 获取并填充数据
         let user = await this.service.user.getUserByUserId(userId);
+        let role = await this.service.role.getRoleByUserId(userId);
         if (user) {
             let userInfo = {
                 username: user.username,
@@ -23,7 +24,10 @@ class UserController extends Controller {
                 account: user.email.replace(/@.*/, ''),
                 mobile: user.mobile,
                 sex: user.sex,
-                userId: user.userId
+                userId: user.userId,
+                group: role.group,
+                parentGroup: role.parentGroup,
+                level: role.level
             }
             ctx.returnBody(200, "获取成功", userInfo)
         } else {
@@ -68,6 +72,18 @@ class UserController extends Controller {
             ctx.returnBody(200, "更新成功")
         }
     }
+    // 获取所有教师
+    public async teacherList() {
+        const { ctx } = this;
+        const roles = await ctx.service.role.getTearchList();
+        const ids = roles.map(item => (item.userId));
+        const users = await ctx.service.user.getUsersByIds(ids);
+        if (Array.isArray(users)) {
+            ctx.returnBody(200, '请求成功', { teacherList: users })
+        } else {
+            ctx.returnBody(500, '请求失败')
+        }
+    }
 
     // 获取用户列表
     public async teacherInfos() {
@@ -88,9 +104,16 @@ class UserController extends Controller {
 
     public async completeInfo() {
         const { ctx } = this;
-        const { userId, roleType } = ctx.request.body;
+        const { userId, roleType, superior, parentGroup, group, level } = ctx.request.body;
 
-        const role = await ctx.service.role.updateRole({ userId, roleType});
+        const role = await ctx.service.role.updateRole({ 
+            userId,
+            roleType, 
+            superior: superior ? superior : 'principal',
+            parentGroup,
+            group,
+            level
+        });
 
         if (role) {
             ctx.returnBody(200, '保存成功')

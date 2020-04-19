@@ -12,7 +12,6 @@ module.exports = app => {
     avatarUrl: {type: STRING(256), defaultValue: 'https://s11.mogucdn.com/mlcdn/c45406/181105_60bdj928jdhjg9ehhg58hje1212ek_640x640.jpg'},// 头像
     signature: {type:STRING(256)},
     title: {type: STRING(256)}, // 头衔
-    group: {type: STRING(256)}, // 组织
     notifyCount: {type: INTEGER, defaultValue: 0},
     unreadCount: {type: INTEGER, defaultValue: 0},
     mobile: STRING(32),// 手机号,
@@ -23,5 +22,17 @@ module.exports = app => {
   }, {
     freezeTableName: true, // 不自动添加负数
   });
+  User.associate = function (){
+    // 与Info存在一对多关系，所以是hasOne()
+    // app.model.User.hasMany(app.model.Process, { foreignKey: 'userId'});
+    // // 与Classes存在多对一关系，所以使用belongsTo()
+    // app.model.User.belongsTo(app.model.Classes, {foreignKey: 'classId', targetKey: 'id'});
+    // 与Lessison存在多对多关系，使用belongsToMany()
+    // app.model.User.belongsToMany(app.model.Lession, {
+    //     through: app.model.LessionStudent,
+    //     foreignKey: 'studentId',
+    //     otherKey: 'lessionId'
+    // });
+  }
   return User;
 };

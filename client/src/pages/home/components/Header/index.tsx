@@ -6,6 +6,7 @@ import { CheckSquareOutlined } from '@ant-design/icons';
 import { ConnectProps, ConnectState } from '@/models/connect';
 import { CurrentUser } from '@/models/user';
 import styles from './style.less';
+import { roleLevel } from '../../config';
 
 interface HeaderProps extends ConnectProps {
     currentUser?: CurrentUser
@@ -31,9 +32,10 @@ const Header: React.FC<HeaderProps> = props => {
                     </div>
                 </div>
                 <div className={styles.right}>
-                    <div className={styles.text}>本科</div>
-                    <div className={styles.text}>软件与通信工程学院</div>
-                    <div className={styles.text}>软件161</div>
+                    <div className={styles.text}>{roleLevel[currentUser.level || -1]}</div>
+                    <div className={styles.text}>{currentUser.group}</div>
+                    <div className={styles.text}>{currentUser.parentGroup}</div>
+                    <div className={styles.bgImg}/>
                 </div>
             </div>
             <div className={styles.bottom}>

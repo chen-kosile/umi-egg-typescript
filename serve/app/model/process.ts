@@ -10,11 +10,16 @@ module.exports = app => {
         reason: {type: STRING(255)},
         startTime: {type: DATE},
         endTime: {type: DATE},
+        status: {type: INTEGER}, // 流程状态
+        operator: {type: STRING(255)}, // 操作人
         createdAt: {type: DATE, defaultValue: NOW},// 创建时间
         updatedAt: {type: DATE, defaultValue: NOW}// 更新时间
     }, {
       freezeTableName: true, // 不自动添加负数
     });
+    Process.associate = function () {
+      app.model.Process.belongsTo(app.model.User, {foreignKey: 'approve', targetKey: 'userId'});
+    }
     return Process;
 };
   

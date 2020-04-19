@@ -25,10 +25,12 @@ export default (app: Application) => {
   // user
   apiV2Router.get('/user/currentUser', user.userInfo) // 获取用户信息
   apiV2Router.post('/user/teacherInfos', user.teacherInfos)
+  apiV2Router.get('/user/teacherList', user.teacherList);
   apiV2Router.post('/completeInfo/submitInfo', user.completeInfo);
 
   // process
   apiV2Router.post('/process/forms', process.submitProcess) // 提交
+  apiV2Router.post('/process/getProcessList', process.getProceeList) // 个人列表
   // apiV2Router.post('/process/getSubmitList', process.getSubmitList) 
   // apiV2Router.post('/process/getApproveList', process.getApproveList) 
   // apiV2Router.post('/process/update', process.updateItem)

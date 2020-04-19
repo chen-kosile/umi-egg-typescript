@@ -6,3 +6,7 @@ export async function fakeSubmitForm(params: any) {
     data: params,
   });
 }
+
+export async function getTeacherList() {
+  return request('/user/teacherList');
+}

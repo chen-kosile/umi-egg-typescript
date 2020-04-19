@@ -1,18 +1,15 @@
 import React, { FC, useRef, useState, useEffect } from 'react';
-import { DownOutlined, PlusOutlined } from '@ant-design/icons';
+import { DownOutlined } from '@ant-design/icons';
 import {
-  Avatar,
-  Button,
+  // Avatar,
   Card,
-  Col,
   Dropdown,
   Input,
   List,
   Menu,
   Modal,
-  Progress,
+  // Progress,
   Radio,
-  Row,
 } from 'antd';
 
 import { findDOMNode } from 'react-dom';
@@ -22,7 +19,9 @@ import { connect } from 'dva';
 import moment from 'moment';
 import OperationModal from './components/OperationModal';
 import { StateType } from './model';
+import { statusType, statusConf, processTypes, leaveTypes } from './config';
 import { BasicListItemDataType } from './data.d';
+import { UserModelState, CurrentUser } from '@/models/user';
 import styles from './style.less';
 
 const RadioButton = Radio.Button;
@@ -33,36 +32,56 @@ interface BasicListProps {
   listAndbasicList: StateType;
   dispatch: Dispatch<any>;
   loading: boolean;
+  currentUser?: CurrentUser;
 }
 
-const Info: FC<{
-  title: React.ReactNode;
-  value: React.ReactNode;
-  bordered?: boolean;
-}> = ({ title, value, bordered }) => (
-  <div className={styles.headerInfo}>
-    <span>{title}</span>
-    <p>{value}</p>
-    {bordered && <em />}
-  </div>
-);
-
 const ListContent = ({
-  data: { owner, createdAt, percent, status },
+  data: { 
+    createdAt, 
+    user,
+    processType,
+    leaveType,
+    reason,
+    startTime,
+    endTime,
+    status,
+  },
+  index
 }: {
   data: BasicListItemDataType;
+  index: number
 }) => (
   <div className={styles.listContent}>
     <div className={styles.listContentItem}>
-      <span>Owner</span>
-      <p>{owner}</p>
+      <p>{index + 1}</p>
     </div>
     <div className={styles.listContentItem}>
-      <span>开始时间</span>
+      <p>{statusType[status]}</p>
+      <div className={`${styles.circle} ${styles[statusConf[status]]}`} />
+    </div>
+    <div className={styles.listContentItem}>
+      <span>类型</span>
+      <p>{processTypes[processType]}</p>
+    </div>
+    <div className={styles.listContentItem}>
+      <span>请假类型</span>
+      <p>{leaveTypes[leaveType]}</p>
+    </div>
+    <div className={styles.listContentItem}>
+      <span>原因</span>
+      <p>{reason}</p>
+    </div>
+    <div className={styles.listContentItem}>
+      <span>起止时间</span>
+      <p>{moment(startTime).format('YYYY-MM-DD HH:mm')}-{moment(endTime).format('YYYY-MM-DD HH:mm')}</p>
+    </div>
+    <div className={styles.listContentItem}>
+      <span>operator</span>
+      <p>{user.name}</p>
+    </div>
+    <div className={styles.listContentItem}>
+      <span>创建时间</span>
       <p>{moment(createdAt).format('YYYY-MM-DD HH:mm')}</p>
-    </div>
-    <div className={styles.listContentItem}>
-      <Progress percent={percent} status={status} strokeWidth={6} style={{ width: 180 }} />
     </div>
   </div>
 );
@@ -72,31 +91,35 @@ export const BasicList: FC<BasicListProps> = props => {
   const {
     loading,
     dispatch,
-    listAndbasicList: { list },
+    listAndbasicList: { list, total },
+    currentUser = {
+      userId: ''
+    }
   } = props;
   const [done, setDone] = useState<boolean>(false);
   const [visible, setVisible] = useState<boolean>(false);
   const [current, setCurrent] = useState<Partial<BasicListItemDataType> | undefined>(undefined);
+  const [newList, setNewList] = useState<BasicListItemDataType[]>(list);
 
   useEffect(() => {
     dispatch({
-      type: 'listAndbasicList/fetch',
+      type: 'listAndbasicList/queryProcessList',
       payload: {
-        count: 5,
+        offset: 0,
+        limit: 20,
+        userId: currentUser.userId
       },
     });
-  }, [1]);
+  }, []);
 
+  useEffect(() => {
+    setNewList(list);
+  }, [list])
   const paginationProps = {
-    showSizeChanger: true,
+    // showSizeChanger: true,
     showQuickJumper: true,
-    pageSize: 5,
-    total: 50,
-  };
-
-  const showModal = () => {
-    setVisible(true);
-    setCurrent(undefined);
+    pageSize: 20,
+    total
   };
 
   const showEditModal = (item: BasicListItemDataType) => {
@@ -104,7 +127,7 @@ export const BasicList: FC<BasicListProps> = props => {
     setCurrent(item);
   };
 
-  const deleteItem = (id: string) => {
+  const deleteItem = (id: number) => {
     dispatch({
       type: 'listAndbasicList/submit',
       payload: { id },
@@ -123,13 +146,28 @@ export const BasicList: FC<BasicListProps> = props => {
       });
     }
   };
+  const onChangeSelect = (ev: any) => {
+    const { value } = ev.target;
+    let tempList: BasicListItemDataType[];
+    if (value === 'normal') {
+      tempList = list.filter(item => item.status === 1);
+    } else if (value === 'success') {
+      tempList = list.filter(item => item.status === 2);
+    } else if (value === 'exception') {
+      tempList = list.filter(item => item.status === 3);
+    } else {
+      tempList = list;
+    }
+    setNewList(tempList);
+  }
 
   const extraContent = (
     <div className={styles.extraContent}>
-      <RadioGroup defaultValue="all">
+      <RadioGroup defaultValue="all" onChange={onChangeSelect}>
         <RadioButton value="all">全部</RadioButton>
-        <RadioButton value="progress">进行中</RadioButton>
-        <RadioButton value="waiting">等待中</RadioButton>
+        <RadioButton value="normal">进行中</RadioButton>
+        <RadioButton value="success">完成</RadioButton>
+        <RadioButton value="exception">驳回</RadioButton>
       </RadioGroup>
       <Search className={styles.extraContentSearch} placeholder="请输入" onSearch={() => ({})} />
     </div>
@@ -188,20 +226,6 @@ export const BasicList: FC<BasicListProps> = props => {
     <div>
       <PageHeaderWrapper>
         <div className={styles.standardList}>
-          <Card bordered={false}>
-            <Row>
-              <Col sm={8} xs={24}>
-                <Info title="我的待办" value="8个任务" bordered />
-              </Col>
-              <Col sm={8} xs={24}>
-                <Info title="本周任务平均处理时间" value="32分钟" bordered />
-              </Col>
-              <Col sm={8} xs={24}>
-                <Info title="本周完成任务数" value="24个任务" />
-              </Col>
-            </Row>
-          </Card>
-
           <Card
             className={styles.listCard}
             bordered={false}
@@ -210,23 +234,13 @@ export const BasicList: FC<BasicListProps> = props => {
             bodyStyle={{ padding: '0 32px 40px 32px' }}
             extra={extraContent}
           >
-            <Button
-              type="dashed"
-              style={{ width: '100%', marginBottom: 8 }}
-              onClick={showModal}
-              ref={addBtn}
-            >
-              <PlusOutlined />
-              添加
-            </Button>
-
             <List
               size="large"
               rowKey="id"
               loading={loading}
               pagination={paginationProps}
-              dataSource={list}
-              renderItem={item => (
+              dataSource={newList}
+              renderItem={(item, index) => (
                 <List.Item
                   actions={[
                     <a
@@ -241,12 +255,7 @@ export const BasicList: FC<BasicListProps> = props => {
                     <MoreBtn key="more" item={item} />,
                   ]}
                 >
-                  <List.Item.Meta
-                    avatar={<Avatar src={item.logo} shape="square" size="large" />}
-                    title={<a href={item.href}>{item.title}</a>}
-                    description={item.subDescription}
-                  />
-                  <ListContent data={item} />
+                  <ListContent data={item} index={index} />
                 </List.Item>
               )}
             />
@@ -270,13 +279,16 @@ export default connect(
   ({
     listAndbasicList,
     loading,
+    user
   }: {
     listAndbasicList: StateType;
     loading: {
       models: { [key: string]: boolean };
     };
+    user: UserModelState;
   }) => ({
     listAndbasicList,
     loading: loading.models.listAndbasicList,
+    currentUser: user.currentUser,
   }),
 )(BasicList);

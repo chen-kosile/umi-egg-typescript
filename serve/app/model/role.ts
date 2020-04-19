@@ -7,6 +7,7 @@ module.exports = app => {
       roleType: {type: STRING(255)}, // 角色类型 admin 管理员, faculty 教职工， student学生, visitor 未知
       roleDes: {type: STRING(256)}, // 角色描述
       parentGroup: {type: STRING(256)}, // 所属组织
+      group: {type: STRING(256)}, // 组织
       superior: {type: STRING(256)}, // 领导人 username
       subordinate: {type: STRING(256)}, // 下属
       level: {type: INTEGER}, // 权限等级 管理员 0 ， 老师： 讲师  2，教授 1， 学生：本科 4，研究生 3

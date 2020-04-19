@@ -13,8 +13,9 @@ export interface CurrentUser {
   email?: string;
   unreadCount?: number;
   name?: string;
+  parentGroup?: string;
+  level?: number;
 }
-
 export interface UserModelState {
   currentUser?: CurrentUser;
 }

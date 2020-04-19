@@ -6,7 +6,7 @@ import {
   LockTwoTone 
 } from '@ant-design/icons';
 import { Alert, Checkbox, Form, Input, Button } from 'antd';
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Dispatch, AnyAction } from 'redux';
 import { Link } from 'umi';
 import { connect } from 'dva';
@@ -39,35 +39,30 @@ const LoginMessage: React.FC<{
 const Login: React.FC<LoginProps> = props => {
   const { userAndlogin = {}, submitting } = props;
   const { status } = userAndlogin;
-  const [autoLogin, setAutoLogin] = useState<boolean>(true);
+  const rememberPwd = !!localStorage.getItem('rememberPwd');
+  const [remember, setRemember] = useState<boolean>(rememberPwd);
   // const [name, setUserName] = useState<string>('');
   // const [pass, setPassWrod] = useState<string>('');
   const [form] = Form.useForm();
 
   useEffect(() => {
-    // const { dispatch } = props;
-    // console.log(props);
     const username = localStorage.getItem('username') || '';
     const password = localStorage.getItem('password') || '';
-    if (autoLogin && username && password) {
+    if (remember && username && password) {
       form.setFieldsValue({
         username,
         password: aesDecrypt(password)
       });
-      // dispatch({
-      //   type: 'userAndlogin/login',
-      //   payload: {
-      //     username,
-      //     password,
-      //     type
-      //   }
-      // })
     }
   }, [])
 
   const handleSubmit = (values: LoginParamsType) => {
     const { dispatch } = props;
     const { username, password } = values;
+    if (remember) {
+      localStorage.setItem('username', username);
+      localStorage.setItem('password', aesEncrypt(password));
+    }
     dispatch({
       type: 'userAndlogin/login',
       payload: {
@@ -75,19 +70,16 @@ const Login: React.FC<LoginProps> = props => {
         password: aesEncrypt(password)
       },
     });
-    localStorage.setItem('username', username);
-    localStorage.setItem('password', aesEncrypt(password));
   };
-  // function onChangeName(ev: any) {
-  //   if (ev.target.value) {
-  //     setUserName(ev.target.value)
-  //   }
-  // }
-  // function onChangePass(ev: any) {
-  //   if (ev.target.value) {
-  //     setPassWrod(ev.target.value)
-  //   }
-  // }
+  function onChangeRem(ev: any) {
+    setRemember(ev.target.checked);
+    if (ev.target.checked) {
+      localStorage.setItem('rememberPwd', 'remember');
+    } else {
+      localStorage.removeItem('rememberPwd')
+    }
+  }
+
   return (
     <div className={styles.main}>
       <Form
@@ -142,8 +134,8 @@ const Login: React.FC<LoginProps> = props => {
             />
           </FormItem>
         <div>
-          <Checkbox checked={autoLogin} onChange={e => setAutoLogin(e.target.checked)}>
-            自动登录
+          <Checkbox checked={remember} onChange={onChangeRem}>
+            记住账号密码
           </Checkbox>
           <a
             style={{
