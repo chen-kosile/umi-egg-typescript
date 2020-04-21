@@ -30,7 +30,8 @@ export default (app: Application) => {
 
   // process
   apiV2Router.post('/process/forms', process.submitProcess) // 提交
-  apiV2Router.post('/process/getProcessList', process.getProceeList) // 个人列表
+  apiV2Router.post('/process/getProcessList', process.getProcessList) // 个人列表
+  apiV2Router.post('/process/getApproveList', process.getApproveList) // 审批列表
   // apiV2Router.post('/process/getSubmitList', process.getSubmitList) 
   // apiV2Router.post('/process/getApproveList', process.getApproveList) 
   // apiV2Router.post('/process/update', process.updateItem)

@@ -31,18 +31,37 @@ class ProcessController extends Controller {
         }
     }
 
-    public async getProceeList() {
+    public async getProcessList() {
         const { ctx } = this;
-        const { offset, limit, userId } = ctx.request.body;
-        const list = await ctx.service.process.getProcessList({
-            offset,
-            limit,
+        const { current, pageSize, userId } = ctx.request.body;
+        const data = await ctx.service.process.getProcessList({
+            current,
+            pageSize,
             userId
         });
-        if (list) {
+        if (data) {
             ctx.returnBody(200, "获取成功", {
-                list: list.rows,
-                total: list.count
+                list: data.rows,
+                total: data.count
+            })
+        } else {
+            ctx.returnBody(500, '错误');
+        }
+    }
+
+    public async getApproveList() {
+        const { ctx } = this;
+        const { userId, pageSize, current } = ctx.request.body;
+        const data = await ctx.service.process.getApproveList({
+            current,
+            pageSize,
+            userId
+        })
+
+        if (data) {
+            ctx.returnBody(200, "获取成功", {
+                list: data.rows,
+                total: data.count
             })
         } else {
             ctx.returnBody(500, '错误');

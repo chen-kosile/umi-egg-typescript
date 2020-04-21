@@ -62,12 +62,20 @@ export default [
                   name: 'newProcess',
                   icon: 'smile',
                   path: '/process/newProcess',
-                  component: './process/newProcess'
+                  component: './process/newProcess',
+                  authority: ['admin', 'student', 'faculty'],
                 }, {
                   name: 'processList',
                   icon: 'smile',
                   path: '/process/processList',
-                  component: './process/processList'
+                  component: './process/processList',
+                  authority: ['admin', 'student'],
+                }, {
+                  name: 'approveList',
+                  icon: 'smile',
+                  path: '/process/approveList',
+                  component: './process/approveList',
+                  authority: ['admin', 'faculty'],
                 }
               ]
             },

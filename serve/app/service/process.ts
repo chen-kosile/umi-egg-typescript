@@ -24,7 +24,7 @@ class ProcessService extends Service {
     }
 
     public async getProcessList(params) {
-        const { userId, limit, offset } = params;
+        const { current, pageSize, userId } = params;
         const { ctx } = this;
         return await ctx.model.Process.findAndCountAll({
             where: {
@@ -33,8 +33,23 @@ class ProcessService extends Service {
             include: {
                 model: ctx.model.User
             },
-            limit,
-            offset
+            limit: pageSize,
+            offset: current
+        })
+    }
+
+    public async getApproveList(params) {
+        const { current, pageSize, userId } = params;
+        const { ctx } = this;
+        return await ctx.model.Process.findAndCountAll({
+            where: {
+                approve: userId
+            },
+            include: {
+                model: ctx.model.User
+            },
+            limit: pageSize,
+            offset: current
         })
     }
 }

@@ -105,8 +105,8 @@ export const BasicList: FC<BasicListProps> = props => {
     dispatch({
       type: 'listAndbasicList/queryProcessList',
       payload: {
-        offset: 0,
-        limit: 20,
+        current: 0,
+        pageSize: 20,
         userId: currentUser.userId
       },
     });
