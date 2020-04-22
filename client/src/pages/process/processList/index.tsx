@@ -129,8 +129,8 @@ export const BasicList: FC<BasicListProps> = props => {
 
   const deleteItem = (id: number) => {
     dispatch({
-      type: 'listAndbasicList/submit',
-      payload: { id },
+      type: 'listAndbasicList/queryDeleteProcess',
+      payload: { processId: id },
     });
   };
 
@@ -138,8 +138,8 @@ export const BasicList: FC<BasicListProps> = props => {
     if (key === 'edit') showEditModal(currentItem);
     else if (key === 'delete') {
       Modal.confirm({
-        title: '删除任务',
-        content: '确定删除该任务吗？',
+        title: '删除申请',
+        content: '确定删除该申请吗？',
         okText: '确认',
         cancelText: '取消',
         onOk: () => deleteItem(currentItem.id),

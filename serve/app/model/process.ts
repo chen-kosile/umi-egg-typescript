@@ -19,7 +19,7 @@ module.exports = app => {
     });
     Process.associate = function () {
       app.model.Process.belongsTo(app.model.User, {foreignKey: 'approve', targetKey: 'userId'});
-      app.model.Process.hasOne(app.model.User, {foreignKey: 'userId', targetKey: 'userId'});
+      app.model.Process.belongsTo(app.model.User, {foreignKey: 'userId', targetKey: 'userId'});
     }
     return Process;
 };

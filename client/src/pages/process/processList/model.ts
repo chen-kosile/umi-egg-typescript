@@ -1,6 +1,7 @@
-import { AnyAction, Reducer } from 'redux';
-import { EffectsCommandMap } from 'dva';
-import { addFakeList, queryProcessList, removeFakeList, updateFakeList } from './service';
+import { Reducer } from 'redux';
+import { Effect } from 'dva';
+import { ConnectState } from '@/models/connect.d';
+import { addFakeList, queryProcessList, removeFakeList, updateFakeList, deleteProcess } from './service';
 
 import { BasicListItemDataType } from './data.d';
 
@@ -9,10 +10,10 @@ export interface StateType {
   total: number;
 }
 
-export type Effect = (
-  action: AnyAction,
-  effects: EffectsCommandMap & { select: <T>(func: (state: StateType) => T) => T },
-) => void;
+// export type Effect = (
+//   action: AnyAction,
+//   effects: EffectsCommandMap & { select: <T>(func: (state: StateType) => T) => T },
+// ) => void;
 
 export interface ModelType {
   namespace: string;
@@ -21,6 +22,7 @@ export interface ModelType {
     queryProcessList: Effect;
     appendFetch: Effect;
     submit: Effect;
+    queryDeleteProcess: Effect;
   };
   reducers: {
     queryList: Reducer<StateType>;
@@ -42,6 +44,21 @@ const Model: ModelType = {
         type: 'queryList',
         payload: response.data,
       });
+    },
+    *queryDeleteProcess({ payload }, { call, put, select }) {
+      const user = yield select((state: ConnectState) => state.user.currentUser);
+      const response = yield call(deleteProcess, payload);
+      if (response.status === 200) {
+        yield put({
+          type: 'queryProcessList',
+          payload: {
+            current: 0,
+            pageSize: 20,
+            userId: user.userId
+          }
+        })
+      }
+
     },
     *appendFetch({ payload }, { call, put }) {
       const response = yield call(queryProcessList, payload);

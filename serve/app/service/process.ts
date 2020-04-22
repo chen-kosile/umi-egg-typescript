@@ -49,7 +49,27 @@ class ProcessService extends Service {
                 model: ctx.model.User
             },
             limit: pageSize,
-            offset: current
+            offset: current -  1
+        })
+    }
+
+    public async changeProcessStatus(params) {
+        const { id, status } = params;
+        const { ctx } = this;
+        return await ctx.model.Process.update({
+            status
+        }, {
+            where: {
+                id
+            }
+        })
+    }
+
+    public async deleteProcess(id) {
+        return await this.ctx.model.Process.destroy({
+            where: {
+                id
+            }
         })
     }
 }

@@ -80,10 +80,38 @@ export default [
               ]
             },
             {
+              name: 'release',
+              icon: 'form',
+              path: '/release',
+              authority: ['admin', 'faculty'],
+              routes: [
+                {
+                  name: 'announce',
+                  icon: 'smile',
+                  path: '/release/announce',
+                  component: './releaseform/announce',
+                }
+              ]
+            },
+            {
+              path: '/analysis',
+              name: 'analysis',
+              icon: 'dashboard',
+              authority: ['admin'],
+              routes: [
+                {
+                  name: 'monitor',
+                  icon: 'smile',
+                  path: '/analysis/monitor',
+                  component: './analysis/monitor',
+                },
+              ]
+            },
+            {
               path: '/dashboard',
               name: 'dashboard',
               icon: 'dashboard',
-              authority: ['admin'],
+              authority: ['admin', 'student', 'faculty'],
               routes: [
                 {
                   name: 'analysis',

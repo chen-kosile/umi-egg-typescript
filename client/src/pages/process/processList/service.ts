@@ -12,6 +12,13 @@ export async function queryProcessList(params: ParamsType) {
   });
 }
 
+export async function deleteProcess(params: any) {
+  return request('/process/deleteProcess', {
+    method: 'POST',
+    data: params
+  })
+}
+
 export async function removeFakeList(params: ParamsType) {
   const { count = 5, ...restParams } = params;
   return request('/api/fake_list', {

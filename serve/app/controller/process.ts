@@ -57,7 +57,6 @@ class ProcessController extends Controller {
             pageSize,
             userId
         })
-
         if (data) {
             ctx.returnBody(200, "获取成功", {
                 list: data.rows,
@@ -65,6 +64,31 @@ class ProcessController extends Controller {
             })
         } else {
             ctx.returnBody(500, '错误');
+        }
+    }
+
+    public async changeProcessStatus() {
+        const { ctx } = this;
+        const { processId, status } = ctx.request.body;
+        const success = await ctx.service.process.changeProcessStatus({
+            status,
+            id: processId
+        })
+        if (success) {
+            ctx.returnBody(200, "")
+        } else {
+            ctx.returnBody(500, "失败");
+        }
+    }
+
+    public async deleteProcess() {
+        const { ctx } = this;
+        const { processId } = ctx.request.body;
+        const data = await ctx.service.process.deleteProcess(processId);
+        if (data) {
+            ctx.returnBody(200, '删除成功');
+        } else {
+            ctx.returnBody(500, '删除失败');
         }
     }
 }

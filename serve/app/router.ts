@@ -32,11 +32,10 @@ export default (app: Application) => {
   apiV2Router.post('/process/forms', process.submitProcess) // 提交
   apiV2Router.post('/process/getProcessList', process.getProcessList) // 个人列表
   apiV2Router.post('/process/getApproveList', process.getApproveList) // 审批列表
+  apiV2Router.post('/process/changeProcessStatus', process.changeProcessStatus)
+  apiV2Router.post('/process/deleteProcess', process.deleteProcess)
   // apiV2Router.post('/process/getSubmitList', process.getSubmitList) 
   // apiV2Router.post('/process/getApproveList', process.getApproveList) 
-  // apiV2Router.post('/process/update', process.updateItem)
-  // apiV2Router.post('/process/approve', process.approve)
-  // apiV2Router.post('/process/refuse', process.refuseProcess)
 
   // announce
   // apiV2Router.post('/announce/release', announce.releaseAnnounce) // 发布
