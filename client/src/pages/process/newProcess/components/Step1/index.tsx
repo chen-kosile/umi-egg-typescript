@@ -32,7 +32,7 @@ const Step1: React.FC<Step1Props> = props => {
   const [form] = Form.useForm();
   useEffect(() => {
     form.setFieldsValue({
-      approver: headTeacher ?  headTeacher.userId : ''
+      approve: headTeacher ?  headTeacher.userId : ''
     })
   }, [headTeacher, teacherInfos])
 
@@ -108,7 +108,7 @@ const Step1: React.FC<Step1Props> = props => {
         </Form.Item>
         <Form.Item
           label="审批人"
-          name="approver"
+          name="approve"
           rules={[{ required: true, message: '请选择审批人姓名' }]}
         >
              <Select>

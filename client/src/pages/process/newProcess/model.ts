@@ -9,7 +9,7 @@ export interface StateType {
   step?: {
     processType: number;
     leaveType: number;
-    approver: string;
+    approve: string;
     reason: string;
     startTime: Date;
     endTime: Date;
@@ -45,7 +45,7 @@ const Model: ModelType = {
     step: {
       processType: 1,
       leaveType: 1,
-      approver: '',
+      approve: '',
       reason: '',
       startTime: new Date(),
       endTime: new Date(),

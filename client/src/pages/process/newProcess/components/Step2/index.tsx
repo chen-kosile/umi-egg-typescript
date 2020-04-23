@@ -61,7 +61,7 @@ const Step2: React.FC<Step2Props> = props => {
     }
   };
 
-  const { approver, processType, leaveType, reason, startTime, endTime } = data;
+  const { approve, processType, leaveType, reason, startTime, endTime } = data;
   return (
     <Form
       {...formItemLayout}
@@ -82,7 +82,7 @@ const Step2: React.FC<Step2Props> = props => {
         <Descriptions.Item label="流程类型">{processTypes[processType]}</Descriptions.Item>
         <Descriptions.Item label="请假类型">{leaveTypes[leaveType]}</Descriptions.Item>
         <Descriptions.Item label="起止日期">{moment(startTime).format('YYYY-MM-DD HH:mm')} - {moment(endTime).format('YYYY-MM-DD HH:mm')}</Descriptions.Item>
-        <Descriptions.Item label="审批人"> {teacherInfos.filter(item => item.userId === approver)[0].name}</Descriptions.Item>
+        <Descriptions.Item label="审批人"> {teacherInfos.filter(item => item.userId === approve)[0].name}</Descriptions.Item>
         <Descriptions.Item label="请假原因">
           {reason}
         </Descriptions.Item>

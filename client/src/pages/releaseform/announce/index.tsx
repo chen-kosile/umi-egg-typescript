@@ -1,15 +1,14 @@
-import { InfoCircleOutlined } from '@ant-design/icons';
-import { Button, Card, DatePicker, Input, Form, InputNumber, Radio, Select, Tooltip } from 'antd';
+// import { InfoCircleOutlined } from '@ant-design/icons';
+import { Button, Card, Input, Form, Radio, Select } from 'antd';
 import { FormattedMessage, formatMessage } from 'umi-plugin-react/locale';
 import React, { FC } from 'react';
 import { Dispatch } from 'redux';
 import { PageHeaderWrapper } from '@ant-design/pro-layout';
 import { connect } from 'dva';
-import styles from './style.less';
+// import styles from './style.less';
 
 const FormItem = Form.Item;
 const { Option } = Select;
-const { RangePicker } = DatePicker;
 const { TextArea } = Input;
 
 interface BasicFormProps {
@@ -53,12 +52,12 @@ const BasicForm: FC<BasicFormProps> = props => {
   };
 
   const onValuesChange = (changedValues: { [key: string]: any }) => {
-    const { publicType } = changedValues;
-    if (publicType) setShowPublicUsers(publicType === '2');
+    const { needPeoples } = changedValues;
+    if (needPeoples) setShowPublicUsers(needPeoples === '2');
   };
 
   return (
-    <PageHeaderWrapper content={<FormattedMessage id="formandbasic-form.basic.description" />}>
+    <PageHeaderWrapper content=''>
       <Card bordered={false}>
         <Form
           hideRequiredMark
@@ -85,26 +84,7 @@ const BasicForm: FC<BasicFormProps> = props => {
           </FormItem>
           <FormItem
             {...formItemLayout}
-            label={<FormattedMessage id="formandbasic-form.date.label" />}
-            name="date"
-            rules={[
-              {
-                required: true,
-                message: formatMessage({ id: 'formandbasic-form.date.required' }),
-              },
-            ]}
-          >
-            <RangePicker
-              style={{ width: '100%' }}
-              placeholder={[
-                formatMessage({ id: 'formandbasic-form.placeholder.start' }),
-                formatMessage({ id: 'formandbasic-form.placeholder.end' }),
-              ]}
-            />
-          </FormItem>
-          <FormItem
-            {...formItemLayout}
-            label={<FormattedMessage id="formandbasic-form.goal.label" />}
+            label='head'
             name="goal"
             rules={[
               {
@@ -121,8 +101,8 @@ const BasicForm: FC<BasicFormProps> = props => {
           </FormItem>
           <FormItem
             {...formItemLayout}
-            label={<FormattedMessage id="formandbasic-form.standard.label" />}
-            name="standard"
+            label='内容'
+            name="content"
             rules={[
               {
                 required: true,
@@ -138,73 +118,19 @@ const BasicForm: FC<BasicFormProps> = props => {
           </FormItem>
           <FormItem
             {...formItemLayout}
-            label={
-              <span>
-                <FormattedMessage id="formandbasic-form.client.label" />
-                <em className={styles.optional}>
-                  <FormattedMessage id="formandbasic-form.form.optional" />
-                  <Tooltip title={<FormattedMessage id="formandbasic-form.label.tooltip" />}>
-                    <InfoCircleOutlined style={{ marginRight: 4 }} />
-                  </Tooltip>
-                </em>
-              </span>
-            }
-            name="client"
-          >
-            <Input placeholder={formatMessage({ id: 'formandbasic-form.client.placeholder' })} />
-          </FormItem>
-          <FormItem
-            {...formItemLayout}
-            label={
-              <span>
-                <FormattedMessage id="formandbasic-form.invites.label" />
-                <em className={styles.optional}>
-                  <FormattedMessage id="formandbasic-form.form.optional" />
-                </em>
-              </span>
-            }
-            name="invites"
-          >
-            <Input placeholder={formatMessage({ id: 'formandbasic-form.invites.placeholder' })} />
-          </FormItem>
-          <FormItem
-            {...formItemLayout}
-            label={
-              <span>
-                <FormattedMessage id="formandbasic-form.weight.label" />
-                <em className={styles.optional}>
-                  <FormattedMessage id="formandbasic-form.form.optional" />
-                </em>
-              </span>
-            }
-            name="weight"
-          >
-            <InputNumber
-              placeholder={formatMessage({ id: 'formandbasic-form.weight.placeholder' })}
-              min={0}
-              max={100}
-            />
-            <span className="ant-form-text">%</span>
-          </FormItem>
-          <FormItem
-            {...formItemLayout}
-            label={<FormattedMessage id="formandbasic-form.public.label" />}
-            help={<FormattedMessage id="formandbasic-form.label.help" />}
-            name="publicType"
+            label='需要通知的人'
+            name="needPeoples"
           >
             <div>
               <Radio.Group>
                 <Radio value="1">
-                  <FormattedMessage id="formandbasic-form.radio.public" />
+                  所有人
                 </Radio>
                 <Radio value="2">
-                  <FormattedMessage id="formandbasic-form.radio.partially-public" />
-                </Radio>
-                <Radio value="3">
-                  <FormattedMessage id="formandbasic-form.radio.private" />
+                  部分人
                 </Radio>
               </Radio.Group>
-              <FormItem style={{ marginBottom: 0 }} name="publicUsers">
+              <FormItem style={{ marginBottom: 0 }} name="announceUsers">
                 <Select
                   mode="multiple"
                   placeholder={formatMessage({ id: 'formandbasic-form.publicUsers.placeholder' })}
@@ -214,16 +140,26 @@ const BasicForm: FC<BasicFormProps> = props => {
                   }}
                 >
                   <Option value="1">
-                    <FormattedMessage id="formandbasic-form.option.A" />
-                  </Option>
-                  <Option value="2">
-                    <FormattedMessage id="formandbasic-form.option.B" />
-                  </Option>
-                  <Option value="3">
-                    <FormattedMessage id="formandbasic-form.option.C" />
+                    学生1
                   </Option>
                 </Select>
               </FormItem>
+            </div>
+          </FormItem>
+          <FormItem
+            {...formItemLayout}
+            label='通知类型'
+            name="announceType"
+          >
+            <div>
+              <Radio.Group>
+                <Radio value="1">
+                  发邮件
+                </Radio>
+                <Radio value="2">
+                  不发邮件
+                </Radio>
+              </Radio.Group>
             </div>
           </FormItem>
           <FormItem {...submitFormLayout} style={{ marginTop: 32 }}>
