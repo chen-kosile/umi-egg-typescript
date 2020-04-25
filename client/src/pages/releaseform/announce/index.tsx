@@ -3,6 +3,7 @@ import { Button, Card, Input, Form, Radio, Select } from 'antd';
 import { FormattedMessage, formatMessage } from 'umi-plugin-react/locale';
 import React, { FC } from 'react';
 import { Dispatch } from 'redux';
+import { UserModelState, CurrentUser } from '@/models/user';
 import { PageHeaderWrapper } from '@ant-design/pro-layout';
 import { connect } from 'dva';
 // import styles from './style.less';
@@ -14,10 +15,11 @@ const { TextArea } = Input;
 interface BasicFormProps {
   submitting: boolean;
   dispatch: Dispatch<any>;
+  currentUser?: CurrentUser;
 }
 
 const BasicForm: FC<BasicFormProps> = props => {
-  const { submitting } = props;
+  const { submitting, currentUser = { userId: ''} } = props;
   const [form] = Form.useForm();
   const [showPublicUsers, setShowPublicUsers] = React.useState(false);
   const formItemLayout = {
@@ -43,7 +45,10 @@ const BasicForm: FC<BasicFormProps> = props => {
     const { dispatch } = props;
     dispatch({
       type: 'formAndbasicForm/submitRegularForm',
-      payload: values,
+      payload: {
+        ...values,
+        userId: currentUser.userId
+      },
     });
   };
 
@@ -82,23 +87,7 @@ const BasicForm: FC<BasicFormProps> = props => {
           >
             <Input placeholder={formatMessage({ id: 'formandbasic-form.title.placeholder' })} />
           </FormItem>
-          <FormItem
-            {...formItemLayout}
-            label='head'
-            name="goal"
-            rules={[
-              {
-                required: true,
-                message: formatMessage({ id: 'formandbasic-form.goal.required' }),
-              },
-            ]}
-          >
-            <TextArea
-              style={{ minHeight: 32 }}
-              placeholder={formatMessage({ id: 'formandbasic-form.goal.placeholder' })}
-              rows={4}
-            />
-          </FormItem>
+
           <FormItem
             {...formItemLayout}
             label='内容'
@@ -119,7 +108,7 @@ const BasicForm: FC<BasicFormProps> = props => {
           <FormItem
             {...formItemLayout}
             label='需要通知的人'
-            name="needPeoples"
+            name="noticeAll"
           >
             <div>
               <Radio.Group>
@@ -149,7 +138,7 @@ const BasicForm: FC<BasicFormProps> = props => {
           <FormItem
             {...formItemLayout}
             label='通知类型'
-            name="announceType"
+            name="useEmail"
           >
             <div>
               <Radio.Group>
@@ -176,6 +165,7 @@ const BasicForm: FC<BasicFormProps> = props => {
   );
 };
 
-export default connect(({ loading }: { loading: { effects: { [key: string]: boolean } } }) => ({
+export default connect(({ loading, user }: { loading: { effects: { [key: string]: boolean } }, user: UserModelState; }) => ({
   submitting: loading.effects['formAndbasicForm/submitRegularForm'],
+  currentUser: user.currentUser,
 }))(BasicForm);

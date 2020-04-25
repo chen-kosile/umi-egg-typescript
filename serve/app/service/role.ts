@@ -32,6 +32,14 @@ class RoleService extends Service {
             }
         })
     }
+
+    public async getUsersById(id) {
+        return this.ctx.model.Role.findAll({ 
+            where: {
+                superior: id
+            }
+        })
+    }
 }
 
 module.exports = RoleService;

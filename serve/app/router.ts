@@ -2,7 +2,7 @@ import { Application, Router } from 'egg';
 
 export default (app: Application) => {
   const { controller } = app;
-  const { login, validate, test, user, process } = controller;
+  const { login, validate, test, user, process, announce } = controller;
 
    // 挂载鉴权路由
   app.passport.mount('github');
@@ -38,7 +38,7 @@ export default (app: Application) => {
   // apiV2Router.post('/process/getApproveList', process.getApproveList) 
 
   // announce
-  // apiV2Router.post('/announce/release', announce.releaseAnnounce) // 发布
+  apiV2Router.post('/release/announce', announce.releaseAnnounce) // 发布
   // apiV2Router.post('/announce/bulkNotice', announce.bulkNotice) // 批量通知 
 
   // annalysis
