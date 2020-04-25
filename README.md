@@ -14,7 +14,7 @@
     // "tslint-react": "^3.6.0",
 
 - 项目目录结构
-  - egg-mysql node后端
+  - serve node后端
     - app  主要后端代码
       - controller
       - extend
@@ -24,7 +24,7 @@
       - service
     - config  egg 配置文件
     - database 数据库配置文件 有sequelize来映射数据库
-  - react-ts-umi react前端
+  - client react前端
     - config  react 项目配置 umi框架配置
     - dist 项目打包后的项目
     - mock 数据模拟文件 遵循umi配置
