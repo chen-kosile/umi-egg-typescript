@@ -109,7 +109,7 @@ class UserController extends Controller {
         const role = await ctx.service.role.updateRole({ 
             userId,
             roleType, 
-            superior: superior ? superior : 'principal',
+            superior: superior ? superior : 'admin',
             parentGroup,
             group,
             level

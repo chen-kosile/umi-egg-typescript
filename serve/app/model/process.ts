@@ -21,6 +21,7 @@ module.exports = app => {
       app.model.Process.belongsTo(app.model.User, {foreignKey: 'approve', targetKey: 'userId'});
       app.model.Process.belongsTo(app.model.User, {foreignKey: 'userId', targetKey: 'userId'});
     }
+    Process.sync({ alter: false})
     return Process;
 };
   

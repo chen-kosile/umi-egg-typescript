@@ -112,10 +112,10 @@ const BasicForm: FC<BasicFormProps> = props => {
           >
             <div>
               <Radio.Group>
-                <Radio value="1">
+                <Radio value={1}>
                   所有人
                 </Radio>
-                <Radio value="2">
+                <Radio value={2}>
                   部分人
                 </Radio>
               </Radio.Group>
@@ -128,7 +128,7 @@ const BasicForm: FC<BasicFormProps> = props => {
                     display: showPublicUsers ? 'block' : 'none',
                   }}
                 >
-                  <Option value="1">
+                  <Option value={1}>
                     学生1
                   </Option>
                 </Select>
@@ -142,10 +142,10 @@ const BasicForm: FC<BasicFormProps> = props => {
           >
             <div>
               <Radio.Group>
-                <Radio value="1">
+                <Radio value={1}>
                   发邮件
                 </Radio>
-                <Radio value="2">
+                <Radio value={2}>
                   不发邮件
                 </Radio>
               </Radio.Group>

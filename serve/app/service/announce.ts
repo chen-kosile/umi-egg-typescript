@@ -1,9 +1,9 @@
 import { Service } from 'egg';
 
 class AnnounceService extends Service {
-    public async createAnnounce(process) {
+    public async createAnnounce(announce) {
         const { ctx } = this;
-        return await ctx.model.Announce.create(process);
+        return await ctx.model.Announce.create(announce);
     }
 }
 

@@ -4,9 +4,9 @@ module.exports = app => {
     const Announce = app.model.define('announces', {
         id: {type: INTEGER, primaryKey: true, autoIncrement: true},//id
         userId: {type: STRING(255), allowNull: false},//用户id
-        title: {type: STRING(256)}, // 权限名
-        head: {type: STRING(256)}, // 权限描述
-        content: {type: INTEGER}, // 权限等级
+        title: {type: STRING(255)}, // 权限名
+        head: {type: STRING(255)}, // 权限描述
+        content: {type: STRING(255)}, // 权限等级
         noticeAll: {type: INTEGER},
         useEmail: {type: INTEGER},
         status: {type: INTEGER}, // 
@@ -15,6 +15,8 @@ module.exports = app => {
     }, {
       freezeTableName: true, // 不自动添加负数
     });
+
+    Announce.sync({ alter: false})
     return Announce;
 };
   

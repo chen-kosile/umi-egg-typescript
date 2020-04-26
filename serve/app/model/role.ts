@@ -5,17 +5,19 @@ module.exports = app => {
       roleId: {type: INTEGER, primaryKey: true, autoIncrement: true},//记录id
       userId: {type: STRING(255), allowNull: false, unique: true},//用户id
       roleType: {type: STRING(255)}, // 角色类型 admin 管理员, faculty 教职工， student学生, visitor 未知
-      roleDes: {type: STRING(256)}, // 角色描述
-      parentGroup: {type: STRING(256)}, // 所属组织
-      group: {type: STRING(256)}, // 组织
-      superior: {type: STRING(256)}, // 领导人 username
-      subordinate: {type: STRING(256)}, // 下属
+      roleDes: {type: STRING(255)}, // 角色描述
+      parentGroup: {type: STRING(255)}, // 所属组织
+      group: {type: STRING(255)}, // 组织
+      superior: {type: STRING(255)}, // 领导人 username
+      subordinate: {type: STRING(255)}, // 下属
       level: {type: INTEGER}, // 权限等级 管理员 0 ， 老师： 讲师  2，教授 1， 学生：本科 4，研究生 3
       createdAt: {type: DATE, defaultValue: NOW},// 创建时间
       updatedAt: {type: DATE, defaultValue: NOW}// 更新时间
     }, {
       freezeTableName: true, // 不自动添加负数
     });
+
+    Role.sync({ alter: false})
     return Role;
   };
   

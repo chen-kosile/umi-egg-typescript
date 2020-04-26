@@ -15,7 +15,7 @@ class ValidateController extends Controller {
             return;
         } else {
             await ctx.service.email.upsertEmail({email, captcha});
-            this.service.tool.sendMail(email, subject, text, html);
+            ctx.service.tool.sendMail(email, subject, text, html);
             ctx.returnBody(200, "发送成功");
         }
     }

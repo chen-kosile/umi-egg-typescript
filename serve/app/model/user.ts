@@ -9,9 +9,9 @@ module.exports = app => {
     email: {type: STRING(255), allowNull: false, unique: true},// email 地址
     password: {type: STRING(255), allowNull: false},// 密码  
     captcha: {type: INTEGER}, // 校验码
-    avatarUrl: {type: STRING(256), defaultValue: 'https://s11.mogucdn.com/mlcdn/c45406/181105_60bdj928jdhjg9ehhg58hje1212ek_640x640.jpg'},// 头像
-    signature: {type:STRING(256)},
-    title: {type: STRING(256)}, // 头衔
+    avatarUrl: {type: STRING(255), defaultValue: 'https://s11.mogucdn.com/mlcdn/c45406/181105_60bdj928jdhjg9ehhg58hje1212ek_640x640.jpg'},// 头像
+    signature: {type:STRING(255)},
+    title: {type: STRING(255)}, // 头衔
     notifyCount: {type: INTEGER, defaultValue: 0},
     unreadCount: {type: INTEGER, defaultValue: 0},
     mobile: STRING(32),// 手机号,
@@ -22,6 +22,8 @@ module.exports = app => {
   }, {
     freezeTableName: true, // 不自动添加负数
   });
+
+  User.sync({ alter: false})
   User.associate = function (){
     // 与Info存在一对多关系，所以是hasOne()
     // app.model.User.hasMany(app.model.Process, { foreignKey: 'userId'});

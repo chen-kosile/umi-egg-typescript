@@ -33,10 +33,10 @@ class RoleService extends Service {
         })
     }
 
-    public async getUsersById(id) {
+    public async getRolesById(userId) {
         return this.ctx.model.Role.findAll({ 
             where: {
-                superior: id
+                superior: userId
             }
         })
     }

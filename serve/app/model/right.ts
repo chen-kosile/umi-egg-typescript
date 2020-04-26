@@ -2,15 +2,18 @@ module.exports = app => {
     const { STRING, INTEGER, DATE, NOW } = app.Sequelize;
   
     const Right = app.model.define('rights', {
-        roleId: {type: INTEGER, primaryKey: true, autoIncrement: true},//记录id
-        userId: {type: STRING(255), allowNull: false},//用户id
-        roleName: {type: STRING(256)}, // 角色名
-        roleDes: {type: STRING(256)}, // 角色描述
-        createdAt: {type: DATE, defaultValue: NOW},// 创建时间
-        updatedAt: {type: DATE, defaultValue: NOW}// 更新时间
+      rightId: {type: INTEGER, primaryKey: true, autoIncrement: true},//id
+      userId: {type: STRING(255), allowNull: false},//用户id
+      rightName: {type: STRING(255)}, // 权限名
+      rightDes: {type: STRING(255)}, // 权限描述
+      level: {type: INTEGER}, // 权限等级
+      createdAt: {type: DATE, defaultValue: NOW},// 创建时间
+      updatedAt: {type: DATE, defaultValue: NOW}// 更新时间
     }, {
       freezeTableName: true, // 不自动添加负数
     });
+
+    Right.sync({ alter: false})
     return Right;
   };
   
