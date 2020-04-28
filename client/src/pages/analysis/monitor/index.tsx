@@ -1,19 +1,26 @@
 import { Card, Col, Row, Statistic } from 'antd';
-import { FormattedMessage, formatMessage } from 'umi-plugin-react/locale';
+import { formatMessage } from 'umi-plugin-react/locale';
 import React, { Component } from 'react';
 
 import { Dispatch } from 'redux';
 import { GridContent } from '@ant-design/pro-layout';
 import { connect } from 'dva';
-import numeral from 'numeral';
+// import numeral from 'numeral';
 import { StateType } from './model';
-import { Pie, WaterWave, Gauge, TagCloud, Map } from './components/Charts';
-import ActiveChart from './components/ActiveChart';
+import { 
+  // Pie, 
+  // WaterWave, 
+  Gauge, 
+  // TagCloud, 
+  World,
+  Map
+} from './components/Charts';
+// import ActiveChart from './components/ActiveChart';
 import styles from './style.less';
 
-const { Countdown } = Statistic;
+// const { Countdown } = Statistic;
 
-const deadline = Date.now() + 1000 * 60 * 60 * 24 * 2 + 1000 * 30; // Moment is also OK
+// const deadline = Date.now() + 1000 * 60 * 60 * 24 * 2 + 1000 * 30; // Moment is also OK
 
 interface MonitorProps {
   dashboardAndmonitor: StateType;
@@ -30,96 +37,105 @@ class Monitor extends Component<MonitorProps> {
   }
 
   render() {
-    const { dashboardAndmonitor, loading } = this.props;
-    const { tags } = dashboardAndmonitor;
+    // const { dashboardAndmonitor, loading } = this.props;
+    // const { tags } = dashboardAndmonitor;
     return (
       <GridContent>
         <React.Fragment>
           <Row gutter={24}>
             <Col xl={18} lg={24} md={24} sm={24} xs={24} style={{ marginBottom: 24 }}>
               <Card
-                title={
-                  <FormattedMessage
-                    id="dashboardandmonitor.monitor.trading-activity"
-                    defaultMessage="Real-Time Trading Activity"
-                  />
-                }
+                title='全球疫情'
                 bordered={false}
               >
                 <Row>
                   <Col md={6} sm={12} xs={24}>
                     <Statistic
-                      title={
-                        <FormattedMessage
-                          id="dashboardandmonitor.monitor.total-transactions"
-                          defaultMessage="Total transactions today"
-                        />
-                      }
-                      suffix="元"
-                      value={numeral(124543233).format('0,0')}
+                      valueStyle={{color: '#E83132'}}
+                      title='累计确诊'
+                      suffix="人"
+                      value={2941308}
                     />
                   </Col>
                   <Col md={6} sm={12} xs={24}>
                     <Statistic
-                      title={
-                        <FormattedMessage
-                          id="dashboardandmonitor.monitor.sales-target"
-                          defaultMessage="Sales target completion rate"
-                        />
-                      }
-                      value="92%"
-                    />
-                  </Col>
-                  <Col md={6} sm={12} xs={24}>
-                    <Countdown
-                      title={
-                        <FormattedMessage
-                          id="dashboardandmonitor.monitor.remaining-time"
-                          defaultMessage="Remaining time of activity"
-                        />
-                      }
-                      value={deadline}
-                      format="HH:mm:ss:SSS"
+                      valueStyle={{color: '#FF6A57'}}
+                      title='现有确诊'
+                      suffix="人"
+                      value={1910263}
                     />
                   </Col>
                   <Col md={6} sm={12} xs={24}>
                     <Statistic
-                      title={
-                        <FormattedMessage
-                          id="dashboardandmonitor.monitor.total-transactions-per-second"
-                          defaultMessage="Total transactions per second"
-                        />
-                      }
-                      suffix="元"
-                      value={numeral(234).format('0,0')}
+                      valueStyle={{color: '#000000'}}
+                      title='死亡'
+                      suffix="人"
+                      value={203614}
+                    />
+                  </Col>
+                  <Col md={6} sm={12} xs={24}>
+                    <Statistic
+                      valueStyle={{color: '#10B8D2'}}
+                      title='治愈'
+                      suffix="人"
+                      value={827431}
                     />
                   </Col>
                 </Row>
                 <div className={styles.mapChart}>
-                  <Map />
+                  <World />
                 </div>
               </Card>
             </Col>
             <Col xl={6} lg={24} md={24} sm={24} xs={24}>
               <Card
-                title={
-                  <FormattedMessage
-                    id="dashboardandmonitor.monitor.activity-forecast"
-                    defaultMessage="Activity forecast"
-                  />
-                }
+                title="全球疫情"
                 style={{ marginBottom: 24 }}
                 bordered={false}
               >
-                <ActiveChart />
+                <Row>
+                  <Col>
+                    <Statistic
+                        valueStyle={{color: '#E83132'}}
+                        title='累计确诊'
+                        suffix="人"
+                        value={2941308}
+                      />
+                  </Col>
+                </Row>
+                <Row>
+                  <Col>
+                    <Statistic
+                        valueStyle={{color: '#FF6A57'}}
+                        title='现有确诊'
+                        suffix="人"
+                        value={1910263}
+                      />
+                  </Col>
+                </Row>
+                <Row>
+                  <Col>
+                    <Statistic
+                        valueStyle={{color: '#000000'}}
+                        title='死亡'
+                        suffix="人"
+                        value={203614}
+                      />
+                  </Col>
+                </Row>
+                <Row>
+                  <Col>
+                    <Statistic
+                        valueStyle={{color: '#10B8D2'}}
+                        title='治愈'
+                        suffix="人"
+                        value={827431}
+                      />
+                  </Col>
+                </Row>
               </Card>
               <Card
-                title={
-                  <FormattedMessage
-                    id="dashboardandmonitor.monitor.efficiency"
-                    defaultMessage="Efficiency"
-                  />
-                }
+                title='治愈率'
                 style={{ marginBottom: 24 }}
                 bodyStyle={{ textAlign: 'center' }}
                 bordered={false}
@@ -136,103 +152,110 @@ class Monitor extends Component<MonitorProps> {
             </Col>
           </Row>
           <Row gutter={24}>
-            <Col xl={12} lg={24} sm={24} xs={24} style={{ marginBottom: 24 }}>
+          <Col xl={18} lg={24} md={24} sm={24} xs={24} style={{ marginBottom: 24 }}>
               <Card
-                title={
-                  <FormattedMessage
-                    id="dashboardandmonitor.monitor.proportion-per-category"
-                    defaultMessage="Proportion Per Category"
-                  />
-                }
+                title='国内疫情'
                 bordered={false}
-                className={styles.pieCard}
               >
-                <Row style={{ padding: '16px 0' }}>
-                  <Col span={8}>
-                    <Pie
-                      animate={false}
-                      percent={28}
-                      title={
-                        <FormattedMessage
-                          id="dashboardandmonitor.monitor.fast-food"
-                          defaultMessage="Fast food"
-                        />
-                      }
-                      total="28%"
-                      height={128}
-                      lineWidth={2}
+                <Row>
+                <Col md={6} sm={12} xs={24}>
+                    <Statistic
+                      valueStyle={{color: '#E83132'}}
+                      title='累计确诊'
+                      suffix="人"
+                      value={84367}
                     />
                   </Col>
-                  <Col span={8}>
-                    <Pie
-                      animate={false}
-                      color="#5DDECF"
-                      percent={22}
-                      title={
-                        <FormattedMessage
-                          id="dashboardandmonitor.monitor.western-food"
-                          defaultMessage="Western food"
-                        />
-                      }
-                      total="22%"
-                      height={128}
-                      lineWidth={2}
+                  <Col md={6} sm={12} xs={24}>
+                    <Statistic
+                      valueStyle={{color: '#FF6A57'}}
+                      title='现有确诊'
+                      suffix="人"
+                      value={1012}
                     />
                   </Col>
-                  <Col span={8}>
-                    <Pie
-                      animate={false}
-                      color="#2FC25B"
-                      percent={32}
-                      title={
-                        <FormattedMessage
-                          id="dashboardandmonitor.monitor.hot-pot"
-                          defaultMessage="Hot pot"
-                        />
-                      }
-                      total="32%"
-                      height={128}
-                      lineWidth={2}
+                  <Col md={6} sm={12} xs={24}>
+                    <Statistic
+                      valueStyle={{color: '#000000'}}
+                      title='死亡'
+                      suffix="人"
+                      value={4643}
+                    />
+                  </Col>
+                  <Col md={6} sm={12} xs={24}>
+                    <Statistic
+                      valueStyle={{color: '#10B8D2'}}
+                      title='治愈'
+                      suffix="人"
+                      value={78712}
+                    />
+                  </Col>
+                </Row>
+                <div className={styles.mapChart}>
+                  <Map />
+                </div>
+              </Card>
+            </Col>
+            <Col xl={6} lg={24} md={24} sm={24} xs={24}>
+              <Card
+                title="国内疫情"
+                style={{ marginBottom: 24 }}
+                bordered={false}
+              >
+                <Row>
+                  <Col>
+                  <Statistic
+                      valueStyle={{color: '#E83132'}}
+                      title='累计确诊'
+                      suffix="人"
+                      value={84367}
+                    />
+                  </Col>
+                </Row>
+                <Row>
+                  <Col>
+                  <Statistic
+                      valueStyle={{color: '#FF6A57'}}
+                      title='现有确诊'
+                      suffix="人"
+                      value={1012}
+                    />
+                  </Col>
+                </Row>
+                <Row>
+                  <Col>
+                  <Statistic
+                      valueStyle={{color: '#000000'}}
+                      title='死亡'
+                      suffix="人"
+                      value={4643}
+                    />
+                  </Col>
+                </Row>
+                <Row>
+                  <Col>
+                  <Statistic
+                      valueStyle={{color: '#10B8D2'}}
+                      title='治愈'
+                      suffix="人"
+                      value={78712}
                     />
                   </Col>
                 </Row>
               </Card>
-            </Col>
-            <Col xl={6} lg={12} sm={24} xs={24} style={{ marginBottom: 24 }}>
               <Card
-                title={
-                  <FormattedMessage
-                    id="dashboardandmonitor.monitor.popular-searches"
-                    defaultMessage="Popular Searches"
-                  />
-                }
-                loading={loading}
-                bordered={false}
-                bodyStyle={{ overflow: 'hidden' }}
-              >
-                <TagCloud data={tags || []} height={161} />
-              </Card>
-            </Col>
-            <Col xl={6} lg={12} sm={24} xs={24} style={{ marginBottom: 24 }}>
-              <Card
-                title={
-                  <FormattedMessage
-                    id="dashboardandmonitor.monitor.resource-surplus"
-                    defaultMessage="Resource Surplus"
-                  />
-                }
-                bodyStyle={{ textAlign: 'center', fontSize: 0 }}
+                title='治愈率'
+                style={{ marginBottom: 24 }}
+                bodyStyle={{ textAlign: 'center' }}
                 bordered={false}
               >
-                <WaterWave
-                  height={161}
-                  title={
-                    <FormattedMessage
-                      id="dashboardandmonitor.monitor.fund-surplus"
-                      defaultMessage="Fund Surplus"
-                    />
-                  }
-                  percent={34}
+                <Gauge
+                  title={formatMessage({
+                    id: 'dashboardandmonitor.monitor.ratio',
+                    defaultMessage: 'Ratio',
+                  })}
+                  height={180}
+                  percent={50}
                 />
               </Card>
             </Col>

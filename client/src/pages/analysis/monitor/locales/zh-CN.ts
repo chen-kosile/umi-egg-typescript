@@ -6,7 +6,7 @@ export default {
   'dashboardandmonitor.monitor.total-transactions-per-second': '每秒交易总额',
   'dashboardandmonitor.monitor.activity-forecast': '活动情况预测',
   'dashboardandmonitor.monitor.efficiency': '券核效率',
-  'dashboardandmonitor.monitor.ratio': '跳出率',
+  'dashboardandmonitor.monitor.ratio': '百分比',
   'dashboardandmonitor.monitor.proportion-per-category': '各品类占比',
   'dashboardandmonitor.monitor.fast-food': '中式快餐',
   'dashboardandmonitor.monitor.western-food': '西餐',

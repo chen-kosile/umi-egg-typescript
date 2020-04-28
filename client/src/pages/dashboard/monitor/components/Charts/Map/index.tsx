@@ -101,7 +101,7 @@ export default class Map extends React.Component {
         })
           .setLnglat(e.lngLat)
           .setHTML(
-            `地理可视化引擎 AntV L7:  <a  target='_blank', href='https://github.com/antvis/L7'>GitHub</a>`,
+            `kosile`,
           );
         this.scene.addPopup(popup);
       });

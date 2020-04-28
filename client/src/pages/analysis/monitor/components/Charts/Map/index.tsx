@@ -1,132 +1,210 @@
-/* eslint-disable no-eval */
-import { Scene, LineLayer, PointLayer, PolygonLayer, Popup } from '@antv/l7';
-import { Mapbox } from '@antv/l7-maps';
+/* eslint-disable */
+// import { Scene, PolygonLayer, LineLayer, PointLayer } from '@antv/l7';
+import {
+  // HeatmapLayer,
+  LineLayer,
+  LayerEvent,
+  MapboxScene,
+  // Marker,
+  // PointLayer,
+  PolygonLayer,
+  Popup,
+} from '@antv/l7-react';
+// import { GaodeMap } from '@antv/l7-maps';
 import * as React from 'react';
 
-export default class Map extends React.Component {
-  private scene: Scene;
+const colors =
+['#732200', '#CC3D00', '#FF6619', '#FF9466', '#FFC1A6', '#FCE2D7','#2b8cbe','#08589e'].reverse();
 
-  private initMap() {
-    this.scene = new Scene({
-      id: 'map',
-      map: new Mapbox({
-        pitch: 20,
-        // @ts-ignore
-        style: 'blank',
-        center: [5, 40.16797],
-        zoom: 0.51329,
-        minZoom: 0.2,
-      }),
+// function joinData(geodata: any, ncovData: any) {
+//   const ncovDataObj: any = {};
+//   ncovData.forEach((item: any) => {
+//     const {
+//       countryName,
+//       countryEnglishName,
+//       currentConfirmedCount,
+//       confirmedCount,
+//       suspectedCount,
+//       curedCount,
+//       deadCount,
+//     } = item;
+//     if (countryName === '中国') {
+//       if (!ncovDataObj[countryName]) {
+//         ncovDataObj[countryName] = {
+//           countryName,
+//           countryEnglishName,
+//           currentConfirmedCount: 0,
+//           confirmedCount: 0,
+//           suspectedCount: 0,
+//           curedCount: 0,
+//           deadCount: 0,
+//         };
+//       } else {
+//         ncovDataObj[countryName].currentConfirmedCount += currentConfirmedCount;
+//         ncovDataObj[countryName].confirmedCount += confirmedCount;
+//         ncovDataObj[countryName].suspectedCount += suspectedCount;
+//         ncovDataObj[countryName].curedCount += curedCount;
+//         ncovDataObj[countryName].deadCount += deadCount;
+//       }
+//     } else {
+//       ncovDataObj[countryName] = {
+//         countryName,
+//         countryEnglishName,
+//         currentConfirmedCount,
+//         confirmedCount,
+//         suspectedCount,
+//         curedCount,
+//         deadCount,
+//       };
+//     }
+//   });
+//   const geoObj: any = {};
+//   geodata.features.forEach((feature: any) => {
+//     const { name } = feature.properties;
+//     geoObj[name] = feature.properties;
+//     const ncov = ncovDataObj[name] || {};
+//     feature.properties = {
+//       ...feature.properties,
+//       ...ncov,
+//     };
+//   });
+//   return geodata;
+// }
+
+const Map = React.memo(function Map() {
+  const [data, setData] = React.useState();
+  // const [dataPro, setDataPro] = React.useState();
+  // const [filldata, setfillData] = React.useState();
+  const [popupInfo, setPopupInfo] = React.useState<{
+    lnglat: number[];
+    feature: any;
+  }>();
+  React.useEffect(() => {
+    const fetchData = async () => {
+      const [geoData, ncovData] = await Promise.all([
+        fetch(
+          '/FeHelper-20200429004004.json'
+        ).then((d) => d.json()),
+        // https://lab.isaaclin.cn/nCoV/api/area?latest=1
+        fetch(
+          'https://gw.alipayobjects.com/os/bmw-prod/55a7dd2e-3fb4-4442-8899-900bb03ee67a.json',
+        ).then((d) => d.json())
+      ]);
+      setData(geoData);
+    };
+    fetchData();
+  }, []);
+
+  function showPopup(args: any): void {
+    setPopupInfo({
+      lnglat: args.lngLat,
+      feature: args.feature,
     });
   }
-
-  private addLayer() {
-    Promise.all([
-      fetch(
-        'https://gw.alipayobjects.com/os/basement_prod/dbd008f1-9189-461c-88aa-569357ffc07d.json',
-      ).then(d => d.json()),
-      fetch(
-        'https://gw.alipayobjects.com/os/basement_prod/4472780b-fea1-4fc2-9e4b-3ca716933dc7.json',
-      ).then(d => d.text()),
-      fetch(
-        'https://gw.alipayobjects.com/os/basement_prod/a5ac7bce-181b-40d1-8a16-271356264ad8.json',
-      ).then(d => d.text()),
-    ]).then(res => {
-      const [world, dot, flyLine] = res;
-      const dotData = eval(dot);
-      const flydata = eval(flyLine).map((item: any) => {
-        const latLng1 = item.from.split(',').map((e: number) => e * 1);
-        const latLng2 = item.to.split(',').map((e: number) => e * 1);
-        return { coord: [latLng1, latLng2] };
-      });
-      const worldFill = new PolygonLayer()
-        .source(world)
-        .color('#d1e0f3')
-        .shape('fill')
-        .style({
-          opacity: 1,
-        });
-
-      const worldLine = new LineLayer()
-        .source(world)
-        .color('#fff')
-        .size(0.5)
-        .style({
-          opacity: 0.4,
-        });
-      const dotPoint = new PointLayer()
-        .source(dotData, {
-          parser: {
-            type: 'json',
-            x: 'lng',
-            y: 'lat',
-          },
-        })
-        .shape('circle')
-        .color('#268edc')
-        .animate(false)
-        .size(4)
-        .style({
-          opacity: 0.2,
-        });
-      const flyLineLayer = new LineLayer({
-        blend: 'normal',
-      })
-        .source(flydata, {
-          parser: {
-            type: 'json',
-            coordinates: 'coord',
-          },
-        })
-        .color('#5b97f1')
-        .shape('arc3d')
-        .size(2.6)
-        .animate({
-          interval: 2,
-          trailLength: 2,
-          duration: 1,
-        })
-        .style({
-          opacity: 1,
-        });
-      this.scene.addLayer(worldFill);
-      this.scene.addLayer(worldLine);
-      this.scene.addLayer(dotPoint);
-      this.scene.addLayer(flyLineLayer);
-
-      flyLineLayer.on('mousemove', e => {
-        const popup = new Popup({
-          offsets: [0, 0],
-          closeButton: false,
-        })
-          .setLnglat(e.lngLat)
-          .setHTML(
-            `地理可视化引擎 AntV L7:  <a  target='_blank', href='https://github.com/antvis/L7'>GitHub</a>`,
-          );
-        this.scene.addPopup(popup);
-      });
-    });
-  }
-
-  public componentWillUnmount() {
-    this.scene.destroy();
-  }
-
-  public async componentDidMount() {
-    this.initMap();
-    this.addLayer();
-  }
-
-  public render() {
-    return (
-      <div
-        id="map"
-        style={{
-          position: 'relative',
-          width: '100%',
-          height: '452px',
+  return (
+    <>
+      <MapboxScene
+        map={{
+          pitch: 0,
+          style: 'light',
+          center: [ 107.042225, 37.66565 ],
+          zoom: 2.5
         }}
-      />
-    );
-  }
-}
+        style={{
+          position: 'absolute',
+          background:'#fff', // 地图背景色
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+        }}
+      >
+        {popupInfo && (
+          <Popup lnglat={popupInfo.lnglat}>
+            {popupInfo.feature.properties.name}
+            <ul
+              style={{
+                margin: 0,
+              }}
+            >
+              <li>现有确诊:{popupInfo.feature.properties.currentConfirmedCount}</li>
+              <li>累计确诊:{popupInfo.feature.properties.confirmedCount}</li>
+              <li>治愈:{popupInfo.feature.properties.curedCount}</li>
+              <li>死亡:{popupInfo.feature.properties.deadCount}</li>
+            </ul>
+          </Popup>
+          )}
+        {data && [
+          <PolygonLayer
+            key={'1'}
+            options={{
+              autoFit: false,
+            }}
+            source={{
+              data,
+            }}
+            scale={{
+              values: {
+                confirmedCount: {
+                  type: 'log',
+                },
+              },
+            }}
+            active={{
+              option: {
+                color: '#0c2c84',
+              },
+            }}
+            color={{
+              field: 'confirmedCount',
+              values: (count) => {
+                return count > 10000
+                  ? colors[6]
+                  : count > 1000
+                  ? colors[5]
+                  : count > 500
+                  ? colors[4]
+                  : count > 100
+                  ? colors[3]
+                  : count > 10
+                  ? colors[2]
+                  : count > 1
+                  ? colors[1]
+                  : colors[0];
+              },
+            }}
+            shape={{
+              values: 'fill',
+            }}
+            style={{
+              opacity: 1,
+            }}
+          >
+            <LayerEvent type="mousemove" handler={showPopup} />
+          </PolygonLayer>
+          ,
+          <LineLayer
+            key={'2'}
+            source={{
+              data,
+            }}
+            size={{
+              values: 0.6,
+            }}
+            color={{
+              values: '#aaa', // 描边颜色
+            }}
+            shape={{
+              values: 'line',
+            }}
+            style={{
+              opacity: 1,
+            }}
+          />,
+        ]}
+      </MapboxScene>
+    </>
+  );
+});
+
+export default Map;

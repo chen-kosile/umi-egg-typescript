@@ -19,13 +19,13 @@ export interface GaugeProps {
 const defaultFormatter = (val: string): string => {
   switch (val) {
     case '2':
-      return '差';
+      return '20';
     case '4':
-      return '中';
+      return '40';
     case '6':
-      return '良';
+      return '60';
     case '8':
-      return '优';
+      return '80';
     default:
       return '';
   }
