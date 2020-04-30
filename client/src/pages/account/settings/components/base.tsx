@@ -5,7 +5,7 @@ import React, { Component } from 'react';
 
 import { connect } from 'dva';
 import { CurrentUser } from '../data.d';
-import GeographicView from './GeographicView';
+// import GeographicView from './GeographicView';
 import PhoneView from './PhoneView';
 import styles from './BaseView.less';
 
@@ -172,7 +172,7 @@ class BaseView extends Component<BaseViewProps> {
                 },
               ]}
             >
-              <GeographicView />
+              {/* <GeographicView /> */}
             </Form.Item>
             <Form.Item
               name="address"

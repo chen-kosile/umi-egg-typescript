@@ -19,7 +19,7 @@ const operationTabList = [
     key: 'articles',
     tab: (
       <span>
-        文章 <span style={{ fontSize: 14 }}>(8)</span>
+        课程 <span style={{ fontSize: 14 }}>(8)</span>
       </span>
     ),
   },
@@ -27,7 +27,7 @@ const operationTabList = [
     key: 'applications',
     tab: (
       <span>
-        应用 <span style={{ fontSize: 14 }}>(8)</span>
+        签到 <span style={{ fontSize: 14 }}>(8)</span>
       </span>
     ),
   },
@@ -35,7 +35,7 @@ const operationTabList = [
     key: 'projects',
     tab: (
       <span>
-        项目 <span style={{ fontSize: 14 }}>(8)</span>
+        日期 <span style={{ fontSize: 14 }}>(8)</span>
       </span>
     ),
   },

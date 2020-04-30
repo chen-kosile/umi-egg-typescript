@@ -153,7 +153,7 @@ const Login: React.FC<LoginProps> = props => {
         <div className={styles.other}>
           其他登录方式
           <GithubOutlined className={styles.icon} onClick={() => {
-            window.open('https://github.com/login/oauth/authorize?client_id=1e5eb6004517470e9a6d&redirect_uri=http://localhost:7001/passport/github');
+            window.open('https://github.com/login/oauth/authorize?client_id=1e5eb6004517470e9a6d&redirect_uri=http://localhost:8000/passport/github/callback');
           }}/>
           <WechatOutlined className={styles.icon} />
           <QqOutlined className={styles.icon} />

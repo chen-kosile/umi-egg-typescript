@@ -17,6 +17,9 @@ module.exports = app => {
     mobile: STRING(32),// 手机号,
     abstract:  {type: STRING(255), allowNull: true},// 自我介绍
     sex: {type: STRING(2), defaultValue: '男'}, // 值为1时是男性，值为2时是女性，默认值为0时是未知
+    provider: {type: STRING(255)},
+    uid: {type: STRING(255)},
+    thirdPassUpdate: {type: INTEGER},
     createdAt: {type: DATE, defaultValue: NOW},// 创建时间
     updatedAt: {type: DATE, defaultValue: NOW}// 更新时间
   }, {

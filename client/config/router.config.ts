@@ -97,7 +97,6 @@ export default [
               path: '/analysis',
               name: 'analysis',
               icon: 'dashboard',
-              authority: ['admin'],
               routes: [
                 {
                   name: 'monitor',

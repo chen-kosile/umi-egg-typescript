@@ -25,19 +25,15 @@ export interface NoticeType {
 }
 
 export interface CurrentUser {
-  name: string;
-  avatar: string;
-  userid: string;
-  notice: NoticeType[];
-  email: string;
-  signature: string;
-  title: string;
-  group: string;
-  tags: TagType[];
-  notifyCount: number;
-  unreadCount: number;
-  country: string;
-  geographic: GeographicType;
-  address: string;
-  phone: string;
+  avatar?: string;
+  username?: string;
+  title?: string;
+  group?: string;
+  signature?: string;
+  userId?: string;
+  email?: string;
+  unreadCount?: number;
+  name?: string;
+  parentGroup?: string;
+  level?: number;
 }

@@ -35,24 +35,24 @@ class Settings extends Component<SettingsProps, SettingsState> {
     super(props);
     const menuMap = {
       base: (
-        <FormattedMessage id="accountandsettings.menuMap.basic" defaultMessage="Basic Settings" />
+        <FormattedMessage id="accountandsettings.menuMap.basic" defaultMessage="基础设置" />
       ),
       security: (
         <FormattedMessage
           id="accountandsettings.menuMap.security"
-          defaultMessage="Security Settings"
+          defaultMessage="安全设置"
         />
       ),
       binding: (
         <FormattedMessage
           id="accountandsettings.menuMap.binding"
-          defaultMessage="Account Binding"
+          defaultMessage="账户绑定"
         />
       ),
       notification: (
         <FormattedMessage
           id="accountandsettings.menuMap.notification"
-          defaultMessage="New Message Notification"
+          defaultMessage="消息提醒"
         />
       ),
     };
@@ -134,7 +134,7 @@ class Settings extends Component<SettingsProps, SettingsState> {
 
   render() {
     const { currentUser } = this.props;
-    if (!currentUser.userid) {
+    if (!currentUser.userId) {
       return '';
     }
     const { mode, selectKey } = this.state;

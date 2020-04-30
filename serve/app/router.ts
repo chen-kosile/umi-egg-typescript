@@ -1,14 +1,17 @@
 import { Application, Router } from 'egg';
 
 export default (app: Application) => {
+  // api 版本的 访问路径前面加上apiV2Router的路径
+  const apiV2Router: Router = app.router.namespace('/api/v2');
   const { controller } = app;
   const { login, validate, test, user, process, announce } = controller;
 
    // 挂载鉴权路由
-  app.passport.mount('github');
-
-  // api 版本的 访问路径前面加上apiV2Router的路径
-  const apiV2Router: Router = app.router.namespace('/api/v2');
+   const github = app.passport.authenticate('github', {
+    successRedirect: app.config.passportGithubSuccessRedirect, // 配置鉴权成功后的跳转地址
+  });
+  apiV2Router.get('/passport/github', github);
+  apiV2Router.get('/passport/github/callback', github);
 
   // 邮箱校验码
   apiV2Router.post('/pass/getCaptcha', validate.getCaptcha); // 邮件下发校验码

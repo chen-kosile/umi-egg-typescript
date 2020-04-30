@@ -1,10 +1,11 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Form, Button, Divider, Input, Select, DatePicker } from 'antd';
 import { formatMessage } from 'umi-plugin-react/locale';
 import { Dispatch } from 'redux';
 import { connect } from 'dva';
 import moment from 'moment';
 import { CurrentUser } from '@/models/user';
+import { leaveTypes } from '../../config';
 import { StateType } from '../../model';
 import styles from './index.less';
 
@@ -29,6 +30,7 @@ interface Step1Props {
 
 const Step1: React.FC<Step1Props> = props => {
   const { dispatch, data, teacherInfos = [], headTeacher = { userId: ''} } = props;
+  const [processType, setProcessType] = useState<number>(1);
   const [form] = Form.useForm();
   useEffect(() => {
     form.setFieldsValue({
@@ -58,6 +60,9 @@ const Step1: React.FC<Step1Props> = props => {
     }
   };
 
+  function onProcessType(value: number) {
+    setProcessType(value)
+  }
   // const authority = localStorage.getItem('oa-authority') || 'visitor';
   // console.log(authority);
   return (
@@ -75,20 +80,23 @@ const Step1: React.FC<Step1Props> = props => {
           name="processType"
           rules={[{ required: true, message: '请选择流程类型' }]}
         >
-          <Select placeholder="">
-            <Option value={1}>请假</Option>
-            <Option value={2}>评优评先</Option>
+          <Select placeholder="" onChange={onProcessType}>
+            <Option value={1}>填报</Option>
+            <Option value={2}>请假</Option>
+            <Option value={3}>评优评先</Option>
           </Select>
         </Form.Item>
         <Form.Item 
-          label="请假类型" 
+          label="类型" 
           name="leaveType"
-          rules={[{ required: true, message: '请选择请假类型' }]}
+          rules={[{ required: true, message: '请选择类型' }]}
         >
             <Select>
-              <Option value={1}>病假</Option>
-              <Option value={2}>事假</Option>
-              <Option value={3}>公假</Option>
+              {
+                Object.keys(leaveTypes[processType]).map(item => (
+                <Option key={item} value={item}>{leaveTypes[processType][item]}</Option>
+                ))
+              }
             </Select>
         </Form.Item>
         <Form.Item 

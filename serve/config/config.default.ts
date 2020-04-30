@@ -37,7 +37,8 @@ export default (appInfo: EggAppInfo) => {
     '/api/v2/login', 
     '/api/v2/signout', 
     '/api/v2/pass/getCaptcha',
-    '/api/v2/user/currentUser'
+    '/api/v2/user/currentUser',
+    '/passport/github/callback'
   ];
   // config.middleware = [ 'errorHandler', ];,
   config.middleware = [ 'authorization', 'errorHandler', 'notfoundHandler' ];
@@ -48,9 +49,9 @@ export default (appInfo: EggAppInfo) => {
 
   config.passportGithub = {
     key: '1e5eb6004517470e9a6d',
-    secret: '4ae1ba674cf54f47b844682820f42598625fb380',
+    secret: '4ae1ba674cf54f47b844682820f42598625fb380'
   };
-
+  config.passportGithubSuccessRedirect = 'http://127.0.0.1:8000/';
   return {
     ...config,
     ...bizConfig,

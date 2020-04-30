@@ -142,7 +142,8 @@ class BasicLayout extends Component<BasicLayoutProps, BasicLayoutState> {
     const urls = [
       '/user/login',
       '/user/register',
-      '/user/register-result'
+      '/user/register-result',
+      '/passport/github/callback'
     ]
   
     if (urls.includes(url)) {

@@ -1,39 +1,39 @@
-import { FormattedMessage, formatMessage } from 'umi-plugin-react/locale';
-import { AlipayOutlined, DingdingOutlined, TaobaoOutlined } from '@ant-design/icons';
+// import { formatMessage } from 'umi-plugin-react/locale';
+import { GithubFilled, WechatFilled, QqOutlined } from '@ant-design/icons';
 import { List } from 'antd';
 import React, { Component, Fragment } from 'react';
 
 class BindingView extends Component {
   getData = () => [
     {
-      title: formatMessage({ id: 'accountandsettings.binding.taobao' }, {}),
-      description: formatMessage({ id: 'accountandsettings.binding.taobao-description' }, {}),
+      title: '绑定github',
+      description: '当前未绑定github',
       actions: [
         <a key="Bind">
-          <FormattedMessage id="accountandsettings.binding.bind" defaultMessage="Bind" />
+          绑定
         </a>,
       ],
-      avatar: <TaobaoOutlined className="taobao" />,
+      avatar: <GithubFilled className="taobao" />,
     },
     {
-      title: formatMessage({ id: 'accountandsettings.binding.alipay' }, {}),
-      description: formatMessage({ id: 'accountandsettings.binding.alipay-description' }, {}),
+      title: '绑定微信',
+      description: '当前未绑定微信',
       actions: [
         <a key="Bind">
-          <FormattedMessage id="accountandsettings.binding.bind" defaultMessage="Bind" />
+          绑定
         </a>,
       ],
-      avatar: <AlipayOutlined className="alipay" />,
+      avatar: <WechatFilled className="alipay" />,
     },
     {
-      title: formatMessage({ id: 'accountandsettings.binding.dingding' }, {}),
-      description: formatMessage({ id: 'accountandsettings.binding.dingding-description' }, {}),
+      title: '绑定QQ',
+      description: '当前未绑定QQ',
       actions: [
         <a key="Bind">
-          <FormattedMessage id="accountandsettings.binding.bind" defaultMessage="Bind" />
+          绑定
         </a>,
       ],
-      avatar: <DingdingOutlined className="dingding" />,
+      avatar: <QqOutlined className="dingding" />,
     },
   ];
 
