@@ -4,10 +4,10 @@
         {
             "type": "Feature",
             "properties": {
-                "currentConfirmedCount": 46,
+                "currentConfirmedCount": 37,
                 "confirmedCount": 593,
                 "suspectedCount": 0,
-                "curedCount": 538,
+                "curedCount": 547,
                 "deadCount": 9,
                 "adcode": "110000",
                 "name": "北京市",
@@ -863,7 +863,7 @@
         {
             "type": "Feature",
             "properties": {
-                "currentConfirmedCount": 4,
+                "currentConfirmedCount": 3,
                 "confirmedCount": 190,
                 "suspectedCount": 0,
                 "curedCount": 183,
@@ -1698,10 +1698,10 @@
         {
             "type": "Feature",
             "properties": {
-                "currentConfirmedCount": 222,
-                "confirmedCount": 1037,
-                "curedCount": 811,
-                "deadCount": 4,
+                "currentConfirmedCount": 4,
+                "confirmedCount": 328,
+                "curedCount": 318,
+                "deadCount": 6,
                 "suspectedCount": 0,
                 "adcode": "130000",
                 "name": "河北省",
@@ -5662,10 +5662,10 @@
         {
             "type": "Feature",
             "properties": {
-                "currentConfirmedCount": 222,
-                "confirmedCount": 1037,
-                "curedCount": 811,
-                "deadCount": 4,
+                "currentConfirmedCount": 25,
+                "confirmedCount": 197,
+                "curedCount": 172,
+                "deadCount": 0,
                 "suspectedCount": 0,
                 "adcode": "140000",
                 "name": "山西省",
@@ -7337,10 +7337,10 @@
         {
             "type": "Feature",
             "properties": {
-                "currentConfirmedCount": 222,
-                "confirmedCount": 1037,
-                "curedCount": 811,
-                "deadCount": 4,
+                "currentConfirmedCount": 48,
+                "confirmedCount": 201,
+                "curedCount": 152,
+                "deadCount": 1,
                 "suspectedCount": 0,
                 "adcode": 150000,
                 "name": "内蒙古自治区",
@@ -14325,10 +14325,10 @@
         {
             "type": "Feature",
             "properties": {
-                "currentConfirmedCount": 222,
-                "confirmedCount": 1037,
-                "curedCount": 811,
-                "deadCount": 4,
+                "currentConfirmedCount": 1,
+                "confirmedCount": 146,
+                "curedCount": 143,
+                "deadCount": 2,
                 "suspectedCount": 0,
                 "adcode": "210000",
                 "name": "辽宁省",
@@ -16916,10 +16916,10 @@
         {
             "type": "Feature",
             "properties": {
-                "currentConfirmedCount": 222,
-                "confirmedCount": 1037,
-                "curedCount": 811,
-                "deadCount": 4,
+                "currentConfirmedCount": 9,
+                "confirmedCount": 111,
+                "curedCount": 101,
+                "deadCount": 1,
                 "suspectedCount": 0,
                 "adcode": "220000",
                 "name": "吉林省",
@@ -19919,8 +19919,8 @@
         {
             "type": "Feature",
             "properties": {
-                "currentConfirmedCount": 339,
-                "confirmedCount": 939,
+                "currentConfirmedCount": 344,
+                "confirmedCount": 944,
                 "suspectedCount": 0,
                 "curedCount": 587,
                 "deadCount": 13,
@@ -24714,10 +24714,10 @@
         {
             "type": "Feature",
             "properties": {
-                "currentConfirmedCount": 222,
-                "confirmedCount": 1037,
-                "curedCount": 811,
-                "deadCount": 4,
+                "currentConfirmedCount": 46,
+                "confirmedCount": 652,
+                "curedCount": 599,
+                "deadCount": 7,
                 "suspectedCount": 0,
                 "adcode": "310000",
                 "name": "上海市",
@@ -25189,10 +25189,10 @@
         {
             "type": "Feature",
             "properties": {
-                "currentConfirmedCount": 222,
-                "confirmedCount": 1037,
-                "curedCount": 811,
-                "deadCount": 4,
+                "currentConfirmedCount": 3,
+                "confirmedCount": 653,
+                "curedCount": 650,
+                "deadCount": 0,
                 "suspectedCount": 0,
                 "adcode": "320000",
                 "name": "江苏省",
@@ -26816,10 +26816,10 @@
         {
             "type": "Feature",
             "properties": {
-                "currentConfirmedCount": 222,
-                "confirmedCount": 1037,
-                "curedCount": 811,
-                "deadCount": 4,
+                "currentConfirmedCount": 3,
+                "confirmedCount": 1268,
+                "curedCount": 1264,
+                "deadCount": 1,
                 "suspectedCount": 0,
                 "adcode": "330000",
                 "name": "浙江省",
@@ -29007,10 +29007,10 @@
         {
             "type": "Feature",
             "properties": {
-                "currentConfirmedCount": 222,
-                "confirmedCount": 1037,
-                "curedCount": 811,
-                "deadCount": 4,
+                "currentConfirmedCount": 0,
+                "confirmedCount": 991,
+                "curedCount": 985,
+                "deadCount": 6,
                 "suspectedCount": 0,
                 "adcode": "340000",
                 "name": "安徽省",
@@ -31142,10 +31142,10 @@
         {
             "type": "Feature",
             "properties": {
-                "currentConfirmedCount": 222,
-                "confirmedCount": 1037,
-                "curedCount": 811,
-                "deadCount": 4,
+                "currentConfirmedCount": 2,
+                "confirmedCount": 365,
+                "curedCount": 252,
+                "deadCount": 1,
                 "suspectedCount": 0,
                 "adcode": "350000",
                 "name": "福建省",
@@ -35172,10 +35172,10 @@
         {
             "type": "Feature",
             "properties": {
-                "currentConfirmedCount": 222,
-                "confirmedCount": 1037,
-                "curedCount": 811,
-                "deadCount": 4,
+                "currentConfirmedCount": 8,
+                "confirmedCount": 787,
+                "curedCount": 772,
+                "deadCount": 7,
                 "suspectedCount": 0,
                 "adcode": "370000",
                 "name": "山东省",
@@ -37483,9 +37483,9 @@
         {
             "type": "Feature",
             "properties": {
-                "currentConfirmedCount": 222,
-                "confirmedCount": 1037,
-                "curedCount": 811,
+                "currentConfirmedCount": 1276,
+                "confirmedCount": 1254,
+                "curedCount": 4,
                 "deadCount": 4,
                 "suspectedCount": 0,
                 "adcode": "410000",
@@ -41989,9 +41989,9 @@
         {
             "type": "Feature",
             "properties": {
-                "currentConfirmedCount": 222,
-                "confirmedCount": 1037,
-                "curedCount": 811,
+                "currentConfirmedCount": 0,
+                "confirmedCount": 1019,
+                "curedCount": 1014,
                 "deadCount": 4,
                 "suspectedCount": 0,
                 "adcode": "430000",
@@ -44216,10 +44216,10 @@
         {
             "type": "Feature",
             "properties": {
-                "currentConfirmedCount": 222,
-                "confirmedCount": 1037,
-                "curedCount": 811,
-                "deadCount": 4,
+                "currentConfirmedCount": 15,
+                "confirmedCount": 1588,
+                "curedCount": 1565,
+                "deadCount": 8,
                 "suspectedCount": 0,
                 "adcode": "440000",
                 "name": "广东省",
@@ -47035,10 +47035,10 @@
         {
             "type": "Feature",
             "properties": {
-                "currentConfirmedCount": 222,
-                "confirmedCount": 1037,
-                "curedCount": 811,
-                "deadCount": 4,
+                "currentConfirmedCount": 0,
+                "confirmedCount": 254,
+                "curedCount": 252,
+                "deadCount": 2,
                 "suspectedCount": 0,
                 "adcode": "450000",
                 "name": "广西壮族自治区",
@@ -49454,10 +49454,10 @@
         {
             "type": "Feature",
             "properties": {
-                "currentConfirmedCount": 222,
-                "confirmedCount": 1037,
-                "curedCount": 811,
-                "deadCount": 4,
+                "currentConfirmedCount": 0,
+                "confirmedCount": 168,
+                "curedCount": 162,
+                "deadCount": 6,
                 "suspectedCount": 0,
                 "adcode": "460000",
                 "name": "海南省",
@@ -52629,10 +52629,10 @@
         {
             "type": "Feature",
             "properties": {
-                "currentConfirmedCount": 222,
-                "confirmedCount": 1037,
-                "curedCount": 811,
-                "deadCount": 4,
+                "currentConfirmedCount": 0,
+                "confirmedCount": 579,
+                "curedCount": 573,
+                "deadCount": 6,
                 "suspectedCount": 0,
                 "adcode": "500000",
                 "name": "重庆市",
@@ -54752,10 +54752,10 @@
         {
             "type": "Feature",
             "properties": {
-                "currentConfirmedCount": 222,
-                "confirmedCount": 1037,
-                "curedCount": 811,
-                "deadCount": 4,
+                "currentConfirmedCount": 0,
+                "confirmedCount": 561,
+                "curedCount": 558,
+                "deadCount": 3,
                 "suspectedCount": 0,
                 "adcode": "510000",
                 "name": "四川省",
@@ -58943,10 +58943,10 @@
         {
             "type": "Feature",
             "properties": {
-                "currentConfirmedCount": 222,
-                "confirmedCount": 1037,
-                "curedCount": 811,
-                "deadCount": 4,
+                "currentConfirmedCount": 0,
+                "confirmedCount": 147,
+                "curedCount": 145,
+                "deadCount": 2,
                 "suspectedCount": 0,
                 "adcode": "520000",
                 "name": "贵州省",
@@ -61306,10 +61306,10 @@
         {
             "type": "Feature",
             "properties": {
-                "currentConfirmedCount": 222,
-                "confirmedCount": 1037,
-                "curedCount": 811,
-                "deadCount": 4,
+                "currentConfirmedCount": 2,
+                "confirmedCount": 185,
+                "curedCount": 181,
+                "deadCount": 2,
                 "suspectedCount": 0,
                 "adcode": "530000",
                 "name": "云南省",
@@ -64957,10 +64957,10 @@
         {
             "type": "Feature",
             "properties": {
-                "currentConfirmedCount": 222,
-                "confirmedCount": 1037,
-                "curedCount": 811,
-                "deadCount": 4,
+                "currentConfirmedCount": 0,
+                "confirmedCount": 1,
+                "curedCount": 1,
+                "deadCount": 0,
                 "suspectedCount": 0,
                 "adcode": "540000",
                 "name": "西藏自治区",
@@ -69800,10 +69800,10 @@
         {
             "type": "Feature",
             "properties": {
-                "currentConfirmedCount": 222,
-                "confirmedCount": 1037,
-                "curedCount": 811,
-                "deadCount": 4,
+                "currentConfirmedCount": 49,
+                "confirmedCount": 306,
+                "curedCount": 254,
+                "deadCount": 3,
                 "suspectedCount": 0,
                 "adcode": "610000",
                 "name": "陕西省",
@@ -72395,10 +72395,10 @@
         {
             "type": "Feature",
             "properties": {
-                "currentConfirmedCount": 222,
-                "confirmedCount": 1037,
-                "curedCount": 811,
-                "deadCount": 4,
+                "currentConfirmedCount": 0,
+                "confirmedCount": 139,
+                "curedCount": 137,
+                "deadCount": 2,
                 "suspectedCount": 0,
                 "adcode": "620000",
                 "name": "甘肃省",
@@ -76950,10 +76950,10 @@
         {
             "type": "Feature",
             "properties": {
-                "currentConfirmedCount": 222,
-                "confirmedCount": 1037,
-                "curedCount": 811,
-                "deadCount": 4,
+                "currentConfirmedCount": 0,
+                "confirmedCount": 18,
+                "curedCount": 18,
+                "deadCount": 0,
                 "suspectedCount": 0,
                 "adcode": "630000",
                 "name": "青海省",
@@ -80865,10 +80865,10 @@
         {
             "type": "Feature",
             "properties": {
-                "currentConfirmedCount": 222,
-                "confirmedCount": 1037,
-                "curedCount": 811,
-                "deadCount": 4,
+                "currentConfirmedCount": 0,
+                "confirmedCount": 75,
+                "curedCount": 75,
+                "deadCount": 0,
                 "suspectedCount": 0,
                 "adcode": "640000",
                 "name": "宁夏回族自治区",
@@ -82156,10 +82156,10 @@
         {
             "type": "Feature",
             "properties": {
-                "currentConfirmedCount": 222,
-                "confirmedCount": 1037,
-                "curedCount": 811,
-                "deadCount": 4,
+                "currentConfirmedCount": 0,
+                "confirmedCount": 76,
+                "curedCount": 73,
+                "deadCount": 3,
                 "suspectedCount": 0,
                 "adcode": "650000",
                 "name": "新疆维吾尔自治区",
@@ -87762,7 +87762,7 @@
         {
             "type": "Feature",
             "properties": {
-                "currentConfirmedCount": 222,
+                "currentConfirmedCount": 187,
                 "confirmedCount": 1037,
                 "curedCount": 811,
                 "deadCount": 4,
@@ -88125,10 +88125,10 @@
         {
             "type": "Feature",
             "properties": {
-                "currentConfirmedCount": 222,
-                "confirmedCount": 1037,
-                "curedCount": 811,
-                "deadCount": 4,
+                "currentConfirmedCount": 10,
+                "confirmedCount": 45,
+                "curedCount": 35,
+                "deadCount": 0,
                 "suspectedCount": 0,
                 "adcode": "820000",
                 "name": "澳门特别行政区",

@@ -143,7 +143,7 @@ class BasicLayout extends Component<BasicLayoutProps, BasicLayoutState> {
       '/user/login',
       '/user/register',
       '/user/register-result',
-      '/passport/github/callback'
+      // '/passport/github/callback'
     ]
   
     if (urls.includes(url)) {

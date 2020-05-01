@@ -11,9 +11,9 @@ export default {
       target: 'http://localhost:7001', // eggjs 端口
       changeOrigin: true,
     },
-    '/passport/github/callback': {
-      target: 'http://localhost:7001/passport/github/callback'
-    }
+    // '/passport/github/callback': {
+    //   target: 'http://localhost:7001/passport/github/callback'
+    // }
   },
   test: {
     '/api/': {
