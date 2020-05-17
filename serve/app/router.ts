@@ -4,7 +4,7 @@ export default (app: Application) => {
   // api 版本的 访问路径前面加上apiV2Router的路径
   const apiV2Router: Router = app.router.namespace('/api/v2');
   const { controller } = app;
-  const { login, validate, test, user, process, announce } = controller;
+  const { login, validate, user, process, announce } = controller;
 
    // 挂载鉴权路由
    const github = app.passport.authenticate('github', {
@@ -48,5 +48,5 @@ export default (app: Application) => {
   // apiV2Router.post('/annalysis/annalysisInfos', annalysis.annalysisInfos)
 
   // 兜底测试
-  apiV2Router.all('*', test.index);
+  // apiV2Router.all('*', test.index);
 };

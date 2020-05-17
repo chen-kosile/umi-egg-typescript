@@ -3,6 +3,7 @@
     border-radius: 5px;
     background-color: white;
     padding: 24px;
+    margin-bottom: 24px;
 
     .top {
         display: flex;
@@ -20,6 +21,9 @@
                     color: black;
                     font-weight: bold;
                     font-size: 18px;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
                 }
             }
         }
@@ -31,6 +35,9 @@
 
             .text {
                 margin-bottom: 5px;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
             }
 
             .bgImg {
@@ -57,8 +64,15 @@
             .upcoming {
                 font-size: 20px;
                 font-weight: bold;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+
                 .process {
                     margin-left: 5px;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
                 }
             }
         }
