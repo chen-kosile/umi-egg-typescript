@@ -16,7 +16,7 @@ export default (appInfo: EggAppInfo) => {
     csrf: { enable: false },
 
     domainWhiteList: [ 
-      'http://www.jxufe.oasystem.com', 
+      'http://www.oasystem.jxufe.com', 
       'http://localhost:8000', 
       'http://127.0.0.1:8000', 
       'http://127.0.0.1:80' 

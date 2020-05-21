@@ -11,7 +11,7 @@ const Content: React.FC = () => {
         <div className={styles.content}>
             <GridContent>
                 <React.Fragment>
-                    <Row gutter={24} >
+                    {/* <Row gutter={24} >
                         <Col xl={8} lg={24} md={24} sm={24} xs={24} style={{ marginBottom: 24 }} >
                             <div className={`${styles.contentItem} ${styles.normal} ${styles.item1}`}>
                                 <div className={styles.recently}>
@@ -25,7 +25,7 @@ const Content: React.FC = () => {
                         <Col xl={8} lg={24} md={24} sm={24} xs={24} style={{ marginBottom: 24 }}>
                             <div className={`${styles.contentItem} ${styles.normal} ${styles.item3}`}></div>
                         </Col>
-                    </Row>
+                    </Row> */}
                     <Row gutter={24} style={{ marginBottom: 24 }}>
                         <Col xl={8} lg={24} md={24} sm={24} xs={24} style={{ marginBottom: 24 }} >
                             <div className={`${styles.contentItem} ${styles.item1} ${styles.hoverItem}`}>
@@ -54,7 +54,7 @@ const Content: React.FC = () => {
                         <Col xl={8} lg={24} md={24} sm={24} xs={24} style={{ marginBottom: 24 }}>
                             <div className={`${styles.contentItem} ${styles.item3} ${styles.hoverItem}`}>
                                 <div className={`${styles.choose} ${styles.three}`}>
-                                    实时疫情
+                                    数据可视化
                                 </div>
                                 <Link to="/analysis/monitor">
                                     <div className={styles.chooseHover}>

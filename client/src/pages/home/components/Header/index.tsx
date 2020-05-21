@@ -1,7 +1,8 @@
 import React from 'react';
 import { Avatar } from 'antd';
 import { connect } from 'dva';
-import { CheckSquareOutlined } from '@ant-design/icons';
+import { CheckSquareTwoTone } from '@ant-design/icons';
+import classnames from 'classnames';
 
 import { ConnectProps, ConnectState } from '@/models/connect';
 import { CurrentUser } from '@/models/user';
@@ -41,16 +42,23 @@ const Header: React.FC<HeaderProps> = props => {
             <div className={styles.bottom}>
                 <div className={styles.left}>
                     <div className={styles.upcoming}>
-                        <CheckSquareOutlined />
+                        <CheckSquareTwoTone  />
                         <span className={styles.process}>待办流程 {0}</span>
                     </div>
                     <p style={{marginTop: '20px'}}>暂无待办流程，喝杯咖啡休息一下吧~</p>
                 </div>
                 <div className={styles.center}>
-                    <div className={styles.process}>我的发起 <span className={styles.undone}>未完成 {0}</span></div>
-                    <div style={{marginTop: '20px'}} className={styles.process}>抄送流程 <span className={styles.undone}>未确认 {0}</span></div>
+                    <div className={styles.process}>
+                        <div className={classnames(styles.iconImg,  styles.one)}/>
+                        我的发起 <span className={styles.undone}>未完成 {0}</span>
+                    </div>
+                    <div style={{marginTop: '20px'}} className={styles.process}>
+                        <div className={classnames(styles.iconImg, styles.two)}/>
+                        抄送流程 <span className={styles.undone}>未确认 {0}</span>
+                    </div>
                 </div>
                 <div className={styles.right}>
+                    <div className={classnames(styles.iconImg, styles.three)}/>
                     今日日程 {0}
                 </div>
             </div>
